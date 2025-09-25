@@ -100,7 +100,7 @@ const courses = [
 const HomePage = () => {
 	return (
 		<>
-			<section className='space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32 grainy'>
+			<section className='pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32 grainy'>
 				<div className='container flex max-w-[64rem] flex-col items-center gap-4 text-center relative isolate'>
 					<div
 						aria-hidden='true'
@@ -125,8 +125,9 @@ const HomePage = () => {
 						<span className='text-green-500'>Test</span>
 					</h2>
 					<p className='max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8'>
-						Building qualified operators to ensure safe workstations, valid
-						testing results and on-time throughput.
+						Utilize our video training modules to build qualified operators.
+						Ensuring safe workstations, valid testing results and on-time
+						production.
 					</p>
 					<div className='flex items-center gap-3 flex-wrap justify-center'>
 						<Link href='' className={cn(buttonVariants({ size: 'lg' }))}>
@@ -145,11 +146,8 @@ const HomePage = () => {
 			<Element />
 
 			{/* Categories Section */}
-			<section
-				id='categories'
-				className='container space-y-6  py-8  md:py-12 lg:py-24'
-			>
-				<div className='flex items-center justify-between'>
+			<section id='categories' className='container py-4  md:py-4 lg:py-4'>
+				<div className='flex items-center justify-between mb-6'>
 					<SectionTitle>Categories</SectionTitle>
 
 					<Link
@@ -183,7 +181,7 @@ const HomePage = () => {
 			</section>
 
 			{/* Courses */}
-			<section id='courses' className='container space-y-6   md:py-12 lg:py-24'>
+			<section id='courses' className='container space-y-6   md:py-12 lg:py-12'>
 				<div className='flex items-center justify-between'>
 					<SectionTitle>Courses</SectionTitle>
 					<Link
@@ -246,6 +244,8 @@ const HomePage = () => {
 					})}
 				</div>
 			</section>
+
+			<Support />
 		</>
 	);
 };

@@ -3,8 +3,8 @@ import React from 'react';
 
 const Element = () => {
 	return (
-		<div className='bg-darkBlue min-h-screen px-0 py-12'>
-			<div className='w-full bg-blue-50 p-6 flex flex-col md:flex-row items-center pt-5 pb-10 ps-10'>
+		<div className='bg-darkBlue px-0 py-6 md:py-10 md:min-h-[420px] lg:min-h-[520px]'>
+			<div className='w-full bg-blue-50 p-6 flex flex-col md:flex-row items-center pt-5 pb-5 ps-10'>
 				<div className='md:w-1/2 text-center md:text-left pt-10 pb-10'>
 					<h3 className='text-red-900 font-semibold text-lg mb-2'>
 						Fast-Track your learning
@@ -16,7 +16,7 @@ const Element = () => {
 						From absolute beginner to Qualified Electrical Safety Tester. Gain
 						the skills necessary to build confidence in your testing procedures
 						while gaining the skills to trouble-shoot any unexpected issues
-						which may hold back production
+						which may hold back production.
 					</p>
 				</div>
 				<div className='md:w-1/2 flex justify-center mt-6 md:mt-0'>

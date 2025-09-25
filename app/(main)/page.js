@@ -10,7 +10,7 @@ import { ArrowRightIcon } from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import CourseCard from './courses/components/CourseCard';
+import CourseCard from './courses/_components/CourseCard';
 import { getCategories } from '@/queries/categories';
 
 const HomePage = async () => {

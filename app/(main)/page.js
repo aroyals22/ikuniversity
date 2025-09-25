@@ -4,100 +4,19 @@ import Support from '@/components/support';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { formatPrice } from '@/lib/formatPrice';
 import { cn } from '@/lib/utils';
+import { getCourseList } from '@/queries/courses';
 import { BookOpen } from 'lucide-react';
 import { ArrowRightIcon } from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import CourseCard from './courses/components/CourseCard';
+import { getCategories } from '@/queries/categories';
 
-const categories = [
-	{
-		id: 1,
-		title: 'Design',
-		thumbnail: '/assets/images/categories/design.jpg',
-	},
+const HomePage = async () => {
+	const courses = await getCourseList();
+	const categories = await getCategories();
 
-	{
-		id: 3,
-		title: 'Development',
-		thumbnail: '/assets/images/categories/development.jpg',
-	},
-	{
-		id: 4,
-		title: 'Marketing',
-		thumbnail: '/assets/images/categories/marketing.jpg',
-	},
-	{
-		id: 5,
-		title: 'IT & Software',
-		thumbnail: '/assets/images/categories/it_software.jpg',
-	},
-	{
-		id: 6,
-		title: 'Personal Development',
-		thumbnail: '/assets/images/categories/personal_development.jpg',
-	},
-	{
-		id: 7,
-		title: 'Business',
-		thumbnail: '/assets/images/categories/programming.jpg',
-	},
-	{
-		id: 8,
-		title: 'Photography',
-		thumbnail: '/assets/images/categories/photography.jpg',
-	},
-	{
-		id: 9,
-		title: 'Music',
-		thumbnail: '/assets/images/categories/music.jpg',
-	},
-];
-
-const courses = [
-	{
-		id: 1,
-		title: 'Design',
-		thumbnail: '/assets/images/categories/design.jpg',
-	},
-
-	{
-		id: 3,
-		title: 'Development',
-		thumbnail: '/assets/images/categories/development.jpg',
-	},
-	{
-		id: 4,
-		title: 'Marketing',
-		thumbnail: '/assets/images/categories/marketing.jpg',
-	},
-	{
-		id: 5,
-		title: 'IT & Software',
-		thumbnail: '/assets/images/categories/it_software.jpg',
-	},
-	{
-		id: 6,
-		title: 'Personal Development',
-		thumbnail: '/assets/images/categories/personal_development.jpg',
-	},
-	{
-		id: 7,
-		title: 'Business',
-		thumbnail: '/assets/images/categories/business.jpg',
-	},
-	{
-		id: 8,
-		title: 'Photography',
-		thumbnail: '/assets/images/categories/photography.jpg',
-	},
-	{
-		id: 9,
-		title: 'Music',
-		thumbnail: '/assets/images/categories/music.jpg',
-	},
-];
-const HomePage = () => {
 	return (
 		<>
 			<section className='pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32 grainy'>
@@ -146,37 +65,57 @@ const HomePage = () => {
 			<Element />
 
 			{/* Categories Section */}
-			<section id='categories' className='container py-4  md:py-4 lg:py-4'>
-				<div className='flex items-center justify-between mb-6'>
-					<SectionTitle>Categories</SectionTitle>
+			<section id='categories' className='container py-8'>
+				{/* header */}
+				<div className='mb-6 flex items-center justify-between'>
+					<SectionTitle className='text-2xl md:text-3xl font-bold tracking-tight'>
+						Categories
+					</SectionTitle>
 
 					<Link
-						href={''}
-						className=' text-sm font-medium  hover:opacity-80 flex items-center gap-1'
+						href='/categories'
+						className='text-sm font-semibold text-primary hover:underline underline-offset-4 flex items-center gap-1'
 					>
 						Browse All <ArrowRightIcon className='h-4 w-4' />
 					</Link>
 				</div>
-				<div className='mx-auto grid justify-center gap-4 grid-cols-2  md:grid-cols-3 2xl:grid-cols-4'>
-					{categories.map((category) => {
-						return (
-							<Link
-								href=''
-								key={category.id}
-								className='relative overflow-hidden rounded-lg border bg-background p-2 hover:scale-105 transition-all duration-500 ease-in-out'
-							>
-								<div className='flex  flex-col gap-4 items-center justify-between rounded-md p-6'>
-									<Image
-										src={category.thumbnail}
-										alt={category.title}
-										width={100}
-										height={100}
-									/>
-									<h3 className='font-bold'>{category.title}</h3>
+
+				{/* grid */}
+				<div className='grid gap-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4'>
+					{categories.map((category) => (
+						<Link
+							key={category.id}
+							href={`/categories/${category.id}`}
+							aria-label={category.title}
+							className='group relative overflow-hidden rounded-xl border bg-card transition-all
+                   hover:-translate-y-0.5 hover:shadow-md
+                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring'
+						>
+							<div className='flex flex-col items-center gap-4 p-6'>
+								{/* THUMBNAIL — large, consistent, responsive */}
+								<div
+									className='w-full max-w-[280px] aspect-[4/3] md:aspect-[3/2] lg:aspect-[16/9]
+                       rounded-lg bg-muted/30 grid place-items-center'
+								>
+									{/* Next/Image needs a relative parent when using 'fill' */}
+									<div className='relative w-[78%] md:w-[82%] lg:w-[86%] h-full'>
+										<Image
+											src={`/assets/images/categories/${category.thumbnail}`}
+											alt={category.title}
+											fill
+											className='object-contain'
+											sizes='(min-width:1024px) 280px, (min-width:768px) 220px, 180px'
+											priority={false}
+										/>
+									</div>
 								</div>
-							</Link>
-						);
-					})}
+
+								<h3 className='text-center text-base md:text-lg font-semibold text-foreground'>
+									{category.title}
+								</h3>
+							</div>
+						</Link>
+					))}
 				</div>
 			</section>
 
@@ -185,62 +124,15 @@ const HomePage = () => {
 				<div className='flex items-center justify-between'>
 					<SectionTitle>Courses</SectionTitle>
 					<Link
-						href={''}
+						href={'/courses'}
 						className=' text-sm font-medium  hover:opacity-80 flex items-center gap-1'
 					>
 						Browse All <ArrowRightIcon className='h-4 w-4' />
 					</Link>
 				</div>
 				<div className='grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4'>
-					{courses.map((category) => {
-						return (
-							<Link key={category.id} href={`/courses/${category.id}`}>
-								<div className='group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full'>
-									<div className='relative w-full aspect-video rounded-md overflow-hidden'>
-										<Image
-											src='/assets/images/courses/course_1.png'
-											alt={'course'}
-											className='object-cover'
-											fill
-										/>
-									</div>
-									<div className='flex flex-col pt-2'>
-										<div className='text-lg md:text-base font-medium group-hover:text-sky-700 line-clamp-2'>
-											Reactive Accelerator
-										</div>
-										<p className='text-xs text-muted-foreground'>Development</p>
-										<div className='my-3 flex items-center gap-x-2 text-sm md:text-xs'>
-											<div className='flex items-center gap-x-1 text-slate-500'>
-												<div>
-													<BookOpen className='w-4' />
-												</div>
-												<span>4 Chapters</span>
-											</div>
-										</div>
-
-										{/* <CourseProgress
-                      size="sm"
-                      value={80}
-                      variant={110 === 100 ? "success" : ""}
-                    /> */}
-
-										<div className='flex items-center justify-between mt-4'>
-											<p className='text-md md:text-sm font-medium text-slate-700'>
-												{formatPrice(49)}
-											</p>
-
-											<Button
-												variant='ghost'
-												className='text-xs text-sky-700 h-7 gap-1'
-											>
-												Enroll
-												<ArrowRight className='w-3' />
-											</Button>
-										</div>
-									</div>
-								</div>
-							</Link>
-						);
+					{courses.map((course) => {
+						return <CourseCard key={course.id} course={course} />;
 					})}
 				</div>
 			</section>

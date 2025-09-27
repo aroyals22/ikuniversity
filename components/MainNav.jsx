@@ -23,7 +23,6 @@ const MainNav = ({ items, children }) => {
 	const [loginSession, setLoginSession] = useState(null);
 
 	useEffect(() => {
-		console.log('Test information');
 		setLoginSession(session);
 	}, [session]);
 

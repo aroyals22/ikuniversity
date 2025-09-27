@@ -24,7 +24,6 @@ const poppins = Inter({ subsets: ['latin'], variable: '--font-poppins' });
 
 export default async function RootLayout({ children }) {
 	const conn = await dbConnect();
-	console.log(conn);
 
 	return (
 		<html lang='en'>

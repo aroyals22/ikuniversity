@@ -1,6 +1,6 @@
-import Element from '@/components/element';
+import Element from '@/components/Element';
 import { SectionTitle } from '@/components/SectionTitle';
-import Support from '@/components/support';
+import Support from '@/components/Support';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { formatPrice } from '@/lib/formatPrice';
 import { cn } from '@/lib/utils';

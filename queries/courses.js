@@ -5,8 +5,12 @@ import { Testimonial } from '@/model/testimonial-model';
 import { Module } from '@/model/module-model';
 import { replaceMongoIdInObject } from '@/lib/convertData';
 import { replaceMongoIdInArray } from './../lib/convertData';
+import { dbConnect } from '@/service/mongo';
+import { getEnrollmentsForCourse } from './enrollments';
+import { getTestimonialsForCourse } from './testimonials';
 
 export async function getCourseList() {
+	await dbConnect();
 	const courses = await Course.find({})
 		.select([
 			'title',
@@ -35,4 +39,66 @@ export async function getCourseList() {
 		})
 		.lean();
 	return replaceMongoIdInArray(courses);
-}  
+}
+
+export async function getCourseDetails(id) {
+	await dbConnect();
+	const course = await Course.findById(id)
+		.populate({
+			path: 'category',
+			model: Category,
+		})
+		.populate({
+			path: 'instructor',
+			model: User,
+		})
+		.populate({
+			path: 'testimonials',
+			model: Testimonial,
+			populate: {
+				path: 'user',
+				model: User,
+			},
+		})
+		.populate({
+			path: 'modules',
+			model: Module,
+		})
+		.lean();
+	return replaceMongoIdInObject(course);
+}
+
+export async function getCourseDetailsByInstructor(instructorId) {
+	const courses = await Course.find({ instructor: instructorId }).lean();
+
+	const enrollments = await Promise.all(
+		courses.map(async (course) => {
+			const enrollment = await getEnrollmentsForCourse(course._id.toString());
+			return enrollment;
+		})
+	);
+
+	const totalEnrollments = enrollments.reduce((acc, obj) => {
+		return acc + obj.length;
+	}, 0);
+
+	const tesimonials = await Promise.all(
+		courses.map(async (course) => {
+			const tesimonial = await getTestimonialsForCourse(course._id.toString());
+			return tesimonial;
+		})
+	);
+
+	const totalTestimonials = tesimonials.flat();
+	const avgRating =
+		totalTestimonials.reduce(function (acc, obj) {
+			return acc + obj.rating;
+		}, 0) / totalTestimonials.length;
+
+	return {
+		courses: courses.length,
+		enrollments: totalEnrollments,
+		reviews: totalTestimonials.length,
+		ratings: avgRating.toPrecision(2),
+	};
+}

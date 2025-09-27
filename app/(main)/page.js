@@ -44,16 +44,18 @@ const HomePage = async () => {
 						<span className='text-green-500'>Test</span>
 					</h2>
 					<p className='max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8'>
-						Utilize our video training modules to build qualified operators.
-						Ensuring safe workstations, valid testing results and on-time
-						production.
+						Utilize our training modules to qualify your team. This ensures safe
+						workstations, valid testing results and on-time production.
 					</p>
 					<div className='flex items-center gap-3 flex-wrap justify-center'>
-						<Link href='' className={cn(buttonVariants({ size: 'lg' }))}>
+						<Link
+							href='/courses'
+							className={cn(buttonVariants({ size: 'lg' }))}
+						>
 							Explore Now
 						</Link>
 						<Link
-							href=''
+							href='/register/instructor'
 							className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))}
 						>
 							Become An Instructor

@@ -15,6 +15,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { credentialLogin } from '@/app/actions';
+import { toast } from 'sonner';
 
 export function LoginForm() {
 	const [error, setError] = useState('');
@@ -31,6 +32,7 @@ export function LoginForm() {
 				console.log(response.error);
 				setError(response.error);
 			} else {
+				toast.success('Login Successful!');
 				router.push('/courses');
 			}
 		} catch (e) {

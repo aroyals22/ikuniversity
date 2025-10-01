@@ -9,7 +9,6 @@ import { dbConnect } from '@/service/mongo';
 import { getEnrollmentsForCourse } from './enrollments';
 import { getTestimonialsForCourse } from './testimonials';
 
-
 export async function getCourseList() {
 	await dbConnect();
 	const courses = await Course.find({})
@@ -69,7 +68,18 @@ export async function getCourseDetails(id) {
 	return replaceMongoIdInObject(course);
 }
 
-export async function getCourseDetailsByInstructor(instructorId) {
+function groupBy(array, keyFn) {
+	return array.reduce((acc, item) => {
+		const key = keyFn(item);
+		if (!acc[key]) {
+			acc[key] = [];
+		}
+		acc[key].push(item);
+		return acc;
+	}, {});
+}
+
+export async function getCourseDetailsByInstructor(instructorId, expand) {
 	await dbConnect();
 	const courses = await Course.find({ instructor: instructorId })
 		.populate({ path: 'category', model: Category })
@@ -82,6 +92,18 @@ export async function getCourseDetailsByInstructor(instructorId) {
 			return enrollment;
 		})
 	);
+	// console.log(enrollments);
+
+	//group enrollments by courses
+
+	const groupByCourses = groupBy(enrollments.flat(), (item) => item.course);
+
+	const totalRevenue = courses.reduce((acc, course) => {
+		const enrollmentsForCourse = groupByCourses[course._id] || [];
+		return acc + enrollmentsForCourse.length * course.price;
+	}, 0);
+	// console.log(totalRevenue);
+	//calc revenue
 
 	const totalEnrollments = enrollments.reduce((acc, obj) => {
 		return acc + obj.length;
@@ -105,7 +127,6 @@ export async function getCourseDetailsByInstructor(instructorId) {
 	const lastName =
 		courses.length > 0 ? courses[0]?.instructor?.lastName : 'Unknown';
 	const fullInsName = `${firstName} ${lastName}`;
-	console.log(fullInsName);
 
 	const Designation =
 		courses.length > 0 ? courses[0]?.instructor?.designation : 'Unknown';
@@ -113,12 +134,21 @@ export async function getCourseDetailsByInstructor(instructorId) {
 	const insImage =
 		courses.length > 0 ? courses[0]?.instructor?.profilePicture : 'Unknown';
 
+	if (expand) {
+		return {
+			courses: courses?.flat(),
+			enrollments: enrollments?.flat(),
+			reviews: totalTestimonials,
+		};
+	}
+
 	return {
 		courses: courses.length,
 		enrollments: totalEnrollments,
 		reviews: totalTestimonials.length,
 		ratings: avgRating.toPrecision(2),
 		inscourses: courses,
+		revenue: totalRevenue,
 		fullInsName,
 		Designation,
 		insImage,

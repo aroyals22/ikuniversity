@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import logo from '@/public/assets/images/Ikonix-Logo.png';
+import ikonix from '@/public/assets/images/Ikonix-Logo.png';
 import { cn } from '@/lib/utils';
 
 const Logo = ({ className = '' }) => {
@@ -8,7 +8,7 @@ const Logo = ({ className = '' }) => {
 		<div>
 			<Image
 				className={cn('max-w-[200px]', className)}
-				src={logo}
+				src={ikonix}
 				alt='Ikonix Logo'
 			/>
 		</div>

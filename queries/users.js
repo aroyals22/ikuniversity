@@ -12,6 +12,14 @@ export async function getUserByEmail(email) {
 	return replaceMongoIdInObject(user);
 }
 
+export async function getUserDetails(userId) {
+	await dbConnect();
+	const user = await User.findById(userId).lean();
+	return replaceMongoIdInObject(user);
+} 
+
+
+
 export async function validatePassword(email, password) {
 	await dbConnect();
 	const user = await getUserByEmail(email);

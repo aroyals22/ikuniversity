@@ -3,6 +3,7 @@ import MainNav from '@/components/MainNav';
 import React from 'react';
 import { SessionProvider } from 'next-auth/react';
 
+
 const navLinks = [
 	{
 		title: 'Courses',

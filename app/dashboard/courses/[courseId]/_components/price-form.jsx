@@ -19,6 +19,7 @@ import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { updateCourse } from '@/app/actions/course';
 
 const formSchema = z.object({
   price: z.coerce.number(),
@@ -31,16 +32,17 @@ export const PriceForm = ({ initialData, courseId }) => {
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      price: initialData?.price || undefined,
-    },
-  });
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			price: initialData?.price ?? undefined,
+		},
+	});
 
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values) => {
     try {
+       await updateCourse(courseId, values);
       toast.success("Course updated");
       toggleEdit();
       router.refresh();

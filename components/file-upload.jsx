@@ -8,49 +8,50 @@ import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
 
 export const UploadDropzone = (props) => {
-  const { isMulti = false, label } = props;
+  const { isMulti = false, label, onUpload } = props;
 
-  const [droppedFiles, setDroppedFiles] = useState(null);
+	const [droppedFiles, setDroppedFiles] = useState(null);
 
-  console.log(droppedFiles);
+	console.log(droppedFiles);
 
-  const [isUploading, setIsUploading] = useState(false);
+	const [isUploading, setIsUploading] = useState(false);
 
-  const [uploadProgress, setUploadProgress] = useState(0);
+	const [uploadProgress, setUploadProgress] = useState(0);
 
-  // upload progress utility
-  const startSimulatedProgress = () => {
-    setUploadProgress(0);
+	// upload progress utility
+	const startSimulatedProgress = () => {
+		setUploadProgress(0);
 
-    const interval = setInterval(() => {
-      setUploadProgress((prevProgress) => {
-        if (prevProgress >= 95) {
-          clearInterval(interval);
-          prevProgress;
-        }
-        return prevProgress + 5;
-      });
-    }, 500);
+		const interval = setInterval(() => {
+			setUploadProgress((prevProgress) => {
+				if (prevProgress >= 95) {
+					clearInterval(interval);
+					prevProgress;
+				}
+				return prevProgress + 5;
+			});
+		}, 500);
 
-    return interval;
-  };
+		return interval;
+	};
 
-  const onDrop = useCallback(async (acceptedFiles) => {
-    // Do something with the files
+	const onDrop = useCallback(async (acceptedFiles) => {
+		// Do something with the files
 
-    setIsUploading(true);
-    const progressInterval = startSimulatedProgress();
+		setIsUploading(true);
+		const progressInterval = startSimulatedProgress();
 
-    setDroppedFiles(acceptedFiles);
+		setDroppedFiles(acceptedFiles);
 
-    // await new Promise((resolve) => {
-    //   setTimeout(() => {
-    //     resolve('resolved');
-    //   }, 3000);
-    // });
-    setUploadProgress(100);
-    clearInterval(progressInterval);
-  }, []);
+		// await new Promise((resolve) => {
+		//   setTimeout(() => {
+		//     resolve('resolved');
+		//   }, 3000);
+		// });
+		setUploadProgress(100);
+		clearInterval(progressInterval);
+		onUpload(acceptedFiles);
+	}, []);
 
   const { getRootProps, getInputProps, fileRejections } = useDropzone({
     onDrop,

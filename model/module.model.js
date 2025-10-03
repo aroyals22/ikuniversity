@@ -6,24 +6,25 @@ const moduleSchema = new Schema({
 		type: String,
 	},
 	description: {
-		required: true,
 		type: String,
 	},
-	status: {
+	active: {
 		required: true,
-		type: String,
+		default: false,
+		type: Boolean,
 	},
 	slug: {
 		required: true,
-		type: [Schema.ObjectId],
+		type: String,
 	},
 	course: {
 		required: true,
-		type: String,
+		type: Schema.ObjectId,
 	},
-	lessonsId: {
-		required: true,
-		type: [String],
+	lessonIds: [{ type: Schema.ObjectId, ref: 'Lesson' }],
+	order: {
+		require: true,
+		type: Number,
 	},
 });
 

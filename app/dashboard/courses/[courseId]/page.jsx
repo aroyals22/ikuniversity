@@ -17,6 +17,8 @@ import { QuizSetForm } from "./_components/quiz-set-form";
 import { getCourseDetails } from '@/queries/courses';
 import { SubTitleForm } from './_components/subtitle-form';
 import { getCategories } from '@/queries/categories';
+import { replaceMongoIdInArray } from '@/lib/convertData';
+import { ObjectId } from 'mongoose';
 
 const EditCourse = async ({ params }) => {
 	const { courseId } = await params;
@@ -31,6 +33,27 @@ const EditCourse = async ({ params }) => {
 			id: c.id,
 		};
 	});
+
+	function sanitizeData(data) {
+		return JSON.parse(
+			JSON.stringify(data, (key, value) => {
+				if (value instanceof ObjectId) {
+					return value.toString();
+				}
+				if (Buffer.isBuffer(value)) {
+					return value.toString('base64');
+				}
+				return value;
+			})
+		);
+	}
+
+	const rawmodules = await replaceMongoIdInArray(course?.modules).sort(
+		(a, b) => a.order - b.order
+	);
+
+	const modules = sanitizeData(rawmodules);
+
 
 	return (
 		<>
@@ -85,7 +108,7 @@ const EditCourse = async ({ params }) => {
 								<h2 className='text-xl'>Course Modules</h2>
 							</div>
 
-							<ModulesForm initialData={[]} courseId={[]} />
+							<ModulesForm initialData={modules} courseId={[courseId]} />
 						</div>
 						<div>
 							<div className='flex items-center gap-x-2'>

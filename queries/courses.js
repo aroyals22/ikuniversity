@@ -2,7 +2,7 @@ import { Course } from '@/model/course-model';
 import { Category } from '@/model/category-model';
 import { User } from '@/model/user-model';
 import { Testimonial } from '@/model/testimonial-model';
-import { Module } from '@/model/module-model';
+import { Module } from '@/model/module.model';
 import { replaceMongoIdInObject } from '@/lib/convertData';
 import { replaceMongoIdInArray } from './../lib/convertData';
 import { dbConnect } from '@/service/mongo';

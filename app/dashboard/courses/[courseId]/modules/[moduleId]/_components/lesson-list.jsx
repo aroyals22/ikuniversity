@@ -52,58 +52,56 @@ export const LessonList = ({ items, onReorder, onEdit }) => {
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="modules">
-        {(provided) => (
-          <div {...provided.droppableProps} ref={provided.innerRef}>
-            {modules.map((module, index) => (
-              <Draggable key={module.id} draggableId={module.id} index={index}>
-                {(provided) => (
-                  <div
-                    className={cn(
-                      "flex items-center gap-x-2 bg-slate-200 border-slate-200 border text-slate-700 rounded-md mb-4 text-sm",
-                      module.isPublished &&
-                        "bg-sky-100 border-sky-200 text-sky-700"
-                    )}
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                  >
-                    <div
-                      className={cn(
-                        "px-2 py-3 border-r border-r-slate-200 hover:bg-slate-300 rounded-l-md transition",
-                        module.isPublished &&
-                          "border-r-sky-200 hover:bg-sky-200"
-                      )}
-                      {...provided.dragHandleProps}
-                    >
-                      <Grip className="h-5 w-5" />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CirclePlay size={18} />
-                      {module.title}
-                    </div>
-                    <div className="ml-auto pr-2 flex items-center gap-x-2">
-                      <Badge
-                        className={cn(
-                          "bg-gray-500",
-                          module.isPublished && "bg-emerald-600"
-                        )}
-                      >
-                        {module.isPublished ? "Published" : "Draft"}
-                      </Badge>
-                      <Pencil
-                        onClick={() => onEdit(module.id)}
-                        className="w-4 h-4 cursor-pointer hover:opacity-75 transition"
-                      />
-                    </div>
-                  </div>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
-  );
+		<DragDropContext onDragEnd={onDragEnd}>
+			<Droppable droppableId='modules'>
+				{(provided) => (
+					<div {...provided.droppableProps} ref={provided.innerRef}>
+						{modules.map((module, index) => (
+							<Draggable key={module.id} draggableId={module.id} index={index}>
+								{(provided) => (
+									<div
+										className={cn(
+											'flex items-center gap-x-2 bg-slate-200 border-slate-200 border text-slate-700 rounded-md mb-4 text-sm',
+											module.active && 'bg-sky-100 border-sky-200 text-sky-700'
+										)}
+										ref={provided.innerRef}
+										{...provided.draggableProps}
+									>
+										<div
+											className={cn(
+												'px-2 py-3 border-r border-r-slate-200 hover:bg-slate-300 rounded-l-md transition',
+												module.active && 'border-r-sky-200 hover:bg-sky-200'
+											)}
+											{...provided.dragHandleProps}
+										>
+											<Grip className='h-5 w-5' />
+										</div>
+										<div className='flex items-center gap-2'>
+											<CirclePlay size={18} />
+											{module.title}
+										</div>
+										<div className='ml-auto pr-2 flex items-center gap-x-2'>
+											<Badge
+												className={cn(
+													'bg-gray-500',
+													module.active && 'bg-emerald-600'
+												)}
+											>
+												{module.active ? 'Published' : 'Draft'}
+											</Badge>
+											<Pencil
+												onClick={() => onEdit(module.id)}
+												className='w-4 h-4 cursor-pointer hover:opacity-75 transition'
+											/>
+										</div>
+									</div>
+								)}
+							</Draggable>
+						))}
+						{provided.placeholder}
+					</div>
+				)}
+			</Droppable>
+		</DragDropContext>
+	);
 };

@@ -4,16 +4,12 @@ import { Trash } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-
+import { changeLessonPublishState, deleteLesson } from '@/app/actions/lesson';
 import { toast } from 'sonner';
 
-import { useRouter } from 'next/navigation';
-import { changeCoursePublishState, deleteCourse } from '@/app/actions/course';
-
-export const CourseActions = ({ courseId, isActive }) => {
+export const LessonActions = ({ lesson, moduleId, onDelete }) => {
 	const [action, setAction] = useState(null);
-	const [published, setPublished] = useState(isActive);
-	const router = useRouter();
+	const [published, setPublished] = useState(lesson?.active);
 
 	async function handleSubmit(event) {
 		event.preventDefault();
@@ -21,22 +17,20 @@ export const CourseActions = ({ courseId, isActive }) => {
 		try {
 			switch (action) {
 				case 'change-active': {
-					const activeState = await changeCoursePublishState(courseId);
+					const activeState = await changeLessonPublishState(lesson.id);
 					setPublished(!activeState);
-					toast.success('The Course has been updated');
-					router.refresh();
+					toast.success('The lesson has been updated');
 					break;
 				}
 
 				case 'delete': {
 					if (published) {
 						toast.error(
-							'A published Course can not be deleted. First unpublish it, then delete'
+							'A published lesson can not be deleted. First unpublish it, then delete'
 						);
 					} else {
-						await deleteCourse(courseId);
-						toast.success('The Course has been deleted successfully');
-						router.push(`/dashboard/courses`);
+						await deleteLesson(lesson.id, moduleId);
+						onDelete();
 					}
 					break;
 				}

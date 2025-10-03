@@ -15,12 +15,14 @@ import { getModule } from '@/queries/modules';
 import { ObjectId } from 'mongoose';
 import { replaceMongoIdInArray } from '@/lib/convertData';
 import { notFound } from 'next/navigation';
+import { ModuleActions } from './_components/module-action';
 
 const Module = async ({ params }) => {
 	const { courseId } = await params;
 	const { moduleId } = await params;
 
 	const module = await getModule(moduleId);
+	const sanitizedModule = sanitizeData(module);
 
 	function sanitizeData(data) {
 		return JSON.parse(
@@ -45,10 +47,12 @@ const Module = async ({ params }) => {
 
 	return (
 		<>
-			<AlertBanner
-				label='This module is unpublished. It will not be visible in the course.'
-				variant='warning'
-			/>
+			{!module?.active && (
+				<AlertBanner
+					label='This module is unpublished. It will not be visible in the course.'
+					variant='warning'
+				/>
+			)}
 
 			<div className='p-6'>
 				<div className='flex items-center justify-between'>
@@ -61,7 +65,7 @@ const Module = async ({ params }) => {
 							Back to course setup
 						</Link>
 						<div className='flex items-center justify-end'>
-							<CourseActions />
+							<ModuleActions module={sanitizedModule} courseId={courseId} />
 						</div>
 					</div>
 				</div>

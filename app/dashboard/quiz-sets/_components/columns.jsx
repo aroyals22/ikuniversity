@@ -55,10 +55,10 @@ export const columns = [
       const isPublished = row.getValue("isPublished") || false;
 
       return (
-        <Badge className={cn("bg-gray-500", isPublished && "bg-success")}>
-          {isPublished ? "Published" : "Unpublished"}
-        </Badge>
-      );
+				<Badge className={cn('bg-gray-500', isPublished && 'bg-green-500')}>
+					{isPublished ? 'Published' : 'Unpublished'}
+				</Badge>
+			);
     },
   },
   {

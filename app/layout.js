@@ -13,6 +13,11 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
 	variable: '--font-geist-mono',
 	subsets: ['latin'],
+	icons: {
+		icon: [
+			{ url: '/favicon.ico', sizes: 'any' }, // /public/favicon.ico
+		],
+	},
 });
 
 export const metadata = {

@@ -8,6 +8,7 @@ import { replaceMongoIdInArray } from './../lib/convertData';
 import { dbConnect } from '@/service/mongo';
 import { getEnrollmentsForCourse } from './enrollments';
 import { getTestimonialsForCourse } from './testimonials';
+import { Lesson } from '@/model/lesson.model';
 
 export async function getCourseList() {
 	await dbConnect();
@@ -63,6 +64,10 @@ export async function getCourseDetails(id) {
 		.populate({
 			path: 'modules',
 			model: Module,
+			populate: {
+				path: 'lessonIds',
+				model: Lesson,
+			},
 		})
 		.lean();
 	return replaceMongoIdInObject(course);

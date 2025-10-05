@@ -4,6 +4,8 @@ import { BookOpen } from 'lucide-react';
 import Image from 'next/image';
 import { getCategoryDetails } from '@/queries/categories';
 import { getReport } from '@/queries/reports';
+import { CourseProgress } from '@/components/course-progress';
+import { getCourseDetails } from '@/queries/courses';
 
 const EnrolledCourseCard = async ({ enrollment }) => {
 	// console.log(enrollment);
@@ -20,15 +22,23 @@ const EnrolledCourseCard = async ({ enrollment }) => {
 	// console.log(filter);
 	// console.log(report);
 
-	const totalCompletedModules = report?.totalCompletedModeules?.length;
+	const courseDetails = await getCourseDetails(enrollment?.course?._id);
+	const totalModuleCount = courseDetails?.modules?.length ?? 0;
+
+	const totalCompletedModules = report?.totalCompletedModeules
+		? report?.totalCompletedModeules?.length
+		: 0;
+
+	const totalProgress = totalModuleCount
+		? (totalCompletedModules / totalModuleCount) * 100
+		: 0;
 
 	// Get all Quizzes and Assignments
-	const quizzes = report?.quizAssessment?.assessments;
-	const totalQuizzes = quizzes?.length;
+	const quizzes = report?.quizAssessment?.assessments ?? [];
+	const totalQuizzes = quizzes?.length ?? 0;
 
 	// Find attempted quizzes
 	const quizzesTaken = quizzes.filter((q) => q.attempted);
-	// console.log(quizzesTaken);
 
 	const totalCorrect = quizzesTaken
 		.map((quiz) => {
@@ -42,7 +52,7 @@ const EnrolledCourseCard = async ({ enrollment }) => {
 	// console.log(totalCorrect);
 
 	const marksFromQuizzes = totalCorrect?.length * 5;
-	const otherMarks = report?.quizAssessment?.otherMarks;
+	const otherMarks = report?.quizAssessment?.otherMarks ?? 0;
 	const totalMarks = marksFromQuizzes + otherMarks;
 
 	return (
@@ -69,7 +79,7 @@ const EnrolledCourseCard = async ({ enrollment }) => {
 				<div className='border-b pb-2 mb-2'>
 					<div className='flex items-center justify-between'>
 						<span className='text-md md:text-sm font-medium text-slate-700'>
-							Total Modules: 10
+							Total Modules: {totalModuleCount}
 						</span>
 						<div className='text-md md:text-sm font-medium text-slate-700'>
 							Completed Modules{' '}
@@ -109,6 +119,11 @@ const EnrolledCourseCard = async ({ enrollment }) => {
 						<Badge variant='success'>{totalMarks}</Badge>
 					</span>
 				</div>
+				<CourseProgress
+					size='sm'
+					value={totalProgress}
+					variant={110 === 100 ? 'success' : ''}
+				/>
 			</div>
 		</div>
 	);

@@ -2,11 +2,11 @@ import mongoose, { Schema } from 'mongoose';
 
 const assessmentSchema = new Schema({
 	assessments: {
-		required: true,
+		required: false,
 		type: Array,
 	},
 	otherMarks: {
-		required: true,
+		required: false,
 		type: Number,
 	},
 });

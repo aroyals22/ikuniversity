@@ -21,7 +21,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 						);
 
 						if (isMatch) {
-							return user;
+							return {
+								id: user._id.toString(),
+								email: user.email,
+								name: user.firstName + ' ' + user.lastName,
+								role: user.role,
+							};
 						} else {
 							console.error('Password Mismatch');
 							throw new Error('Check your password');

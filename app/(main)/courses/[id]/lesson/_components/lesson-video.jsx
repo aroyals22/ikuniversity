@@ -34,7 +34,7 @@ export const LessonVideo = ({ courseId, lesson, module }) => {
 			});
 			if (response.status === 200) {
 				const result = await response.text();
-				console.log(result);
+				// console.log(result);
 				setStarted(false);
 			}
 		}
@@ -66,15 +66,15 @@ export const LessonVideo = ({ courseId, lesson, module }) => {
 	}, [ended]);
 
 	function handleOnStart() {
-		console.log('handleOnStart');
+		// console.log('handleOnStart');
 		setStarted(true);
 	}
 	function handleOnEnded() {
-		console.log('handleOnEnded');
+		// console.log('handleOnEnded');
 		setEnded(true);
 	}
 	function handleOnDuration(duration) {
-		console.log('handleOnDuration', duration);
+		// console.log('handleOnDuration', duration);
 		setDuration(duration);
 	}
 	function handleOnProgress() {

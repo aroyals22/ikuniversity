@@ -9,6 +9,9 @@ import { dbConnect } from '@/service/mongo';
 import { getEnrollmentsForCourse } from './enrollments';
 import { getTestimonialsForCourse } from './testimonials';
 import { Lesson } from '@/model/lesson.model';
+import { Quizset } from '@/model/quizset-model';
+import { Quiz } from '@/model/quizzes-model';
+import mongoose from 'mongoose';
 
 export async function getCourseList() {
 	await dbConnect();
@@ -67,6 +70,14 @@ export async function getCourseDetails(id) {
 			populate: {
 				path: 'lessonIds',
 				model: Lesson,
+			},
+		})
+		.populate({
+			path: 'quizSet',
+			model: Quizset,
+			populate: {
+				path: 'quizIds',
+				model: Quiz,
 			},
 		})
 		.lean();
@@ -179,6 +190,45 @@ export async function create(courseData) {
 	try {
 		const course = await Course.create(courseData);
 		return JSON.parse(JSON.stringify(course));
+	} catch (error) {
+		throw new Error(error);
+	}
+}
+
+export async function getCoursesByCategory(categoryId) {
+	try {
+		const courses = await Course.find({ category: categoryId })
+			.populate('category')
+			.lean();
+		return courses;
+	} catch (error) {
+		throw new Error(error);
+	}
+}
+
+export const getCategoryById = async (categoryId) => {
+	try {
+		const category = await Category.findById(categoryId);
+		return category;
+	} catch (error) {
+		throw new Error(error);
+	}
+};
+
+export async function getRelatedCourses(currentCourseId, categoryId) {
+	try {
+		const currentCourseObjectId = new mongoose.Types.ObjectId(currentCourseId);
+		const categoryObjectId = new mongoose.Types.ObjectId(categoryId);
+		// console.log("course id", currentCourseObjectId);
+		// console.log("category id",categoryObjectId );
+		const relatedCourses = await Course.find({
+			category: categoryObjectId,
+			_id: { $ne: currentCourseObjectId }, // Exclude current course
+			active: true,
+		})
+			.select('title thumbnail price')
+			.lean();
+		return relatedCourses;
 	} catch (error) {
 		throw new Error(error);
 	}

@@ -20,6 +20,7 @@ import { getLoggedInUser } from '@/lib/loggedin-user';
 import { Watch } from '@/model/watch-model';
 import { ObjectId } from 'mongoose';
 import { getReport } from '@/queries/reports';
+import Quiz from './quiz';
 
 export const CourseSidebar = async ({ courseId }) => {
 	const course = await getCourseDetails(courseId);
@@ -80,6 +81,11 @@ export const CourseSidebar = async ({ courseId }) => {
 		);
 	}
 
+	const quizSetall = course?.quizSet;
+	const isQuizComplete =
+		report?.quizAssessment?.assessments?.some((q) => q.attempted) ?? false;
+	const quizSet = sanitizeData(quizSetall);
+
 	return (
 		<>
 			<div className='h-full border-r flex flex-col overflow-y-auto shadow-sm'>
@@ -93,9 +99,21 @@ export const CourseSidebar = async ({ courseId }) => {
 					}
 				</div>
 				<SidebarModules courseId={courseId} modules={updatedallModules} />
-				<div className='w-full px-6'>
-					<GiveReview />
-					<DownloadCertificate />
+				<div className='w-full px-4 lg:px-14 pt-10 border-t'>
+					{quizSet && (
+						<Quiz
+							courseId={courseId}
+							quizSet={quizSet}
+							isTaken={isQuizComplete}
+						/>
+					)}
+				</div>
+				<div className='w-full px-6 mb-5'>
+					<GiveReview courseId={courseId} loginid={loggedinUser.id} />
+					<DownloadCertificate
+						courseId={courseId}
+						totalProgress={totalProgress}
+					/>
 				</div>
 			</div>
 		</>

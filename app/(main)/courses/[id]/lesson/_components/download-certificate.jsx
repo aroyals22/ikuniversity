@@ -1,5 +1,42 @@
-import { Button } from '@/components/ui/button';
+'use client';
 
-export const DownloadCertificate = () => {
-	return <Button className='w-full mt-6'>Download Certificate</Button>;
+import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import { toast } from 'sonner';
+
+export const DownloadCertificate = ({ courseId, totalProgress }) => {
+	const [isCertificateDownloading, setIsCertificateDownloading] =
+		useState(false);
+
+	async function handleCertificateDownload() {
+		try {
+			setIsCertificateDownloading(true);
+			fetch(`/api/certificate?courseId=${courseId}`)
+				.then((respone) => respone.blob())
+				.then((blob) => {
+					const url = URL.createObjectURL(blob);
+					const a = document.createElement('a');
+					a.href = url;
+					a.download = 'Certificate.pdf';
+					document.body.appendChild(a);
+					a.click();
+					a.remove();
+				});
+			toast.success('Congratulations! Certficate has been downloaded');
+		} catch (error) {
+			toast.error(error.message);
+		} finally {
+			setIsCertificateDownloading(false);
+		}
+	}
+
+	return (
+		<Button
+			disabled={totalProgress < 100}
+			onClick={handleCertificateDownload}
+			className='w-full mt-6'
+		>
+			Download Certificate
+		</Button>
+	);
 };

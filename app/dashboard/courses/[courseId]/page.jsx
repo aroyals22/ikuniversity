@@ -124,7 +124,7 @@ const EditCourse = async ({ params }) => {
 								<h2 className='text-xl'>Course Modules</h2>
 							</div>
 
-							<ModulesForm initialData={modules} courseId={[courseId]} />
+							<ModulesForm initialData={modules} courseId={courseId} />
 						</div>
 						<div>
 							<div className='flex items-center gap-x-2'>

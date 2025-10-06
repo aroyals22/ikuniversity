@@ -3,6 +3,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { User } from './model/user-model';
 import crypto from 'crypto';
 import { authConfig } from './auth.config';
+import { dbConnect } from './service/mongo';
 
 // Helper function to hash passwords
 function hashPassword(password) {
@@ -16,10 +17,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 			async authorize(credentials) {
 				if (credentials == null) return null;
 
-				console.log('[AUTH] Email:', credentials.email);
-				console.log('[AUTH] Password provided:', !!credentials.password);
+				console.log('[AUTH] Starting auth');
 
 				try {
+					// Connect to database first
+					await dbConnect();
+					console.log('[AUTH] DB connected');
+
 					const user = await User.findOne({ email: credentials?.email });
 
 					if (!user) {
@@ -27,12 +31,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 						return null;
 					}
 
-					console.log('[AUTH] User found:', user._id);
-					console.log('[AUTH] Stored hash:', user.password);
+					console.log('[AUTH] User found');
 
 					// Hash the input password
 					const hashedInput = hashPassword(credentials.password);
-					console.log('[AUTH] Hashed input:', hashedInput);
 
 					// Compare hashed passwords
 					const isMatch = hashedInput === user.password;
@@ -49,7 +51,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
 					return null;
 				} catch (err) {
-					console.error('[AUTH] Error:', err);
+					console.error('[AUTH] Error:', err.message);
 					return null;
 				}
 			},

@@ -32,15 +32,19 @@ export function LoginForm() {
 				redirect: false,
 			});
 
+			console.log('SignIn result:', result); // Add this
+
 			if (result?.error) {
-				console.log(result.error);
+				console.log('Error:', result.error);
 				setError(result.error);
 				toast.error('Login failed');
-			} else {
+			} else if (result?.ok) {
+				// Change this line - check for ok explicitly
 				toast.success('Login Successful!');
-				router.push('/courses');
+				window.location.href = '/courses'; // Force a full page redirect instead of router.push
 			}
 		} catch (e) {
+			console.error('Exception:', e);
 			setError(e.message);
 			toast.error('Something went wrong');
 		}

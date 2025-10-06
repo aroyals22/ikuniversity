@@ -18,7 +18,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 						return null;
 					}
 
-					const isMatch = await bcrypt.compare(
+					const isMatch = bcrypt.compareSync(
 						credentials.password,
 						user.password
 					);

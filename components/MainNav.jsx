@@ -138,7 +138,7 @@ const MainNav = ({ items, children }) => {
 									href=''
 									onClick={(e) => {
 										e.preventDefault();
-										signOut();
+										signOut({ callbackUrl: '/' });
 									}}
 								>
 									Logout

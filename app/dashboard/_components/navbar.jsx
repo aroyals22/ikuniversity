@@ -51,7 +51,7 @@ export const Navbar = () => {
 							<Link
 								href='#'
 								onClick={() => {
-									signOut();
+									signOut({ callbackUrl: '/' });
 								}}
 							>
 								Logout

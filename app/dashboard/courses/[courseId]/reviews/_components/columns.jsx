@@ -13,7 +13,7 @@ import { GraduationCap } from 'lucide-react';
 import { ArrowUpDown, MoreHorizontal, Pencil } from 'lucide-react';
 import Link from 'next/link';
 import { formatMyDate } from '@/lib/date';
-import StarRating from '@/components/starRating';
+import StarRating from '@/components/StarRating';
 
 export const columns = [
 	{

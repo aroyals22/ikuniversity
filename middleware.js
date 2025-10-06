@@ -1,21 +1,32 @@
-import { auth } from './auth';
 import { NextResponse } from 'next/server';
 import { PUBLIC_ROUTES, LOGIN, ROOT } from '@/lib/routes';
 
-export default auth((req) => {
+export async function middleware(req) {
 	const { nextUrl } = req;
-	const isAuthenticated = !!req.auth;
 
+	// Check if route is public
 	const isPublicRoute =
 		PUBLIC_ROUTES.some((route) => nextUrl.pathname.startsWith(route)) ||
-		nextUrl.pathname === ROOT;
+		nextUrl.pathname === ROOT ||
+		nextUrl.pathname.startsWith('/api/auth');
 
-	if (!isAuthenticated && !isPublicRoute) {
+	// Let public routes through
+	if (isPublicRoute) {
+		return NextResponse.next();
+	}
+
+	// Check for session token
+	const token =
+		req.cookies.get('authjs.session-token') ||
+		req.cookies.get('__Secure-authjs.session-token');
+
+	if (!token) {
 		return NextResponse.redirect(new URL(LOGIN, nextUrl));
 	}
+
 	return NextResponse.next();
-});
+}
 
 export const config = {
-	matcher: ['/((?!api/auth|_next|favicon.ico|.*\\..*).*)', '/'],
+	matcher: ['/((?!_next|favicon.ico|.*\\..*).*)', '/'],
 };

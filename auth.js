@@ -4,12 +4,7 @@ import { User } from './model/user-model';
 import bcrypt from 'bcryptjs';
 import { authConfig } from './auth.config';
 
-export const {
-	handlers: { GET, POST },
-	auth,
-	signIn,
-	signOut,
-} = NextAuth({
+export const { handlers, auth, signIn, signOut } = NextAuth({
 	...authConfig,
 	providers: [
 		CredentialsProvider({

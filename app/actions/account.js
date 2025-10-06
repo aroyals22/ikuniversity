@@ -1,7 +1,7 @@
 'use server';
 
 import { User } from '@/model/user-model';
-import bcrypt from 'bcryptjs';
+import { hashPassword } from '@/auth';
 import { revalidatePath } from 'next/cache';
 import { validatePassword } from '@/queries/users';
 
@@ -22,7 +22,7 @@ export async function changePassword(email, oldPassword, newPassword) {
 		throw new Error('Please enter a valid current password');
 	}
 	const filter = { email: email };
-	const hashedPassword = await bcrypt.hash(newPassword, 5);
+	const hashedPassword = hashPassword(newPassword);
 
 	const dataToUpadate = {
 		password: hashedPassword,

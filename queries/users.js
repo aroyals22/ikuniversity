@@ -3,7 +3,7 @@ import {
 	replaceMongoIdInObject,
 } from '@/lib/convertData';
 import { User } from '@/model/user-model';
-import bcrypt from 'bcryptjs';
+import { hashPassword } from '@/auth';
 import { dbConnect } from '@/service/mongo';
 
 export async function getUserByEmail(email) {
@@ -16,13 +16,12 @@ export async function getUserDetails(userId) {
 	await dbConnect();
 	const user = await User.findById(userId).lean();
 	return replaceMongoIdInObject(user);
-} 
-
-
+}
 
 export async function validatePassword(email, password) {
 	await dbConnect();
 	const user = await getUserByEmail(email);
-	const isMatch = await bcrypt.compare(password, user.password);
+	const hashedInput = hashPassword(password);
+	const isMatch = hashedInput === user.password;
 	return isMatch;
 }

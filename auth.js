@@ -1,8 +1,13 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { User } from './model/user-model';
-import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import { authConfig } from './auth.config';
+
+// Helper function to hash passwords
+function hashPassword(password) {
+	return crypto.createHash('sha256').update(password).digest('hex');
+}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
 	...authConfig,
@@ -18,10 +23,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 						return null;
 					}
 
-					const isMatch = bcrypt.compareSync(
-						credentials.password,
-						user.password
-					);
+					// Hash the input password
+					const hashedInput = hashPassword(credentials.password);
+
+					// Compare hashed passwords
+					const isMatch = hashedInput === user.password;
 
 					if (isMatch) {
 						return {
@@ -41,3 +47,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 		}),
 	],
 });
+
+// Export the hash function so other files can use it
+export { hashPassword };

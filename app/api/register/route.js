@@ -1,6 +1,6 @@
 import { dbConnect } from '@/service/mongo';
 import { NextRequest, NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
+import { hashPassword } from '@/auth';
 import { User } from '@/model/user-model';
 
 export const POST = async (request) => {
@@ -8,7 +8,7 @@ export const POST = async (request) => {
 		await request.json();
 
 	await dbConnect();
-	const hashedPassword = await bcrypt.hash(password, 5);
+	const hashedPassword = hashPassword(password);
 
 	const newUser = {
 		firstName,
@@ -17,7 +17,6 @@ export const POST = async (request) => {
 		password: hashedPassword,
 		role: userRole,
 	};
-	
 
 	try {
 		await User.create(newUser);
@@ -27,7 +26,7 @@ export const POST = async (request) => {
 	} catch (error) {
 		console.log(error);
 		return new NextResponse(error.message, {
-			status: 201,
+			status: 500,
 		});
 	}
 };

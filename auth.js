@@ -16,18 +16,27 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 			async authorize(credentials) {
 				if (credentials == null) return null;
 
+				console.log('[AUTH] Email:', credentials.email);
+				console.log('[AUTH] Password provided:', !!credentials.password);
+
 				try {
 					const user = await User.findOne({ email: credentials?.email });
 
 					if (!user) {
+						console.log('[AUTH] User not found');
 						return null;
 					}
 
+					console.log('[AUTH] User found:', user._id);
+					console.log('[AUTH] Stored hash:', user.password);
+
 					// Hash the input password
 					const hashedInput = hashPassword(credentials.password);
+					console.log('[AUTH] Hashed input:', hashedInput);
 
 					// Compare hashed passwords
 					const isMatch = hashedInput === user.password;
+					console.log('[AUTH] Match result:', isMatch);
 
 					if (isMatch) {
 						return {
@@ -40,7 +49,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
 					return null;
 				} catch (err) {
-					console.error('Auth error:', err);
+					console.error('[AUTH] Error:', err);
 					return null;
 				}
 			},

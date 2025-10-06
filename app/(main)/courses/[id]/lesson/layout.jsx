@@ -24,7 +24,7 @@ const CourseLayout = async ({ children, params }) => {
 
 	return (
 		<div className=''>
-			<div className='h-[80px] lg:pl-96 fixed top-[60px] inset-y-0 w-full z-10'>
+			<div className='h-[80px] lg:pl-96 fixed top-[60px] inset-y-0 w-full z-30'>
 				<div className='flex lg:hidden p-4 border-b h-full items-center bg-white shadow-sm relative'>
 					{/* Course Sidebar For Mobile */}
 					<CourseSidebarMobile courseId={id} />
@@ -33,7 +33,7 @@ const CourseLayout = async ({ children, params }) => {
 			</div>
 
 			<div className='grid grid-cols-1 lg:grid-cols-12'>
-				<div className='hidden lg:flex h-full w-96 flex-col inset-y-0 z-50'>
+				<div className='hidden lg:flex h-full w-96 flex-col inset-y-0 z-30'>
 					{/* sidebar starts */}
 					<CourseSidebar courseId={id} />
 					{/* sidebar ends */}

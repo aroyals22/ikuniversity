@@ -8,31 +8,31 @@ import { BookA } from "lucide-react";
 import { Radio } from "lucide-react";
 
 const routes = [
-  {
-    icon: BarChart,
-    label: "Analytics",
-    href: "/dashboard",
-  },
-  {
-    icon: BookOpen,
-    label: "Courses",
-    href: "/dashboard/courses",
-  },
-  {
-    icon: BookOpen,
-    label: "Add Course",
-    href: "/dashboard/courses/add",
-  },
-  {
-    icon: Radio,
-    label: "Lives",
-    href: "/dashboard/lives",
-  },
-  {
-    icon: BookA,
-    label: "Quizes",
-    href: "/dashboard/quiz-sets",
-  },
+	{
+		icon: BarChart,
+		label: 'Analytics',
+		href: '/dashboard',
+	},
+	{
+		icon: BookOpen,
+		label: 'Courses',
+		href: '/dashboard/courses',
+	},
+	{
+		icon: BookOpen,
+		label: 'Add Course',
+		href: '/dashboard/courses/add',
+	},
+	{
+		icon: Radio,
+		label: 'Lives',
+		href: '/dashboard/lives',
+	},
+	{
+		icon: BookA,
+		label: 'Quizzes',
+		href: '/dashboard/quiz-sets',
+	},
 ];
 
 export const SidebarRoutes = () => {

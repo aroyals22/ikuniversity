@@ -24,14 +24,14 @@ const Support = () => {
 
 					<div className='flex flex-wrap gap-4'>
 						<a
-							href='#'
+							href='https://www.ikonixusa.com/app-support'
 							className='bg-neutral-300 text-black font-semibold px-6 py-3 rounded-lg shadow hover:bg-red-800 transition'
 						>
 							Contact Us
 						</a>
 
 						<a
-							href='#'
+							href='https://www.ikonixusa.com/about/contact'
 							className='bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg shadow hover:bg-gray-900 transition'
 						>
 							Call for Support

@@ -12,6 +12,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import CourseCard from './courses/_components/CourseCard';
 import { getCategories } from '@/queries/categories';
+import { Play } from 'lucide-react';
 
 const HomePage = async () => {
 	const courses = await getCourseList();
@@ -30,18 +31,22 @@ const HomePage = async () => {
 								clipPath:
 									'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
 							}}
-							className='relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]'
+							className='relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#B92234] to-[#E63946] opacity-15 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]'
 						/>
 					</div>
-					<span className='rounded-2xl bg-muted px-4 py-1.5 text-sm font-medium border shadow-lg'>
-						Hey, Welcome
-					</span>
-					<h1 className='font-heading text-3xl font-bold sm:text-5xl md:text-6xl lg:text-7xl'>
+					{/* <span className='rounded-2xl bg-[#007AFF] text-white px-4 py-1.5 text-sm font-medium border shadow-lg'>
+						Welcome
+					</span> */}
+					<h1 className='font-heading text-3xl font-semibold sm:text-5xl md:text-6xl lg:text-7xl'>
 						Ikonix Training
 					</h1>
-					<h2 className='font-heading text-3xl font-bold sm:text-5xl md:text-6xl lg:text-7xl'>
-						Press Play Before You Press{' '}
-						<span className='text-green-500'>Test</span>
+					<h2 className='font-heading text-3xl font-medium sm:text-5xl md:text-6xl lg:text-7xl'>
+						Press{' '}
+						<Play className='inline h-8 w-8 sm:h-12 sm:w-12 md:h-14 md:w-14 lg:h-16 lg:w-16' />{' '}
+						Before You Press{' '}
+						<span className='inline-block text-white bg-green-500 px-3 py-1.5 rounded-lg shadow-lg border-b-4 border-green-700 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold'>
+							TEST
+						</span>
 					</h2>
 					<p className='max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8'>
 						Utilize our training modules to qualify your team. This ensures safe

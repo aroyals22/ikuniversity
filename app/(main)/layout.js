@@ -7,7 +7,7 @@ import { SessionProvider } from 'next-auth/react';
 const navLinks = [
 	{
 		title: 'Courses',
-		href: '/#Courses',
+		href: '/courses',
 	},
 	{
 		title: 'Testimonials',
@@ -15,7 +15,7 @@ const navLinks = [
 	},
 	{
 		title: 'Contact',
-		href: '/#contact',
+		href: 'https://www.ikonixusa.com/app-support',
 	},
 ];
 

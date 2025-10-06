@@ -10,6 +10,6 @@ export async function credentialLogin(formData) {
 		});
 		return response;
 	} catch (error) {
-		throw new Error(error);
+		return { error: error.message };
 	}
 }

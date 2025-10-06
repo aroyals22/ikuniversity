@@ -1,8 +1,8 @@
 'use client';
 import Link from 'next/link';
-import { ceredntialLogin } from '@/app/actions';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -14,7 +14,6 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { credentialLogin } from '@/app/actions';
 import { toast } from 'sonner';
 
 export function LoginForm() {
@@ -26,17 +25,24 @@ export function LoginForm() {
 
 		try {
 			const formData = new FormData(event.currentTarget);
-			const response = await credentialLogin(formData);
 
-			if (!!response.error) {
-				console.log(response.error);
-				setError(response.error);
+			const result = await signIn('credentials', {
+				email: formData.get('email'),
+				password: formData.get('password'),
+				redirect: false,
+			});
+
+			if (result?.error) {
+				console.log(result.error);
+				setError(result.error);
+				toast.error('Login failed');
 			} else {
 				toast.success('Login Successful!');
 				router.push('/courses');
 			}
 		} catch (e) {
 			setError(e.message);
+			toast.error('Something went wrong');
 		}
 	}
 
@@ -71,9 +77,6 @@ export function LoginForm() {
 						<div className='grid gap-2'>
 							<div className='flex items-center'>
 								<Label htmlFor='password'>Password</Label>
-								{/* <Link href="#" className="ml-auto inline-block text-sm underline">
-                Forgot your password?
-              </Link> */}
 							</div>
 							<Input id='password' name='password' type='password' required />
 						</div>

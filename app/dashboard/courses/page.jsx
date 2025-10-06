@@ -7,6 +7,7 @@ import { DataTable } from './_components/data-table';
 import { ObjectId } from 'mongoose';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 const CoursesPage = async () => {
 	const courses = sanitizeData(await getInstructorDashboardData(COURSE_DATA));

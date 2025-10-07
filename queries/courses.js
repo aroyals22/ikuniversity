@@ -1,10 +1,12 @@
-import { Course } from '@/model/course-model';
 import { Category } from '@/model/category-model';
-import { User } from '@/model/user-model';
-import { Testimonial } from '@/model/testimonial-model';
+import { Course } from '@/model/course-model';
 import { Module } from '@/model/module.model';
-import { replaceMongoIdInObject } from '@/lib/convertData';
-import { replaceMongoIdInArray } from './../lib/convertData';
+import { Testimonial } from '@/model/testimonial-model';
+import { User } from '@/model/user-model';
+import {
+	replaceMongoIdInArray,
+	replaceMongoIdInObject,
+} from '@/lib/convertData';
 import { dbConnect } from '@/service/mongo';
 import { getEnrollmentsForCourse } from './enrollments';
 import { getTestimonialsForCourse } from './testimonials';
@@ -91,12 +93,12 @@ function groupBy(array, keyFn) {
 			acc[key] = [];
 		}
 		acc[key].push(item);
+		return acc;
 	}, {});
 }
 
 export async function getCourseDetailsByInstructor(instructorId, expand) {
 	await dbConnect();
-
 	const publishCourses = await Course.find({
 		instructor: instructorId,
 		active: true,
@@ -109,37 +111,37 @@ export async function getCourseDetailsByInstructor(instructorId, expand) {
 	const enrollments = await Promise.all(
 		publishCourses.map(async (course) => {
 			const enrollment = await getEnrollmentsForCourse(course._id.toString());
-			return enrollment || [];
+			return enrollment;
 		})
 	);
 
-	// Safely flatten and filter
-	const flatEnrollments = enrollments.flat().filter((e) => e != null);
-	const groupByCourses = groupBy(
-		flatEnrollments,
-		(item) => item?.course?.toString() || ''
-	);
+	// Group enrollments by course
+	const groupByCourses = groupBy(enrollments.flat(), (item) => item.course);
 
+	/// Calculate total revenue
 	const totalRevenue = publishCourses.reduce((acc, course) => {
-		const enrollmentsForCourse = groupByCourses[course._id?.toString()] || [];
-		return acc + enrollmentsForCourse.length * (course.price || 0);
+		const enrollmentsForCourse = groupByCourses[course._id] || [];
+		return acc + enrollmentsForCourse.length * course.price;
 	}, 0);
 
-	const totalEnrollments = flatEnrollments.length;
+	//console.log(totalRevenue);
+
+	const totalEnrollments = enrollments.reduce((acc, obj) => {
+		return acc + obj.length;
+	}, 0);
 
 	const tesimonials = await Promise.all(
 		publishCourses.map(async (course) => {
 			const tesimonial = await getTestimonialsForCourse(course._id.toString());
-			return tesimonial || [];
+			return tesimonial;
 		})
 	);
 
-	const totalTestimonials = tesimonials.flat().filter((t) => t != null);
-
+	const totalTestimonials = tesimonials.flat();
 	const avgRating =
 		totalTestimonials.length > 0
 			? totalTestimonials.reduce(function (acc, obj) {
-					return acc + (obj?.rating || 0);
+					return acc + obj.rating;
 				}, 0) / totalTestimonials.length
 			: 0;
 
@@ -164,12 +166,10 @@ export async function getCourseDetailsByInstructor(instructorId, expand) {
 			: 'Unknown';
 
 	if (expand) {
-		const allCourses = await Course.find({
-			instructor: instructorId,
-		}).lean();
+		const allCourses = await Course.find({ instructor: instructorId }).lean();
 		return {
-			courses: allCourses || [],
-			enrollments: flatEnrollments,
+			courses: allCourses?.flat(),
+			enrollments: enrollments?.flat(),
 			reviews: totalTestimonials,
 		};
 	}

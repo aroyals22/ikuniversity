@@ -95,7 +95,13 @@ function groupBy(array, keyFn) {
 }
 
 export async function getCourseDetailsByInstructor(instructorId, expand) {
+	console.log(
+		'[1] Starting getCourseDetailsByInstructor for instructor:',
+		instructorId
+	);
 	await dbConnect();
+	console.log('[2] DB connected');
+
 	const publishCourses = await Course.find({
 		instructor: instructorId,
 		active: true,
@@ -105,40 +111,88 @@ export async function getCourseDetailsByInstructor(instructorId, expand) {
 		.populate({ path: 'instructor', model: User })
 		.lean();
 
+	console.log('[3] Found courses:', publishCourses.length);
+
 	const enrollments = await Promise.all(
-		publishCourses.map(async (course) => {
+		publishCourses.map(async (course, index) => {
+			console.log(
+				`[4.${index}] Getting enrollments for course:`,
+				course._id.toString()
+			);
 			const enrollment = await getEnrollmentsForCourse(course._id.toString());
+			console.log(`[4.${index}] Got enrollments:`, JSON.stringify(enrollment));
 			return enrollment;
 		})
 	);
 
-	const groupByCourses = groupBy(enrollments.flat(), (item) => item.course);
+	console.log('[5] All enrollments fetched. Count:', enrollments.length);
+	console.log('[5.1] Enrollments structure:', JSON.stringify(enrollments));
+	
+	console.log('[6] About to flatten enrollments');
+	const flatEnrollments = enrollments.flat();
+	console.log('[6.1] Flattened enrollments count:', flatEnrollments.length);
 
+	console.log('[7] About to group by course');
+	const groupByCourses = groupBy(flatEnrollments, (item) => {
+		console.log('[7.1] Grouping item:', JSON.stringify(item));
+		return item.course;
+	});
+	console.log('[8] Grouped successfully');
+
+	console.log('[9] About to calculate totalRevenue');
 	const totalRevenue = publishCourses.reduce((acc, course) => {
 		const enrollmentsForCourse = groupByCourses[course._id] || [];
+		console.log(
+			'[9.1] Revenue for course',
+			course._id,
+			':',
+			enrollmentsForCourse.length,
+			'*',
+			course.price
+		);
 		return acc + enrollmentsForCourse.length * course.price;
 	}, 0);
+	console.log('[10] Total revenue calculated:', totalRevenue);
 
-	const totalEnrollments = enrollments.reduce((acc, obj) => {
-		return acc + obj.length;
+	console.log('[11] About to calculate totalEnrollments');
+	const totalEnrollments = enrollments.reduce((acc, obj, index) => {
+		console.log(
+			`[11.${index}] Processing enrollment array:`,
+			obj ? obj.length : 'undefined'
+		);
+		return acc + (obj ? obj.length : 0);
 	}, 0);
+	console.log('[12] Total enrollments calculated:', totalEnrollments);
 
+	console.log('[13] About to fetch testimonials');
 	const tesimonials = await Promise.all(
-		publishCourses.map(async (course) => {
+		publishCourses.map(async (course, index) => {
+			console.log(
+				`[14.${index}] Getting testimonials for course:`,
+				course._id.toString()
+			);
 			const tesimonial = await getTestimonialsForCourse(course._id.toString());
+			console.log(
+				`[14.${index}] Got testimonials:`,
+				tesimonial ? tesimonial.length : 'null'
+			);
 			return tesimonial;
 		})
 	);
+	console.log('[15] All testimonials fetched');
 
 	const totalTestimonials = tesimonials.flat();
+	console.log('[16] Flattened testimonials count:', totalTestimonials.length);
 
-	// Fixed: Handle empty testimonials array
+	console.log('[17] About to calculate avgRating');
 	const avgRating =
 		totalTestimonials.length > 0
-			? totalTestimonials.reduce(function (acc, obj) {
+			? totalTestimonials.reduce(function (acc, obj, index) {
+					console.log(`[17.${index}] Rating:`, obj ? obj.rating : 'undefined');
 					return acc + (obj.rating || 0);
 				}, 0) / totalTestimonials.length
 			: 0;
+	console.log('[18] Avg rating calculated:', avgRating);
 
 	const firstName =
 		publishCourses.length > 0
@@ -160,13 +214,15 @@ export async function getCourseDetailsByInstructor(instructorId, expand) {
 			? publishCourses[0]?.instructor?.profilePicture
 			: 'Unknown';
 
+	console.log('[19] About to return results');
+
 	if (expand) {
 		const allCourses = await Course.find({
 			instructor: instructorId,
 		}).lean();
 		return {
 			courses: allCourses?.flat(),
-			enrollments: enrollments?.flat(),
+			enrollments: flatEnrollments,
 			reviews: totalTestimonials,
 		};
 	}

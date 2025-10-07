@@ -1,4 +1,3 @@
-// queries/reports.js
 import { dbConnect } from '@/service/mongo';
 import { replaceMongoIdInObject } from '@/lib/convertData';
 import { Assessment } from '@/model/assessment-model';
@@ -65,8 +64,11 @@ export async function createWatchReport(data) {
 		const lessonIdsToCheck = module.lessonIds;
 		const completedLessonsIds = report.totalCompletedLessons;
 
+		// Fixed ObjectId comparison
 		const isModuleComplete = lessonIdsToCheck.every((lesson) =>
-			completedLessonsIds.includes(lesson)
+			completedLessonsIds.some(
+				(completedLesson) => completedLesson.toString() === lesson.toString()
+			)
 		);
 
 		if (isModuleComplete) {
@@ -112,7 +114,7 @@ export async function createAssessmentReport(data) {
 		} else {
 			if (!report.quizAssessment) {
 				report.quizAssessment = data.quizAssessment;
-				report.save();
+				await report.save();
 			}
 		}
 	} catch (error) {

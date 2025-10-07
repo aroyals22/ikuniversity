@@ -1,11 +1,19 @@
 'use server';
 import { headers } from 'next/headers';
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
 const CURRENCY = 'USD';
 import { formatAmountForStripe } from '@/lib/stripe-helpers';
 import { stripe } from '@/lib/stripe';
 import { getCourseDetails } from '@/queries/courses';
 
 export async function createCheckoutSession(data) {
+	// Check authentication first
+	const session = await auth();
+	if (!session?.user?.email) {
+		redirect('/login');
+	}
+
 	const ui_mode = 'hosted';
 	const origin = (await headers()).get('origin');
 	const courseId = data.get('courseId');

@@ -91,7 +91,6 @@ function groupBy(array, keyFn) {
 			acc[key] = [];
 		}
 		acc[key].push(item);
-		return acc;
 	}, {});
 }
 
@@ -112,9 +111,6 @@ export async function getCourseDetailsByInstructor(instructorId, expand) {
 			return enrollment;
 		})
 	);
-	// console.log(enrollments);
-
-	//group enrollments by publishCourses
 
 	const groupByCourses = groupBy(enrollments.flat(), (item) => item.course);
 
@@ -122,8 +118,6 @@ export async function getCourseDetailsByInstructor(instructorId, expand) {
 		const enrollmentsForCourse = groupByCourses[course._id] || [];
 		return acc + enrollmentsForCourse.length * course.price;
 	}, 0);
-	// console.log(totalRevenue);
-	//calc revenue
 
 	const totalEnrollments = enrollments.reduce((acc, obj) => {
 		return acc + obj.length;
@@ -196,6 +190,7 @@ export async function create(courseData) {
 }
 
 export async function getCoursesByCategory(categoryId) {
+	await dbConnect();
 	try {
 		const courses = await Course.find({ category: categoryId })
 			.populate('category')
@@ -207,6 +202,7 @@ export async function getCoursesByCategory(categoryId) {
 }
 
 export const getCategoryById = async (categoryId) => {
+	await dbConnect();
 	try {
 		const category = await Category.findById(categoryId);
 		return category;
@@ -216,14 +212,13 @@ export const getCategoryById = async (categoryId) => {
 };
 
 export async function getRelatedCourses(currentCourseId, categoryId) {
+	await dbConnect();
 	try {
 		const currentCourseObjectId = new mongoose.Types.ObjectId(currentCourseId);
 		const categoryObjectId = new mongoose.Types.ObjectId(categoryId);
-		// console.log("course id", currentCourseObjectId);
-		// console.log("category id",categoryObjectId );
 		const relatedCourses = await Course.find({
 			category: categoryObjectId,
-			_id: { $ne: currentCourseObjectId }, // Exclude current course
+			_id: { $ne: currentCourseObjectId },
 			active: true,
 		})
 			.select('title thumbnail price')

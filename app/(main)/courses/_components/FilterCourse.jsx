@@ -1,12 +1,11 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
 } from '@/components/ui/accordion';
-
 import { Checkbox } from '@/components/ui/checkbox';
 
 const PRICE_OPTIONS = [
@@ -14,57 +13,7 @@ const PRICE_OPTIONS = [
 	{ label: 'Paid', value: 'paid' },
 ];
 
-const CATEGORY_OPTIONS = [
-	{
-		id: 1,
-		label: 'Design',
-		value: 'design',
-	},
-
-	{
-		id: 3,
-		label: 'Development',
-		value: 'development',
-	},
-	{
-		id: 4,
-		label: 'Marketing',
-		value: 'marketing',
-	},
-	{
-		id: 5,
-		label: 'IT & Software',
-		value: 'it-software',
-	},
-	{
-		id: 6,
-		label: 'Personal Development',
-		value: 'personal-development',
-	},
-	{
-		id: 7,
-		label: 'Business',
-		value: 'business',
-	},
-	{
-		id: 8,
-		label: 'Photography',
-		value: 'photography',
-	},
-	{
-		id: 9,
-		label: 'Music',
-		value: 'music',
-	},
-];
-const FilterCourse = () => {
-	const [filter, setFilter] = useState({
-		categories: ['development'],
-		price: ['free'],
-		sort: '',
-	});
-
-	//   apply checkbox filter
+const FilterCourse = ({ categories, filter, setFilter }) => {
 	const applyArrayFilter = ({ type, value }) => {
 		const isFilterApplied = filter[type].includes(value);
 
@@ -92,24 +41,26 @@ const FilterCourse = () => {
 
 					<AccordionContent className='pt-6 animate-none'>
 						<ul className='space-y-4'>
-							{CATEGORY_OPTIONS.map((option, optionIdx) => (
-								<li key={option.value} className='flex items-center'>
+							{categories.map((category) => (
+								<li key={category.id} className='flex items-center'>
 									<Checkbox
 										type='checkbox'
-										id={`category-${optionIdx}`}
+										id={`category-${category.id}`}
 										onCheckedChange={() => {
 											applyArrayFilter({
 												type: 'categories',
-												value: option.value,
+												value: category.title.toLowerCase(),
 											});
 										}}
-										checked={filter.categories.includes(option.value)}
+										checked={filter.categories.includes(
+											category.title.toLowerCase()
+										)}
 									/>
 									<label
-										htmlFor={`category-${optionIdx}`}
+										htmlFor={`category-${category.id}`}
 										className='ml-3 text-sm text-gray-600 cursor-pointer'
 									>
-										{option.label}
+										{category.title}
 									</label>
 								</li>
 							))}

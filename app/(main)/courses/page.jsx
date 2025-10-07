@@ -1,6 +1,6 @@
 import { getCourseList } from '@/queries/courses';
 import { getCategories } from '@/queries/categories';
-import CoursesContent from './_components/CoursesContent';
+import CoursesContent from './_components/CourseContent';
 
 const CoursesPage = async () => {
 	const courses = await getCourseList();

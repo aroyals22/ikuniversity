@@ -2,10 +2,13 @@
 
 import { Course } from '@/model/course-model';
 import { Testimonial } from '@/model/testimonial-model';
+import { dbConnect } from '@/service/mongo';
 
 export async function createReview(data, loginid, courseId) {
 	const { review, rating } = data;
 	try {
+		await dbConnect();
+
 		// Check if user already reviewed this course
 		const existingReview = await Testimonial.findOne({
 			user: loginid,
@@ -31,7 +34,7 @@ export async function createReview(data, loginid, courseId) {
 		const updateCourse = await Course.findByIdAndUpdate(
 			courseId,
 			{ $push: { testimonials: newTestimonial._id } },
-			{ new: true } // Return the updated course document
+			{ new: true }
 		);
 
 		if (!updateCourse) {
@@ -39,6 +42,6 @@ export async function createReview(data, loginid, courseId) {
 		}
 		return newTestimonial;
 	} catch (error) {
-		throw new Error(error);
+		throw new Error(error.message);
 	}
 }

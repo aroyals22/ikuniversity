@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { ReviewModal } from './review-modal';
 import { useState } from 'react';
 
-export const GiveReview = ({ courseId, loginid }) => {
+export const GiveReview = ({ courseId, loginid, hasReviewed }) => {
 	const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
 	return (
@@ -12,15 +12,18 @@ export const GiveReview = ({ courseId, loginid }) => {
 				onClick={() => setIsReviewModalOpen(true)}
 				variant='outline'
 				className='w-full mt-6'
+				disabled={hasReviewed}
 			>
-				Give Review
+				{hasReviewed ? 'Already Reviewed' : 'Give Review'}
 			</Button>
-			<ReviewModal
-				open={isReviewModalOpen}
-				setOpen={setIsReviewModalOpen}
-				courseId={courseId}
-				loginid={loginid}
-			/>
+			{!hasReviewed && (
+				<ReviewModal
+					open={isReviewModalOpen}
+					setOpen={setIsReviewModalOpen}
+					courseId={courseId}
+					loginid={loginid}
+				/>
+			)}
 		</>
 	);
 };

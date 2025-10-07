@@ -20,6 +20,7 @@ import { getLoggedInUser } from '@/lib/loggedin-user';
 import { Watch } from '@/model/watch-model';
 import { ObjectId } from 'mongoose';
 import { getReport } from '@/queries/reports';
+import { hasUserReviewedCourse } from '@/queries/testimonials';
 import Quiz from './quiz';
 
 export const CourseSidebar = async ({ courseId }) => {
@@ -30,6 +31,8 @@ export const CourseSidebar = async ({ courseId }) => {
 		course: courseId,
 		student: loggedinUser.id,
 	});
+
+	const hasReviewed = await hasUserReviewedCourse(loggedinUser.id, courseId);
 
 	const totalCompletedModules = report?.totalCompletedModeules
 		? report?.totalCompletedModeules.length
@@ -109,7 +112,11 @@ export const CourseSidebar = async ({ courseId }) => {
 					)}
 				</div>
 				<div className='w-full px-6 mb-5'>
-					<GiveReview courseId={courseId} loginid={loggedinUser.id} />
+					<GiveReview
+						courseId={courseId}
+						loginid={loggedinUser.id}
+						hasReviewed={hasReviewed}
+					/>
 					<DownloadCertificate
 						courseId={courseId}
 						totalProgress={totalProgress}

@@ -131,10 +131,14 @@ export async function getCourseDetailsByInstructor(instructorId, expand) {
 	);
 
 	const totalTestimonials = tesimonials.flat();
+
+	// Fixed: Handle empty testimonials array
 	const avgRating =
-		totalTestimonials.reduce(function (acc, obj) {
-			return acc + obj.rating;
-		}, 0) / totalTestimonials.length;
+		totalTestimonials.length > 0
+			? totalTestimonials.reduce(function (acc, obj) {
+					return acc + (obj.rating || 0);
+				}, 0) / totalTestimonials.length
+			: 0;
 
 	const firstName =
 		publishCourses.length > 0
@@ -171,7 +175,7 @@ export async function getCourseDetailsByInstructor(instructorId, expand) {
 		courses: publishCourses.length,
 		enrollments: totalEnrollments,
 		reviews: totalTestimonials.length,
-		ratings: avgRating.toPrecision(2),
+		ratings: avgRating > 0 ? avgRating.toPrecision(2) : '0',
 		inscourses: publishCourses,
 		revenue: totalRevenue,
 		fullInsName,

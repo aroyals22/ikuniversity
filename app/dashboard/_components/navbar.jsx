@@ -20,11 +20,19 @@ export const Navbar = () => {
 		async function fetchMe() {
 			try {
 				const response = await fetch('/api/me');
+				if (response.status === 401) {
+					// User not authenticated, that's okay
+					setLoggedInUser(null);
+					return;
+				}
+				if (!response.ok) {
+					throw new Error('Failed to fetch user');
+				}
 				const data = await response.json();
-				// console.log(data);
 				setLoggedInUser(data);
 			} catch (error) {
-				console.log(error);
+				// Silent fail - don't show error to user
+				setLoggedInUser(null);
 			}
 		}
 		fetchMe();

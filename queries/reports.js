@@ -93,7 +93,7 @@ export async function createWatchReport(data) {
 			report.completion_date = Date.now();
 		}
 
-		report.save();
+		await report.save();
 	} catch (error) {
 		throw new Error(error);
 	}

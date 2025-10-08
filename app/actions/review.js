@@ -3,6 +3,7 @@
 import { Course } from '@/model/course-model';
 import { Testimonial } from '@/model/testimonial-model';
 import { dbConnect } from '@/service/mongo';
+import { revalidatePath } from 'next/cache';
 
 export async function createReview(data, loginid, courseId) {
 	const { review, rating } = data;
@@ -40,7 +41,13 @@ export async function createReview(data, loginid, courseId) {
 		if (!updateCourse) {
 			throw new Error('Failed to update the course testimonial');
 		}
-		return newTestimonial;
+
+		// Revalidate the course pages to show updated reviews
+		revalidatePath(`/courses/${courseId}`);
+		revalidatePath(`/courses/${courseId}/lesson`);
+
+		// Return plain object instead of Mongoose document
+		return JSON.parse(JSON.stringify(newTestimonial));
 	} catch (error) {
 		throw new Error(error.message);
 	}

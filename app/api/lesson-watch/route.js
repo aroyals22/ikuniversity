@@ -4,6 +4,7 @@ import { getModuleBySlug } from '@/queries/modules';
 import { NextRequest, NextResponse } from 'next/server';
 import { Watch } from '@/model/watch-model';
 import { createWatchReport } from '@/queries/reports';
+import { revalidatePath } from 'next/cache';
 
 const STARTED = 'started';
 const COMPLETED = 'completed';
@@ -77,6 +78,10 @@ export async function POST(request) {
 				}
 			}
 		}
+
+		// Revalidate pages to show updated completion status
+		revalidatePath(`/courses/${courseId}/lesson`);
+		revalidatePath('/account/enrolled-courses');
 
 		return new NextResponse('Watch Record added Successfully', {
 			status: 200,

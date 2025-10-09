@@ -80,8 +80,8 @@ export async function POST(request) {
 		}
 
 		// Revalidate pages to show updated completion status
-		revalidatePath(`/courses/${courseId}/lesson`);
-		revalidatePath('/account/enrolled-courses');
+		revalidatePath(`/courses/${courseId}/lesson`, 'layout');
+		revalidatePath('/account/enrolled-courses', 'page');
 
 		return new NextResponse('Watch Record added Successfully', {
 			status: 200,

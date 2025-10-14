@@ -1,5 +1,8 @@
 'use client';
+import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -11,13 +14,14 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useRouter } from 'next/navigation';
 
 export function SignupForm({ role }) {
 	const router = useRouter();
+	const [isLoading, setIsLoading] = useState(false);
 
 	async function onSubmit(event) {
 		event.preventDefault();
+		setIsLoading(true);
 
 		try {
 			const formData = new FormData(event.currentTarget);
@@ -25,6 +29,14 @@ export function SignupForm({ role }) {
 			const lastName = formData.get('last-name');
 			const email = formData.get('email');
 			const password = formData.get('password');
+			const confirmPassword = formData.get('confirmPassword');
+
+			// Validate passwords match
+			if (password !== confirmPassword) {
+				toast.error('Passwords do not match');
+				setIsLoading(false);
+				return;
+			}
 
 			const userRole =
 				role === 'student' || role === 'instructor' ? role : 'student';
@@ -43,9 +55,31 @@ export function SignupForm({ role }) {
 				}),
 			});
 
-			response.status === 201 && router.push('/login');
+			if (response.status === 201) {
+				// Show success toast
+				toast.success('Account created successfully!', {
+					description: 'Redirecting to login...',
+					duration: 2000,
+				});
+
+				// Redirect after toast shows
+				setTimeout(() => {
+					router.push('/login');
+				}, 2000);
+			} else {
+				// Handle errors (409 for duplicate email, 500 for server error)
+				const errorMessage = await response.text();
+				toast.error('Registration failed', {
+					description: errorMessage,
+				});
+			}
 		} catch (e) {
 			console.log(e.message);
+			toast.error('Something went wrong', {
+				description: 'Please try again later.',
+			});
+		} finally {
+			setIsLoading(false);
 		}
 	}
 
@@ -75,6 +109,7 @@ export function SignupForm({ role }) {
 									name='first-name'
 									placeholder='Max'
 									required
+									disabled={isLoading}
 								/>
 							</div>
 							<div className='grid gap-2'>
@@ -84,6 +119,7 @@ export function SignupForm({ role }) {
 									name='last-name'
 									placeholder='Robinson'
 									required
+									disabled={isLoading}
 								/>
 							</div>
 						</div>
@@ -95,11 +131,18 @@ export function SignupForm({ role }) {
 								type='email'
 								placeholder='m@example.com'
 								required
+								disabled={isLoading}
 							/>
 						</div>
 						<div className='grid gap-2'>
 							<Label htmlFor='password'>Password</Label>
-							<Input id='password' name='password' type='password' />
+							<Input
+								id='password'
+								name='password'
+								type='password'
+								required
+								disabled={isLoading}
+							/>
 						</div>
 						<div className='grid gap-2'>
 							<Label htmlFor='confirmPassword'>Confirm Password</Label>
@@ -107,10 +150,12 @@ export function SignupForm({ role }) {
 								id='confirmPassword'
 								name='confirmPassword'
 								type='password'
+								required
+								disabled={isLoading}
 							/>
 						</div>
-						<Button type='submit' className='w-full'>
-							Create an account
+						<Button type='submit' className='w-full' disabled={isLoading}>
+							{isLoading ? 'Creating account...' : 'Create an account'}
 						</Button>
 					</div>
 					<div className='mt-4 text-center text-sm'>

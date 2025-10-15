@@ -25,7 +25,16 @@ export const POST = async (request) => {
 		});
 	} catch (error) {
 		console.log(error);
-		return new NextResponse(error.message, {
+
+		// Check for MongoDB duplicate key error
+		if (error.code === 11000) {
+			return new NextResponse('This email is already registered', {
+				status: 409, // 409 Conflict
+			});
+		}
+
+		// Generic error for other issues
+		return new NextResponse('Registration failed. Please try again.', {
 			status: 500,
 		});
 	}

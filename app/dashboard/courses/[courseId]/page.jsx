@@ -21,6 +21,21 @@ import { replaceMongoIdInArray } from '@/lib/convertData';
 import { ObjectId } from 'mongoose';
 import { getAllQuizSets } from '@/queries/quizzes';
 
+// Helper function to handle both old (filename) and new (blob URL) thumbnails
+const getThumbnailUrl = (thumbnail) => {
+	if (!thumbnail) {
+		return '/assets/images/courses/placeholder.jpg';
+	}
+	
+	// If it's a full URL (Vercel Blob), use it directly
+	if (thumbnail.startsWith('http')) {
+		return thumbnail;
+	}
+	
+	// If it's just a filename (old courses), construct the path
+	return `/assets/images/courses/${thumbnail}`;
+};
+
 const EditCourse = async ({ params }) => {
 	const { courseId } = await params;
 
@@ -101,7 +116,7 @@ const EditCourse = async ({ params }) => {
 						/>
 						<ImageForm
 							initialData={{
-								imageUrl: `/assets/images/courses/${course?.thumbnail}`,
+								imageUrl: getThumbnailUrl(course?.thumbnail),
 							}}
 							courseId={courseId}
 						/>

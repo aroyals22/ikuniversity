@@ -1,73 +1,64 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-
-// import axios from "axios";
 import { ImageIcon, Pencil, PlusCircle } from 'lucide-react';
 import Image from 'next/image';
 import { toast } from 'sonner';
-import * as z from 'zod';
 
 import { UploadDropzone } from '@/components/file-upload';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 
-const formSchema = z.object({
-	imageUrl: z.string().min(1, {
-		message: 'Image is required',
-	}),
-});
-
 export const ImageForm = ({ initialData, courseId }) => {
 	const [file, setFile] = useState(null);
+	const [isUploading, setIsUploading] = useState(false);
 	const router = useRouter();
 	const [isEditing, setIsEditing] = useState(false);
 
 	useEffect(() => {
+		// Only run if file exists
+		if (!file || file.length === 0) return;
+
 		async function uploadFile() {
+			setIsUploading(true);
 			try {
 				const formData = new FormData();
 				formData.append('files', file[0]);
-				formData.append('destination', './public/assets/images/courses');
 				formData.append('courseId', courseId);
+
 				const response = await fetch('/api/upload', {
 					method: 'POST',
 					body: formData,
 				});
-				const result = await response.text();
-				console.log(result);
-				if (response.status === 200) {
-					initialData.imageUrl = `/assets/images/courses/${file[0].path}`;
-					toast.success(result);
+
+				if (response.ok) {
+					const data = await response.json(); // ← CHANGED: Parse JSON
+					initialData.imageUrl = data.url; // ← CHANGED: Use blob URL
+					toast.success(data.message); // ← CHANGED: Use message from response
 					toggleEdit();
 					router.refresh();
+				} else {
+					const errorText = await response.text();
+					toast.error(errorText || 'Upload failed');
 				}
 			} catch (e) {
-				toast.error(e.message);
+				toast.error(e.message || 'Upload failed');
+			} finally {
+				setIsUploading(false);
+				setFile(null); // Reset file state
 			}
 		}
+
 		uploadFile();
-		if (file) {
-		}
-	}, [file]);
+	}, [file, courseId, router]);
 
 	const toggleEdit = () => setIsEditing((current) => !current);
-
-	const onSubmit = async (values) => {
-		try {
-			toast.success('Course updated');
-			toggleEdit();
-			router.refresh();
-		} catch (error) {
-			toast.error('Something went wrong');
-		}
-	};
 
 	return (
 		<div className='mt-6 border bg-gray-50 rounded-md p-4'>
 			<div className='font-medium flex items-center justify-between'>
 				Course Image
-				<Button variant='ghost' onClick={toggleEdit}>
+				<Button variant='ghost' onClick={toggleEdit} disabled={isUploading}>
 					{isEditing && <>Cancel</>}
 					{!isEditing && !initialData.imageUrl && (
 						<>
@@ -91,7 +82,7 @@ export const ImageForm = ({ initialData, courseId }) => {
 				) : (
 					<div className='relative aspect-video mt-2'>
 						<Image
-							alt='Upload'
+							alt='Course thumbnail'
 							fill
 							className='object-cover rounded-md'
 							src={initialData.imageUrl}
@@ -100,12 +91,148 @@ export const ImageForm = ({ initialData, courseId }) => {
 				))}
 			{isEditing && (
 				<div>
-					<UploadDropzone onUpload={(file) => setFile(file)} />
-					<div className='text-xs text-muted-foreground mt-4'>
-						16:9 aspect ratio recommended
-					</div>
+					{isUploading ? (
+						<div className='flex items-center justify-center h-60 bg-slate-100 rounded-md'>
+							<p className='text-sm text-slate-500'>Uploading...</p>
+						</div>
+					) : (
+						<>
+							<UploadDropzone onUpload={(file) => setFile(file)} />
+							<div className='text-xs text-muted-foreground mt-4'>
+								16:9 aspect ratio recommended
+							</div>
+						</>
+					)}
 				</div>
 			)}
 		</div>
 	);
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// "use client";
+
+// import { useState, useEffect } from 'react';
+
+// // import axios from "axios";
+// import { ImageIcon, Pencil, PlusCircle } from 'lucide-react';
+// import Image from 'next/image';
+// import { toast } from 'sonner';
+// import * as z from 'zod';
+
+// import { UploadDropzone } from '@/components/file-upload';
+// import { Button } from '@/components/ui/button';
+// import { useRouter } from 'next/navigation';
+
+// const formSchema = z.object({
+// 	imageUrl: z.string().min(1, {
+// 		message: 'Image is required',
+// 	}),
+// });
+
+// export const ImageForm = ({ initialData, courseId }) => {
+// 	const [file, setFile] = useState(null);
+// 	const router = useRouter();
+// 	const [isEditing, setIsEditing] = useState(false);
+
+// 	useEffect(() => {
+// 		async function uploadFile() {
+// 			try {
+// 				const formData = new FormData();
+// 				formData.append('files', file[0]);
+// 				formData.append('destination', './public/assets/images/courses');
+// 				formData.append('courseId', courseId);
+// 				const response = await fetch('/api/upload', {
+// 					method: 'POST',
+// 					body: formData,
+// 				});
+// 				const result = await response.text();
+// 				console.log(result);
+// 				if (response.status === 200) {
+// 					initialData.imageUrl = `/assets/images/courses/${file[0].path}`;
+// 					toast.success(result);
+// 					toggleEdit();
+// 					router.refresh();
+// 				}
+// 			} catch (e) {
+// 				toast.error(e.message);
+// 			}
+// 		}
+// 		uploadFile();
+// 		if (file) {
+// 		}
+// 	}, [file]);
+
+// 	const toggleEdit = () => setIsEditing((current) => !current);
+
+// 	const onSubmit = async (values) => {
+// 		try {
+// 			toast.success('Course updated');
+// 			toggleEdit();
+// 			router.refresh();
+// 		} catch (error) {
+// 			toast.error('Something went wrong');
+// 		}
+// 	};
+
+// 	return (
+// 		<div className='mt-6 border bg-gray-50 rounded-md p-4'>
+// 			<div className='font-medium flex items-center justify-between'>
+// 				Course Image
+// 				<Button variant='ghost' onClick={toggleEdit}>
+// 					{isEditing && <>Cancel</>}
+// 					{!isEditing && !initialData.imageUrl && (
+// 						<>
+// 							<PlusCircle className='h-4 w-4 mr-2' />
+// 							Add an image
+// 						</>
+// 					)}
+// 					{!isEditing && initialData.imageUrl && (
+// 						<>
+// 							<Pencil className='h-4 w-4 mr-2' />
+// 							Edit image
+// 						</>
+// 					)}
+// 				</Button>
+// 			</div>
+// 			{!isEditing &&
+// 				(!initialData.imageUrl ? (
+// 					<div className='flex items-center justify-center h-60 bg-slate-200 rounded-md'>
+// 						<ImageIcon className='h-10 w-10 text-slate-500' />
+// 					</div>
+// 				) : (
+// 					<div className='relative aspect-video mt-2'>
+// 						<Image
+// 							alt='Upload'
+// 							fill
+// 							className='object-cover rounded-md'
+// 							src={initialData.imageUrl}
+// 						/>
+// 					</div>
+// 				))}
+// 			{isEditing && (
+// 				<div>
+// 					<UploadDropzone onUpload={(file) => setFile(file)} />
+// 					<div className='text-xs text-muted-foreground mt-4'>
+// 						16:9 aspect ratio recommended
+// 					</div>
+// 				</div>
+// 			)}
+// 		</div>
+// 	);
+// };

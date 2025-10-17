@@ -9,13 +9,28 @@ import { BookOpen } from 'lucide-react';
 import EnrollCourse from '@/components/EnrollCourse';
 
 const CourseCard = ({ course }) => {
+	// Helper function to handle both old (filename) and new (blob URL) thumbnails
+	const getThumbnailUrl = (thumbnail) => {
+		if (!thumbnail) {
+			return '/assets/images/courses/placeholder.jpg';
+		}
+
+		// If it's a full URL (Vercel Blob), use it directly
+		if (thumbnail.startsWith('http')) {
+			return thumbnail;
+		}
+
+		// If it's just a filename (old courses), construct the path
+		return `/assets/images/courses/${thumbnail}`;
+	};
+
 	return (
 		<div className='group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full'>
 			<Link key={course.id} href={`/courses/${course.id}`}>
 				<div className='relative w-full aspect-video rounded-md overflow-hidden'>
 					<Image
-						src={`/assets/images/courses/${course?.thumbnail}`}
-						alt={'course'}
+						src={getThumbnailUrl(course?.thumbnail)}
+						alt={course?.title || 'Course thumbnail'}
 						className='object-cover'
 						fill
 					/>
@@ -35,12 +50,6 @@ const CourseCard = ({ course }) => {
 							<span>{course?.modules?.length} Chapters</span>
 						</div>
 					</div>
-
-					{/* <CourseProgress
-              size="sm"
-              value={80}
-              variant={110 === 100 ? "success" : ""}
-            /> */}
 				</div>
 			</Link>
 

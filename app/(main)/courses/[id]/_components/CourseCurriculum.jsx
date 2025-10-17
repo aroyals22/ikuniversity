@@ -2,7 +2,7 @@ import React from 'react';
 
 import { BookCheck } from 'lucide-react';
 import { Clock10 } from 'lucide-react';
-import { Radio } from 'lucide-react';
+
 import {
 	Accordion,
 	AccordionContent,
@@ -13,9 +13,6 @@ import {
 import CourseModuleList from './module/CourseModuleList';
 
 const CourseCurriculam = ({ course }) => {
-
-
-
 	const totalDuration = course?.modules
 		.map((item) => {
 			return item.lessonIds.reduce(function (acc, obj) {
@@ -36,9 +33,6 @@ const CourseCurriculam = ({ course }) => {
 				<span className='flex items-center gap-1.5'>
 					<Clock10 className='w-4 h-4' />
 					{(totalDuration / 3660).toPrecision(2)}+ Hours
-				</span>
-				<span className='flex items-center gap-1.5'>
-					<Radio className='w-4 h-4' />4 Live Class
 				</span>
 			</div>
 

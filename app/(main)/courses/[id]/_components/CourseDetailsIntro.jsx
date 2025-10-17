@@ -8,6 +8,21 @@ import { auth } from '@/auth';
 import { getUserByEmail } from '@/queries/users';
 import { hasEnrollmentForCourse } from '@/queries/enrollments';
 
+// Helper function to handle both old (filename) and new (blob URL) thumbnails
+const getThumbnailUrl = (thumbnail) => {
+	if (!thumbnail) {
+		return '/assets/images/courses/placeholder.jpg';
+	}
+	
+	// If it's a full URL (Vercel Blob), use it directly
+	if (thumbnail.startsWith('http')) {
+		return thumbnail;
+	}
+	
+	// If it's just a filename (old courses), construct the path
+	return `/assets/images/courses/${thumbnail}`;
+};
+
 const CourseDetailsIntro = async ({ course }) => {
 	const session = await auth();
 	const loggedInUser = await getUserByEmail(session?.user?.email);
@@ -17,8 +32,8 @@ const CourseDetailsIntro = async ({ course }) => {
 	);
 
 	return (
-		<div className='overflow-x-hidden  grainy'>
-			<section className='pt-12  sm:pt-16'>
+		<div className='overflow-x-hidden grainy'>
+			<section className='pt-12 sm:pt-16'>
 				<div className='container'>
 					<div className='px-4 mx-auto max-w-7xl sm:px-6 lg:px-8'>
 						<div className='max-w-2xl mx-auto text-center'>
@@ -63,7 +78,7 @@ const CourseDetailsIntro = async ({ course }) => {
 						</div>
 					</div>
 
-					<div className='pb-12  mt-6'>
+					<div className='pb-12 mt-6'>
 						<div className='relative'>
 							<div className='absolute inset-0 h-2/3'></div>
 							<div className='relative mx-auto'>
@@ -72,8 +87,8 @@ const CourseDetailsIntro = async ({ course }) => {
 										className='w-full rounded-lg'
 										width={768}
 										height={463}
-										src={`/assets/images/courses/${course?.thumbnail}`}
-										alt=''
+										src={getThumbnailUrl(course?.thumbnail)}
+										alt={course?.title || 'Course thumbnail'}
 									/>
 								</div>
 							</div>

@@ -25,8 +25,8 @@ const EnrolledCourseCard = async ({ enrollment }) => {
 	const courseDetails = await getCourseDetails(enrollment?.course?._id);
 	const totalModuleCount = courseDetails?.modules?.length ?? 0;
 
-	const totalCompletedModules = report?.totalCompletedModeules
-		? report?.totalCompletedModeules?.length
+	const totalCompletedModules = report?.totalCompletedModules
+		? report?.totalCompletedModules?.length
 		: 0;
 
 	const totalProgress = totalModuleCount

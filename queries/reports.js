@@ -32,7 +32,7 @@ export async function getReport(filter) {
 		return replaceMongoIdInObject(report);
 	} catch (err) {
 		console.error('Error in getReport:', err);
-		throw new Error('Failed to fetch report');
+		throw err;
 	}
 }
 
@@ -72,11 +72,11 @@ export async function createWatchReport(data) {
 		);
 
 		if (isModuleComplete) {
-			const foundModule = report.totalCompletedModeules.find(
+			const foundModule = report.totalCompletedModules.find(
 				(module) => module.toString() === data.moduleId
 			);
 			if (!foundModule) {
-				report.totalCompletedModeules.push(
+				report.totalCompletedModules.push(
 					new mongoose.Types.ObjectId(data.moduleId)
 				);
 			}
@@ -86,7 +86,7 @@ export async function createWatchReport(data) {
 		const modulesInCourse = course?.modules;
 		const moduleCount = modulesInCourse?.length ?? 0;
 
-		const completedModule = report.totalCompletedModeules;
+		const completedModule = report.totalCompletedModules;
 		const completedModuleCount = completedModule?.length ?? 0;
 
 		if (completedModuleCount >= 1 && completedModuleCount === moduleCount) {
@@ -95,7 +95,8 @@ export async function createWatchReport(data) {
 
 		await report.save();
 	} catch (error) {
-		throw new Error(error);
+		console.error('Error in createWatchReport:', error);
+		throw error;
 	}
 }
 
@@ -105,19 +106,29 @@ export async function createAssessmentReport(data) {
 			course: data.courseId,
 			student: data.userId,
 		});
+
 		if (!report) {
+			// Create new report with quiz data
 			report = await Report.create({
 				course: data.courseId,
 				student: data.userId,
 				quizAssessment: data.quizAssessment,
+				quizScore: data.quizScore,
+				quizPassed: data.quizPassed,
+				quizTakenAt: data.quizTakenAt,
 			});
 		} else {
-			if (!report.quizAssessment) {
-				report.quizAssessment = data.quizAssessment;
-				await report.save();
-			}
+			// Update existing report with quiz data
+			report.quizAssessment = data.quizAssessment;
+			report.quizScore = data.quizScore;
+			report.quizPassed = data.quizPassed;
+			report.quizTakenAt = data.quizTakenAt;
+			await report.save();
 		}
+
+		return report;
 	} catch (error) {
-		throw new Error(error);
+		console.error('Error in createAssessmentReport:', error);
+		throw error;
 	}
 }

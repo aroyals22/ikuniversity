@@ -1,15 +1,7 @@
 import { CourseProgress } from '@/components/course-progress';
-import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,
-} from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { CheckCircle } from 'lucide-react';
-import { PlayCircle } from 'lucide-react';
-import { Lock } from 'lucide-react';
+import { CheckCircle, PlayCircle, Lock } from 'lucide-react';
 import Link from 'next/link';
 import { ReviewModal } from './review-modal';
 import { DownloadCertificate } from './download-certificate';
@@ -34,14 +26,17 @@ export const CourseSidebar = async ({ courseId }) => {
 
 	const hasReviewed = await hasUserReviewedCourse(loggedinUser.id, courseId);
 
-	const totalCompletedModules = report?.totalCompletedModeules
-		? report?.totalCompletedModeules.length
+	const totalCompletedModules = report?.totalCompletedModules
+		? report?.totalCompletedModules.length
 		: 0;
 
 	const totalModules = course?.modules ? course.modules.length : 0;
 
 	const totalProgress =
 		totalModules > 0 ? (totalCompletedModules / totalModules) * 100 : 0;
+
+	// Check if all modules are complete
+	const allModulesComplete = totalProgress === 100;
 
 	const updatedModules = await Promise.all(
 		course?.modules.map(async (module) => {
@@ -69,7 +64,7 @@ export const CourseSidebar = async ({ courseId }) => {
 
 	const updatedallModules = sanitizeData(updatedModules);
 
-	// Sanitize fucntion for handle ObjectID and Buffer
+	// Sanitize function for handle ObjectID and Buffer
 	function sanitizeData(data) {
 		return JSON.parse(
 			JSON.stringify(data, (key, value) => {
@@ -85,21 +80,24 @@ export const CourseSidebar = async ({ courseId }) => {
 	}
 
 	const quizSetall = course?.quizSet;
-	const isQuizComplete =
-		report?.quizAssessment?.assessments?.some((q) => q.attempted) ?? false;
 	const quizSet = sanitizeData(quizSetall);
+
+	// Prepare comprehensive quiz status
+	const quizStatus = {
+		taken: !!report?.quizAssessment,
+		score: report?.quizScore ?? 0,
+		passed: report?.quizPassed ?? false,
+		takenAt: report?.quizTakenAt,
+	};
 
 	return (
 		<>
 			<div className='h-full border-r flex flex-col overflow-y-auto shadow-sm'>
 				<div className='p-8 flex flex-col border-b'>
 					<h1 className='font-semibold'>{course.title}</h1>
-					{/* Check purchase */}
-					{
-						<div className='mt-10'>
-							<CourseProgress variant='success' value={totalProgress} />
-						</div>
-					}
+					<div className='mt-10'>
+						<CourseProgress variant='success' value={totalProgress} />
+					</div>
 				</div>
 				<SidebarModules courseId={courseId} modules={updatedallModules} />
 				<div className='w-full px-4 lg:px-14 pt-10 border-t'>
@@ -107,7 +105,8 @@ export const CourseSidebar = async ({ courseId }) => {
 						<Quiz
 							courseId={courseId}
 							quizSet={quizSet}
-							isTaken={isQuizComplete}
+							quizStatus={quizStatus}
+							modulesComplete={allModulesComplete}
 						/>
 					)}
 				</div>
@@ -120,6 +119,7 @@ export const CourseSidebar = async ({ courseId }) => {
 					<DownloadCertificate
 						courseId={courseId}
 						totalProgress={totalProgress}
+						quizPassed={quizStatus.passed}
 					/>
 				</div>
 			</div>

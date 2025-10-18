@@ -17,11 +17,6 @@ const quizzesSchema = new Schema({
 	options: {
 		type: Array,
 	},
-	mark: {
-		required: true,
-		default: 5,
-		type: Number,
-	},
 });
-export const Quiz =
-	mongoose.models.Quiz ?? mongoose.model('Quiz', quizzesSchema);
+
+export const Quiz = mongoose.models.Quiz ?? mongoose.model('Quiz', quizzesSchema);

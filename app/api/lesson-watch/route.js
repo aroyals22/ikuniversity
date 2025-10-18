@@ -11,9 +11,9 @@ const COMPLETED = 'completed';
 
 async function updateReport(userId, courseId, moduleId, lessonId) {
 	try {
-		createWatchReport({ userId, courseId, moduleId, lessonId });
+		await createWatchReport({ userId, courseId, moduleId, lessonId });
 	} catch (error) {
-		throw new Error(error);
+		throw error; // Don't wrap in Error
 	}
 }
 
@@ -79,9 +79,11 @@ export async function POST(request) {
 			}
 		}
 
-		// Revalidate pages to show updated completion status
-		revalidatePath(`/courses/${courseId}/lesson`, 'layout');
-		revalidatePath('/account/enrolled-courses', 'page');
+		// ✅ FIXED: Revalidate the entire course layout (includes sidebar!)
+		revalidatePath(`/courses/${courseId}`, 'layout');
+
+		// Also revalidate account page
+		revalidatePath('/account/enrolled-courses');
 
 		return new NextResponse('Watch Record added Successfully', {
 			status: 200,

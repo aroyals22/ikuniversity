@@ -9,9 +9,11 @@ import { getLoggedInUser } from '@/lib/loggedin-user';
 import { createAssessmentReport } from '@/queries/reports';
 import { Report } from '@/model/report-model';
 import { revalidatePath } from 'next/cache';
+import { dbConnect } from '@/service/mongo'; // ← ADD THIS
 
 export async function updateQuizSet(quizset, dataToUpdate) {
 	try {
+		await dbConnect(); // ← ADD THIS
 		await Quizset.findByIdAndUpdate(quizset, dataToUpdate);
 	} catch (error) {
 		console.error('Error updating quiz set:', error);
@@ -21,6 +23,7 @@ export async function updateQuizSet(quizset, dataToUpdate) {
 
 export async function addQuizToQuizSet(quizSetId, quizData) {
 	try {
+		await dbConnect(); // ← ADD THIS
 		const transformedQuizData = {};
 		transformedQuizData['title'] = quizData['title'];
 		transformedQuizData['description'] = quizData['description'];
@@ -56,6 +59,7 @@ export async function addQuizToQuizSet(quizSetId, quizData) {
 
 export async function deleteQuiz(quizSetId, quizId) {
 	try {
+		await dbConnect(); // ← ADD THIS
 		await Quizset.findByIdAndUpdate(quizSetId, {
 			$pull: { quizIds: quizId },
 		});
@@ -68,8 +72,9 @@ export async function deleteQuiz(quizSetId, quizId) {
 }
 
 export async function changeQuizPublishState(quizSetId) {
-	const quiz = await Quizset.findById(quizSetId);
 	try {
+		await dbConnect(); // ← ADD THIS
+		const quiz = await Quizset.findById(quizSetId);
 		const res = await Quizset.findByIdAndUpdate(
 			quizSetId,
 			{ active: !quiz.active },
@@ -84,6 +89,7 @@ export async function changeQuizPublishState(quizSetId) {
 
 export async function doCreateQuizSet(data) {
 	try {
+		await dbConnect(); // ← ADD THIS
 		data['slug'] = getSlug(data.title);
 		const createdQuizSet = await Quizset.create(data);
 		return createdQuizSet?._id.toString();
@@ -95,6 +101,7 @@ export async function doCreateQuizSet(data) {
 
 export async function addQuizAssessment(courseId, quizSetId, answers) {
 	try {
+		await dbConnect(); // ← ADD THIS
 		const loggedInUser = await getLoggedInUser();
 
 		if (!loggedInUser) {

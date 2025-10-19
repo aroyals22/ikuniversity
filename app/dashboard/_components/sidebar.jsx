@@ -4,8 +4,8 @@ import Link from 'next/link';
 
 const Sidebar = () => {
 	return (
-		<div className='h-full border-r flex flex-col overflow-y-auto bg-white shadow-sm'>
-			<div className='p-6' style={{ paddingRight: '32px' }}>
+		<div className='h-full border-r flex flex-col overflow-y-auto bg-white shadow-sm pr-4'>
+			<div className='p-6'>
 				<Link href='/'>
 					<Logo />
 				</Link>

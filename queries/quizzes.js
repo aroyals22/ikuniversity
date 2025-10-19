@@ -4,8 +4,10 @@ import {
 } from '@/lib/convertData';
 import { Quizset } from '@/model/quizset-model';
 import { Quiz } from '@/model/quizzes-model';
+import { dbConnect } from '@/service/mongo'; // ← ADD THIS
 
 export async function getAllQuizSets(excludeUnPublished) {
+	await dbConnect(); // ← ADD THIS
 	try {
 		let quizSets = [];
 		if (excludeUnPublished) {
@@ -15,11 +17,13 @@ export async function getAllQuizSets(excludeUnPublished) {
 		}
 		return replaceMongoIdInArray(quizSets);
 	} catch (error) {
-		throw new Error(error);
+		console.error('Error getting quiz sets:', error);
+		throw error;
 	}
 }
 
 export async function getQuizSetById(id) {
+	await dbConnect(); // ← ADD THIS
 	try {
 		const quizSet = await Quizset.findById(id)
 			.populate({
@@ -29,15 +33,18 @@ export async function getQuizSetById(id) {
 			.lean();
 		return replaceMongoIdInObject(quizSet);
 	} catch (error) {
-		throw new Error(error);
+		console.error('Error getting quiz set by id:', error);
+		throw error;
 	}
 }
 
 export async function createQuiz(quizData) {
+	await dbConnect(); // ← ADD THIS
 	try {
 		const quiz = await Quiz.create(quizData);
 		return quiz._id.toString();
 	} catch (error) {
-		throw new Error(error);
+		console.error('Error creating quiz:', error);
+		throw error;
 	}
 }

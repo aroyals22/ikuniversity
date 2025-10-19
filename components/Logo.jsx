@@ -5,11 +5,13 @@ import { cn } from '@/lib/utils';
 
 const Logo = ({ className = '' }) => {
 	return (
-		<Image
-			className={cn('max-w-[200px] mr-4', className)}
-			src={ikonix}
-			alt='Ikonix Logo'
-		/>
+		<div style={{ paddingRight: '16px' }}>
+			<Image
+				className={cn('max-w-[200px]', className)}
+				src={ikonix}
+				alt='Ikonix Logo'
+			/>
+		</div>
 	);
 };
 

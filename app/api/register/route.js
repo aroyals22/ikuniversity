@@ -4,10 +4,10 @@ import { hashPassword } from '@/auth';
 import { User } from '@/model/user-model';
 
 export const POST = async (request) => {
+	await dbConnect();
 	const { firstName, lastName, email, password, userRole } =
 		await request.json();
 
-	await dbConnect();
 	const hashedPassword = hashPassword(password);
 
 	const newUser = {

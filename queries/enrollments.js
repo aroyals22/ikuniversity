@@ -45,6 +45,7 @@ export async function getEnrollmentsForUser(userId) {
 }
 
 export async function hasEnrollmentForCourse(courseId, studentId) {
+	await dbConnect();
 	try {
 		const enrollment = await Enrollment.findOne({
 			course: courseId,

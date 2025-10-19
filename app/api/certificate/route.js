@@ -5,8 +5,10 @@ import { getCourseDetails } from '@/queries/courses';
 import { getLoggedInUser } from '@/lib/loggedin-user';
 import { getReport } from '@/queries/reports';
 import { formatMyDate } from '@/lib/date';
+import { dbConnect } from '@/service/mongo';
 
 export async function GET(request) {
+	await dbConnect();
 	try {
 		// Load fonts inside the function
 		const kalamFontUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/fonts/kalam/Kalam-Regular.ttf`;

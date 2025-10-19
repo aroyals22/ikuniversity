@@ -37,6 +37,7 @@ export async function getReport(filter) {
 }
 
 export async function createWatchReport(data) {
+	await dbConnect();
 	try {
 		let report = await Report.findOne({
 			course: data.courseId,
@@ -101,6 +102,7 @@ export async function createWatchReport(data) {
 }
 
 export async function createAssessmentReport(data) {
+	await dbConnect();
 	try {
 		let report = await Report.findOne({
 			course: data.courseId,

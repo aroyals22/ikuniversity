@@ -4,13 +4,14 @@ import { dbConnect } from '@/service/mongo';
 import { NextResponse } from 'next/server';
 
 export const GET = async (request) => {
+	await dbConnect();
+
 	const session = await auth();
 	if (!session?.user) {
 		return new NextResponse(`You are not authenticated!`, {
 			status: 401,
 		});
 	}
-	await dbConnect();
 
 	try {
 		const user = await getUserByEmail(session?.user?.email);

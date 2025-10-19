@@ -6,10 +6,10 @@ import { dbConnect } from '@/service/mongo';
 import { revalidatePath } from 'next/cache';
 
 export async function createReview(data, loginid, courseId) {
+	await dbConnect(); // ← MOVE BEFORE TRY
+
 	const { review, rating } = data;
 	try {
-		await dbConnect();
-
 		// Check if user already reviewed this course
 		const existingReview = await Testimonial.findOne({
 			user: loginid,

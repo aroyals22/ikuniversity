@@ -9,11 +9,11 @@ import { getLoggedInUser } from '@/lib/loggedin-user';
 import { createAssessmentReport } from '@/queries/reports';
 import { Report } from '@/model/report-model';
 import { revalidatePath } from 'next/cache';
-import { dbConnect } from '@/service/mongo'; // ← ADD THIS
+import { dbConnect } from '@/service/mongo';
 
 export async function updateQuizSet(quizset, dataToUpdate) {
+	await dbConnect(); // ← MOVED BEFORE TRY
 	try {
-		await dbConnect(); // ← ADD THIS
 		await Quizset.findByIdAndUpdate(quizset, dataToUpdate);
 	} catch (error) {
 		console.error('Error updating quiz set:', error);
@@ -22,8 +22,8 @@ export async function updateQuizSet(quizset, dataToUpdate) {
 }
 
 export async function addQuizToQuizSet(quizSetId, quizData) {
+	await dbConnect(); // ← MOVED BEFORE TRY
 	try {
-		await dbConnect(); // ← ADD THIS
 		const transformedQuizData = {};
 		transformedQuizData['title'] = quizData['title'];
 		transformedQuizData['description'] = quizData['description'];
@@ -58,8 +58,8 @@ export async function addQuizToQuizSet(quizSetId, quizData) {
 }
 
 export async function deleteQuiz(quizSetId, quizId) {
+	await dbConnect(); // ← MOVED BEFORE TRY
 	try {
-		await dbConnect(); // ← ADD THIS
 		await Quizset.findByIdAndUpdate(quizSetId, {
 			$pull: { quizIds: quizId },
 		});
@@ -72,14 +72,17 @@ export async function deleteQuiz(quizSetId, quizId) {
 }
 
 export async function changeQuizPublishState(quizSetId) {
+	await dbConnect(); // ← MOVED BEFORE TRY
 	try {
-		await dbConnect(); // ← ADD THIS
 		const quiz = await Quizset.findById(quizSetId);
 		const res = await Quizset.findByIdAndUpdate(
 			quizSetId,
 			{ active: !quiz.active },
-			{ lean: true }
+			{ new: true, lean: true } // ← ALSO ADD "new: true" HERE
 		);
+
+		revalidatePath('/dashboard/quiz-sets'); // ← ADD THIS
+
 		return res.active;
 	} catch (error) {
 		console.error('Error changing quiz publish state:', error);
@@ -88,10 +91,13 @@ export async function changeQuizPublishState(quizSetId) {
 }
 
 export async function doCreateQuizSet(data) {
+	await dbConnect(); // ← MOVED BEFORE TRY
 	try {
-		await dbConnect(); // ← ADD THIS
 		data['slug'] = getSlug(data.title);
 		const createdQuizSet = await Quizset.create(data);
+
+		revalidatePath('/dashboard/quiz-sets'); // ← ADD THIS
+
 		return createdQuizSet?._id.toString();
 	} catch (error) {
 		console.error('Error creating quiz set:', error);
@@ -100,19 +106,19 @@ export async function doCreateQuizSet(data) {
 }
 
 export async function addQuizAssessment(courseId, quizSetId, answers) {
+	await dbConnect(); // ← MOVED BEFORE TRY
 	try {
-		await dbConnect(); // ← ADD THIS
 		const loggedInUser = await getLoggedInUser();
 
 		if (!loggedInUser) {
 			throw new Error('User not authenticated');
 		}
 
-		// Get the quiz set with all questions
+		// ... rest of the function stays the same
+
 		const quizSet = await getQuizSetById(quizSetId);
 		const quizzes = replaceMongoIdInArray(quizSet.quizIds);
 
-		// Check if user already passed this quiz
 		const existingReport = await Report.findOne({
 			course: courseId,
 			student: loggedInUser.id,
@@ -126,22 +132,18 @@ export async function addQuizAssessment(courseId, quizSetId, answers) {
 			};
 		}
 
-		// Simplified scoring: Each question worth 1 point
 		const totalQuestions = quizzes.length;
-		const totalMarks = totalQuestions; // 1 point per question
+		const totalMarks = totalQuestions;
 
-		// Build assessment record with scoring
 		let correctAnswers = 0;
 
 		const assessmentRecord = quizzes.map((quiz) => {
 			const obj = {};
 			obj.quizId = new mongoose.Types.ObjectId(quiz.id);
 
-			// Find if this quiz was attempted
 			const studentAnswer = answers.find((a) => a.quizId === quiz.id);
 			obj.attempted = !!studentAnswer;
 
-			// Process options and check correctness
 			const mergedOptions = quiz.options.map((o) => {
 				const isSelected =
 					studentAnswer?.options?.some(
@@ -157,7 +159,6 @@ export async function addQuizAssessment(courseId, quizSetId, answers) {
 
 			obj.options = mergedOptions;
 
-			// Check if answer is correct (1 point per correct answer)
 			const correctOption = mergedOptions.find((o) => o.isCorrect);
 			const selectedOption = mergedOptions.find((o) => o.isSelected);
 
@@ -172,18 +173,15 @@ export async function addQuizAssessment(courseId, quizSetId, answers) {
 			return obj;
 		});
 
-		// Simple calculation: each correct answer = 1 point
 		const earnedMarks = correctAnswers;
 		const score =
 			totalMarks > 0 ? Math.round((earnedMarks / totalMarks) * 100) : 0;
 		const passed = score >= 70;
 
-		// If there's an existing assessment (retake), delete it
 		if (existingReport?.quizAssessment) {
 			await Assessment.findByIdAndDelete(existingReport.quizAssessment);
 		}
 
-		// Create new assessment with scoring
 		const assessmentEntry = {
 			assessments: assessmentRecord,
 			totalQuestions,
@@ -196,7 +194,6 @@ export async function addQuizAssessment(courseId, quizSetId, answers) {
 
 		const assessment = await Assessment.create(assessmentEntry);
 
-		// Update or create report with quiz status
 		await createAssessmentReport({
 			courseId: courseId,
 			userId: loggedInUser.id,
@@ -206,10 +203,8 @@ export async function addQuizAssessment(courseId, quizSetId, answers) {
 			quizTakenAt: new Date(),
 		});
 
-		// Revalidate the course layout to show updated quiz status in sidebar
 		revalidatePath(`/courses/${courseId}`, 'layout');
 
-		// Return results to show to user
 		return {
 			success: true,
 			score,

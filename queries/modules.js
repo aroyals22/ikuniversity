@@ -29,6 +29,7 @@ export async function getModule(moduleId) {
 }
 
 export async function getModuleBySlug(moduleSlug) {
+	await dbConnect();
 	try {
 		const module = await Module.findOne({ slug: moduleSlug }).lean();
 		return replaceMongoIdInObject(module);

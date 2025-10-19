@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Watch } from '@/model/watch-model';
 import { createWatchReport } from '@/queries/reports';
 import { revalidatePath } from 'next/cache';
+import { dbConnect } from '@/service/mongo';
 
 const STARTED = 'started';
 const COMPLETED = 'completed';
@@ -18,6 +19,7 @@ async function updateReport(userId, courseId, moduleId, lessonId) {
 }
 
 export async function POST(request) {
+	await dbConnect();
 	const { courseId, lessonId, moduleSlug, state, lastTime } =
 		await request.json();
 

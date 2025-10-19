@@ -83,12 +83,16 @@ export const CourseSidebar = async ({ courseId }) => {
 	const quizSet = sanitizeData(quizSetall);
 
 	// ✅ FIXED: Only set quiz status if quiz actually exists
-	const quizStatus = report?.quizAssessment
+	// Check if quiz has actually been taken by checking if score exists
+	const hasQuizScore =
+		report?.quizScore !== undefined && report?.quizScore !== null;
+
+	const quizStatus = hasQuizScore
 		? {
 				taken: true,
-				score: report?.quizScore ?? 0,
-				passed: report?.quizPassed ?? false,
-				takenAt: report?.quizTakenAt,
+				score: report.quizScore,
+				passed: report.quizPassed ?? false,
+				takenAt: report.quizTakenAt,
 			}
 		: {
 				taken: false,

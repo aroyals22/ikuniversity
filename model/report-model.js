@@ -25,11 +25,9 @@ const reportSchema = new Schema(
 		},
 		quizScore: {
 			type: Number,
-			default: 0, // Quiz score (0-100)
 		},
 		quizPassed: {
 			type: Boolean,
-			default: false, // Did student pass quiz?
 		},
 		quizTakenAt: {
 			type: Date, // When quiz was taken

@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 
 const Logo = ({ className = '' }) => {
 	return (
-		<div>
+		<div className='pr-4'>
 			<Image
 				className={cn('max-w-[200px]', className)}
 				src={ikonix}

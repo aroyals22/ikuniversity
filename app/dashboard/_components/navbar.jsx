@@ -21,7 +21,6 @@ export const Navbar = () => {
 			try {
 				const response = await fetch('/api/me');
 				if (response.status === 401) {
-					// User not authenticated, that's okay
 					setLoggedInUser(null);
 					return;
 				}
@@ -31,7 +30,6 @@ export const Navbar = () => {
 				const data = await response.json();
 				setLoggedInUser(data);
 			} catch (error) {
-				// Silent fail - don't show error to user
 				setLoggedInUser(null);
 			}
 		}
@@ -41,7 +39,7 @@ export const Navbar = () => {
 	return (
 		<div className='p-4 border-b h-full flex items-center bg-white shadow-sm'>
 			<MobileSidebar />
-			<div className='flex items-center justify-end  w-full'>
+			<div className='flex items-center justify-end w-full'>
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<div className='cursor-pointer'>
@@ -52,13 +50,14 @@ export const Navbar = () => {
 						</div>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end' className='w-56 mt-4'>
-						<DropdownMenuItem className='cursor-pointer'>
+						<DropdownMenuItem className='cursor-pointer' asChild>
 							<Link href='/account'>Profile</Link>
 						</DropdownMenuItem>
-						<DropdownMenuItem className='cursor-pointer'>
+						<DropdownMenuItem className='cursor-pointer' asChild>
 							<Link
 								href='#'
-								onClick={() => {
+								onClick={(e) => {
+									e.preventDefault();
 									signOut({ callbackUrl: '/' });
 								}}
 							>

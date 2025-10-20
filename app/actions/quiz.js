@@ -51,6 +51,10 @@ export async function addQuizToQuizSet(quizSetId, quizData) {
 		const quizSet = await Quizset.findById(quizSetId);
 		quizSet.quizIds.push(createdQuizId);
 		await quizSet.save();
+
+		revalidatePath(`/dashboard/quiz-sets/${quizSetId}`);
+		revalidatePath('/dashboard/quiz-sets');	
+
 	} catch (error) {
 		console.error('Error adding quiz to quiz set:', error);
 		throw error;

@@ -70,8 +70,8 @@ export async function deleteQuiz(quizSetId, quizId) {
 
 		await Quiz.findByIdAndDelete(quizId);
 
-		// ✅ ADD THIS LINE
 		revalidatePath(`/dashboard/quiz-sets/${quizSetId}`);
+		revalidatePath('/dashboard/quiz-sets');
 	} catch (error) {
 		console.error('Error deleting quiz:', error);
 		throw error;

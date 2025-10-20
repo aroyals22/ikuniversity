@@ -5,7 +5,11 @@ import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { changeQuizPublishState, deleteQuiz } from '@/app/actions/quiz';
+import {
+	changeQuizPublishState,
+	deleteQuiz,
+	deleteQuizSet,
+} from '@/app/actions/quiz';
 import { toast } from 'sonner';
 
 export const QuizSetAction = ({ quizSetId, quiz, quizId }) => {
@@ -30,8 +34,8 @@ export const QuizSetAction = ({ quizSetId, quiz, quizId }) => {
 							'A published quiz can not be deleted. First Unpublish, then delete'
 						);
 					} else {
-						await deleteQuiz(quizSetId, quizId);
-						toast.success('Quiz has been deleted');
+						await deleteQuizSet(quizSetId); // ← Changed from deleteQuiz
+						toast.success('Quiz Set has been deleted');
 						router.push(`/dashboard/quiz-sets`);
 					}
 					break;

@@ -58,18 +58,54 @@ export async function addQuizToQuizSet(quizSetId, quizData) {
 }
 
 export async function deleteQuiz(quizSetId, quizId) {
-	await dbConnect(); // ← MOVED BEFORE TRY
+	await dbConnect();
 	try {
 		await Quizset.findByIdAndUpdate(quizSetId, {
 			$pull: { quizIds: quizId },
 		});
 
 		await Quiz.findByIdAndDelete(quizId);
+
+		// ✅ ADD THIS LINE
+		revalidatePath(`/dashboard/quiz-sets/${quizSetId}`);
 	} catch (error) {
 		console.error('Error deleting quiz:', error);
 		throw error;
 	}
 }
+
+export async function deleteQuizSet(quizSetId) {
+	await dbConnect();
+	try {
+		// First, get all quiz IDs in this set
+		const quizSet = await Quizset.findById(quizSetId);
+
+		if (!quizSet) {
+			throw new Error('Quiz set not found');
+		}
+
+		// Delete all quiz questions in this set
+		if (quizSet.quizIds && quizSet.quizIds.length > 0) {
+			await Quiz.deleteMany({ _id: { $in: quizSet.quizIds } });
+		}
+
+		// Delete the quiz set itself
+		await Quizset.findByIdAndDelete(quizSetId);
+
+		// Revalidate the list page
+		revalidatePath('/dashboard/quiz-sets');
+	} catch (error) {
+		console.error('Error deleting quiz set:', error);
+		throw error;
+	}
+}
+
+
+
+
+
+
+
 
 export async function changeQuizPublishState(quizSetId) {
 	await dbConnect(); // ← MOVED BEFORE TRY

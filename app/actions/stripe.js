@@ -6,8 +6,10 @@ const CURRENCY = 'USD';
 import { formatAmountForStripe } from '@/lib/stripe-helpers';
 import { stripe } from '@/lib/stripe';
 import { getCourseDetails } from '@/queries/courses';
+import { dbConnect } from '@/service/mongo';
 
 export async function createCheckoutSession(data) {
+	await dbConnect();
 	// Check authentication first
 	const session = await auth();
 	if (!session?.user?.email) {

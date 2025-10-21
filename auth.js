@@ -18,10 +18,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 				if (credentials == null) return null;
 
 				console.log('[AUTH] Starting auth');
-
+				await dbConnect();
 				try {
 					// Connect to database first
-					await dbConnect();
+
 					console.log('[AUTH] DB connected');
 
 					const user = await User.findOne({ email: credentials?.email });

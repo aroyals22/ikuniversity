@@ -7,6 +7,7 @@ import { dbConnect } from '@/service/mongo';
 import { revalidatePath } from 'next/cache';
 
 export async function createCourse(data) {
+	await dbConnect();
 	try {
 		const loggedinUser = await getLoggedInUser();
 		data['instructor'] = loggedinUser?.id;

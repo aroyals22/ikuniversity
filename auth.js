@@ -20,8 +20,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 				console.log('[AUTH] Starting auth');
 				await dbConnect();
 				try {
-					// Connect to database first
-
 					console.log('[AUTH] DB connected');
 
 					const user = await User.findOne({ email: credentials?.email });
@@ -33,10 +31,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
 					console.log('[AUTH] User found');
 
-					// Hash the input password
 					const hashedInput = hashPassword(credentials.password);
-
-					// Compare hashed passwords
 					const isMatch = hashedInput === user.password;
 					console.log('[AUTH] Match result:', isMatch);
 
@@ -57,7 +52,24 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 			},
 		}),
 	],
+	callbacks: {
+		async jwt({ token, user }) {
+			// Add user data to token on sign in
+			if (user) {
+				token.id = user.id;
+				token.role = user.role;
+			}
+			return token;
+		},
+		async session({ session, token }) {
+			// Add token data to session
+			if (token) {
+				session.user.id = token.id;
+				session.user.role = token.role;
+			}
+			return session;
+		},
+	},
 });
 
-// Export the hash function so other files can use it
 export { hashPassword };

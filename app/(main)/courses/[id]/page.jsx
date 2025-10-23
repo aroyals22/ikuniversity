@@ -32,10 +32,19 @@ export default async function SingleCoursePage({ params }) {
 
 			{/* Free Preview Section */}
 			{previewVideoUrl && (
-				<div className='container mx-auto px-4 py-8'>
-					<h2 className='text-2xl font-bold mb-4'>Free Preview</h2>
-					<PreviewPlayer videoUrl={previewVideoUrl} />
-				</div>
+				<section className='bg-gray-50 py-12'>
+					<div className='container mx-auto px-4 max-w-4xl'>
+						<h2 className='text-3xl font-semi-bold text-center mb-8'>
+							Free access to first lesson!
+						</h2>
+						<div className='rounded-lg overflow-hidden shadow-lg'>
+							<PreviewPlayer videoUrl={previewVideoUrl} />
+						</div>
+						<p className='text-center text-gray-600 mt-4'>
+							Have peace of mind that this course is for you.
+						</p>
+					</div>
+				</section>
 			)}
 
 			<CourseDetails course={course} />

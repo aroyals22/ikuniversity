@@ -135,11 +135,11 @@ function QuizModal({ quizzes, courseId, quizSetId, open, setOpen }) {
 						</p>
 					)}
 				</div>
-				<div className='flex flex-col gap-3 mb-6'>
+				<div className='grid grid-cols-2 gap-3 mb-6'>
 					{currentQuiz?.options.map((option, index) => {
 						const isSelected = selectedAnswer === option.label;
 						return (
-							<div key={`${currentQuiz.id}-${index}`} className='inline-flex'>
+							<div key={`${currentQuiz.id}-${index}`}>
 								<input
 									className='peer sr-only'
 									type='radio'
@@ -149,7 +149,7 @@ function QuizModal({ quizzes, courseId, quizSetId, open, setOpen }) {
 									id={`quiz-${currentQuiz.id}-option-${index}`}
 								/>
 								<Label
-									className='border-2 border-border rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-50 hover:border-green-500 transition-all font-normal peer-checked:border-green-500 peer-checked:bg-green-50 inline-block w-auto'
+									className='border-2 border-border rounded-lg px-3 py-2 block cursor-pointer hover:bg-gray-50 hover:border-green-500 transition-all font-normal peer-checked:border-green-500 peer-checked:bg-green-50'
 									htmlFor={`quiz-${currentQuiz.id}-option-${index}`}
 								>
 									{option.label}

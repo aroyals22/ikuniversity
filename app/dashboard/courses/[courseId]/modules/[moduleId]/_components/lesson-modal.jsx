@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { LayoutDashboard } from "lucide-react";
-import { Eye } from "lucide-react";
+
 import { Video } from "lucide-react";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -76,17 +76,6 @@ export const LessonModal = ({ open, setOpen, courseId, lesson, moduleId }) => {
 								/>
 								<LessonDescriptionForm
 									initialData={{ description: lesson?.description }}
-									courseId={courseId}
-									lessonId={lesson?.id}
-								/>
-							</div>
-							<div>
-								<div className='flex items-center gap-x-2'>
-									<IconBadge icon={Eye} />
-									<h2 className='text-xl'>Access Settings</h2>
-								</div>
-								<LessonAccessForm
-									initialData={{ isFree: lesson?.access !== 'private' }}
 									courseId={courseId}
 									lessonId={lesson?.id}
 								/>

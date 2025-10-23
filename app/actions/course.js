@@ -24,6 +24,8 @@ export async function updateCourse(courseId, dataToUpdate) {
 		await Course.findByIdAndUpdate(courseId, dataToUpdate);
 		revalidatePath(`/dashboard/courses/${courseId}`);
 		revalidatePath('/dashboard/courses');
+		revalidatePath(`/courses/${courseId}`); // Public course detail page
+		revalidatePath('/courses'); // Public courses listing page
 	} catch (e) {
 		throw new Error(e);
 	}

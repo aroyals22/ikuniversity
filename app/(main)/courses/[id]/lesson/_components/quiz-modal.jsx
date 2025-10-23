@@ -100,7 +100,7 @@ function QuizModal({ quizzes, courseId, quizSetId, open, setOpen }) {
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogContent className='sm:max-w-[95%] block'>
+			<DialogContent className='sm:max-w-4xl block'>
 				<DialogTitle className='sr-only'>Quiz Details</DialogTitle>
 				<div className='pb-4 border-b border-border text-sm'>
 					<span className='text-success inline-block mr-1'>
@@ -112,7 +112,7 @@ function QuizModal({ quizzes, courseId, quizSetId, open, setOpen }) {
 					</span>
 				</div>
 				<div className='py-4'>
-					<h3 className='text-xl font-medium mb-6'>
+					<h3 className='text-xl font-medium mb-4'>
 						<svg
 							className='text-success inline mr-2'
 							strokeWidth='0'

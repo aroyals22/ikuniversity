@@ -9,7 +9,25 @@ import { Button } from '@/components/ui/button';
 export const TiptapEditor = ({ content, onChange, placeholder }) => {
 	const editor = useEditor({
 		extensions: [
-			StarterKit,
+			StarterKit.configure({
+				bulletList: {
+					HTMLAttributes: {
+						class: 'list-disc pl-4',
+					},
+					keepMarks: true,
+				},
+				orderedList: {
+					HTMLAttributes: {
+						class: 'list-decimal pl-4',
+					},
+					keepMarks: true,
+				},
+				listItem: {
+					HTMLAttributes: {
+						class: 'ml-4',
+					},
+				},
+			}),
 			Placeholder.configure({
 				placeholder: placeholder || 'Write something...',
 			}),

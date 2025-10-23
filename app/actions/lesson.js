@@ -14,8 +14,9 @@ export async function createLesson(data) {
 		const slug = data.get('slug');
 		const moduleId = data.get('moduleId');
 		const order = data.get('order');
+		const type = data.get('type') || 'video'; // Get type, default to 'video'
 
-		const createdLesson = await create({ title, slug, order });
+		const createdLesson = await create({ title, slug, order, type });
 
 		const module = await Module.findById(moduleId);
 		module.lessonIds.push(createdLesson._id);
@@ -28,7 +29,6 @@ export async function createLesson(data) {
 		throw new Error(e);
 	}
 }
-
 export async function reOrderLesson(data) {
 	await dbConnect();
 	try {

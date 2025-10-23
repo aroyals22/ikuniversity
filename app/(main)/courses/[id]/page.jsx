@@ -32,9 +32,9 @@ export default async function SingleCoursePage({ params }) {
 
 			{/* Free Preview Section */}
 			{previewVideoUrl && (
-				<section className='bg-gray-50 py-12'>
+				<section className='bg-gray-50 py-4'>
 					<div className='container mx-auto px-4 max-w-4xl'>
-						<h2 className='text-3xl font-semi-bold text-center mb-8'>
+						<h2 className='text-3xl font-semi-bold text-center mb-4'>
 							Free access to first lesson!
 						</h2>
 						<div className='rounded-lg overflow-hidden shadow-lg'>

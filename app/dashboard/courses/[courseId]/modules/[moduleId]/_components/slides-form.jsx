@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { updateLesson } from '@/app/actions/lesson';
 import Image from 'next/image';
+import { TiptapEditor } from '@/components/tiptap-editor';
 
 export const SlidesForm = ({ initialData, courseId, lessonId }) => {
 	const router = useRouter();
@@ -183,19 +184,16 @@ export const SlidesForm = ({ initialData, courseId, lessonId }) => {
 						</div>
 
 						{/* Text Content */}
+						{/* Text Content */}
 						<div>
 							<label className='text-sm font-medium mb-2 block'>
 								Text Content
 							</label>
-							<textarea
-								className='w-full border rounded-md p-3 min-h-[100px]'
-								placeholder='Add slide content...'
-								value={slide.text_content}
-								onChange={(e) => updateSlideText(index, e.target.value)}
+							<TiptapEditor
+								content={slide.text_content}
+								onChange={(html) => updateSlideText(index, html)}
+								placeholder='Add slide content with formatting...'
 							/>
-							<p className='text-xs text-gray-500 mt-1'>
-								Basic formatting will be added with Tiptap later
-							</p>
 						</div>
 					</div>
 				))}

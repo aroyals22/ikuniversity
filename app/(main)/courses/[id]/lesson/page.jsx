@@ -9,6 +9,7 @@ import {
 } from '@/lib/convertData';
 import { getLessonBySlug } from '@/queries/lessons';
 import { LessonVideo } from './_components/lesson-video';
+import { LessonSlides } from './_components/lesson-slides';
 
 const Course = async ({ params, searchParams }) => {
 	const { id } = await params;
@@ -27,15 +28,27 @@ const Course = async ({ params, searchParams }) => {
 
 	const defaultModule = module ?? allModules[0].slug;
 
+	// Determine lesson type
+	const lessonType = lessonToPlay?.type || 'video';
+
 	return (
 		<div>
 			<div className='flex flex-col max-w-4xl mx-auto pb-20'>
 				<div className='p-4 w-full'>
-					<LessonVideo
-						courseId={id}
-						lesson={lessonToPlay}
-						module={defaultModule}
-					/>
+					{/* Conditional rendering based on lesson type */}
+					{lessonType === 'video' ? (
+						<LessonVideo
+							courseId={id}
+							lesson={lessonToPlay}
+							module={defaultModule}
+						/>
+					) : (
+						<LessonSlides
+							courseId={id}
+							lesson={lessonToPlay}
+							module={defaultModule}
+						/>
+					)}
 				</div>
 				<div>
 					<div className='p-4 flex flex-col md:flex-row items-center justify-between'>

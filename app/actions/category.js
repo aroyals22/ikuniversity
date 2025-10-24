@@ -5,12 +5,18 @@ import { Course } from '@/model/course-model';
 import { dbConnect } from '@/service/mongo';
 import { revalidatePath } from 'next/cache';
 
-export async function createCategory(title) {
+export async function createCategory(data) {
 	await dbConnect();
 
 	try {
+		const { title, thumbnail } = data;
+
 		if (!title || !title.trim()) {
 			throw new Error('Category name is required');
+		}
+
+		if (!thumbnail) {
+			throw new Error('Category image is required');
 		}
 
 		// Check if category already exists
@@ -22,7 +28,7 @@ export async function createCategory(title) {
 			throw new Error('Category already exists');
 		}
 
-		const category = await Category.create({ title: title.trim() });
+		const category = await Category.create({ title: title.trim(), thumbnail });
 
 		revalidatePath('/dashboard/categories');
 		revalidatePath('/dashboard/courses/add');
@@ -32,6 +38,7 @@ export async function createCategory(title) {
 		return { success: false, error: error.message };
 	}
 }
+
 
 export async function deleteCategory(categoryId) {
 	await dbConnect();

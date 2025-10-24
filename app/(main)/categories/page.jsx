@@ -26,7 +26,11 @@ const CategoriesPage = async () => {
 							<div className='w-full max-w-[280px] aspect-[4/3] md:aspect-[3/2] lg:aspect-[16/9] rounded-lg bg-muted/30 grid place-items-center'>
 								<div className='relative w-[78%] md:w-[82%] lg:w-[86%] h-full'>
 									<Image
-										src={`/assets/images/categories/${category.thumbnail}`}
+										src={
+											category.thumbnail?.startsWith('http')
+												? category.thumbnail
+												: `/assets/images/categories/${category.thumbnail}`
+										}
 										alt={category.title}
 										fill
 										className='object-contain'

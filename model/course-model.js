@@ -32,10 +32,12 @@ const courseSchema = new Schema({
 		default: false,
 		type: Boolean,
 	},
-	category: {
-		type: Schema.ObjectId,
-		ref: 'Category',
-	},
+	category: [
+		{
+			type: Schema.ObjectId,
+			ref: 'Category',
+		},
+	],
 	instructor: {
 		type: Schema.ObjectId,
 		ref: 'User',

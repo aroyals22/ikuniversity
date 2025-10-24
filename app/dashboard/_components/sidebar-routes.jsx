@@ -1,11 +1,8 @@
 "use client";
 
-import { BarChart, PlusCircle } from 'lucide-react';
+import { BarChart, PlusCircle, BookOpen, BookA, Tags } from 'lucide-react';
 
-import { BookOpen } from "lucide-react";
-import { SidebarItem } from "./sidebar-item";
-import { BookA } from "lucide-react";
-
+import { SidebarItem } from './sidebar-item';
 
 const routes = [
 	{
@@ -22,6 +19,11 @@ const routes = [
 		icon: PlusCircle,
 		label: 'Add Course',
 		href: '/dashboard/courses/add',
+	},
+	{
+		icon: Tags,
+		label: 'Categories',
+		href: '/dashboard/categories',
 	},
 	{
 		icon: BookA,

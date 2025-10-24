@@ -107,7 +107,11 @@ const HomePage = async () => {
 									{/* Next/Image needs a relative parent when using 'fill' */}
 									<div className='relative w-[78%] md:w-[82%] lg:w-[86%] h-full'>
 										<Image
-											src={`/assets/images/categories/${category.thumbnail}`}
+											src={
+												category.thumbnail?.startsWith('http')
+													? category.thumbnail
+													: `/assets/images/categories/${category.thumbnail}`
+											}
 											alt={category.title}
 											fill
 											className='object-contain'

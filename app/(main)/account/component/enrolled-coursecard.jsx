@@ -8,20 +8,21 @@ import { CourseProgress } from '@/components/course-progress';
 import { getCourseDetails } from '@/queries/courses';
 
 const EnrolledCourseCard = async ({ enrollment }) => {
-	// console.log(enrollment);
-	const courseCategory = await getCategoryDetails(
-		enrollment?.course?.category?._id
-	);
-	// console.log(courseCategory);
+	// Get first category for display (handle array format)
+	const firstCategoryId = Array.isArray(enrollment?.course?.category)
+		? enrollment?.course?.category[0]
+		: enrollment?.course?.category;
+
+	const courseCategory = firstCategoryId
+		? await getCategoryDetails(firstCategoryId)
+		: null;
+
 	const filter = {
 		course: enrollment?.course?._id,
 		student: enrollment?.student?._id,
 	};
 
 	const report = await getReport(filter);
-	// console.log(filter);
-	// console.log(report);
-
 	const courseDetails = await getCourseDetails(enrollment?.course?._id);
 	const totalModuleCount = courseDetails?.modules?.length ?? 0;
 
@@ -49,11 +50,17 @@ const EnrolledCourseCard = async ({ enrollment }) => {
 		})
 		.filter((elem) => elem.length > 0)
 		.flat();
-	// console.log(totalCorrect);
 
-	const marksFromQuizzes = totalCorrect?.length * 5;
-	const otherMarks = report?.quizAssessment?.otherMarks ?? 0;
-	const totalMarks = marksFromQuizzes + otherMarks;
+	// Calculate total possible correct answers
+	const totalPossibleCorrect = quizzesTaken.reduce((sum, quiz) => {
+		return sum + quiz.options.length;
+	}, 0);
+
+	// Calculate quiz percentage
+	const quizPercentage =
+		totalPossibleCorrect > 0
+			? Math.round((totalCorrect.length / totalPossibleCorrect) * 100)
+			: 0;
 
 	return (
 		<div className='group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full'>
@@ -73,11 +80,19 @@ const EnrolledCourseCard = async ({ enrollment }) => {
 				<div className='text-lg md:text-base font-medium group-hover:text-sky-700 line-clamp-2'>
 					{enrollment?.course?.title}
 				</div>
-				<span className='text-xs text-muted-foreground'>Development</span>
+				<span className='text-xs text-muted-foreground'>
+					{courseCategory?.title || 'Uncategorized'}
+				</span>
 				<div className='my-3 flex items-center gap-x-2 text-sm md:text-xs'>
 					<div className='flex items-center gap-x-1 text-slate-500'>
 						<BookOpen className='w-4' />
-						<span>4 Chapters</span>
+						<span>
+							{courseDetails?.modules?.reduce(
+								(total, module) => total + (module?.lessonIds?.length || 0),
+								0
+							)}{' '}
+							Lessons
+						</span>
 					</div>
 				</div>
 				<div className='border-b pb-2 mb-2'>
@@ -100,28 +115,14 @@ const EnrolledCourseCard = async ({ enrollment }) => {
 					</div>
 					<div className='flex items-center justify-between mt-2'>
 						<span className='text-md md:text-sm font-medium text-slate-700'>
-							Mark from Quizzes
+							Quiz Score
 						</span>
 						<span className='text-md md:text-sm font-medium text-slate-700'>
-							<Badge variant='success'>{marksFromQuizzes}</Badge>
+							<Badge variant='success'>
+								{quizzesTaken.length > 0 ? `${quizPercentage}%` : 'N/A'}
+							</Badge>
 						</span>
 					</div>
-					<div className='flex items-center justify-between mt-2'>
-						<span className='text-md md:text-sm font-medium text-slate-700'>
-							Others
-						</span>
-						<span className='text-md md:text-sm font-medium text-slate-700'>
-							<Badge variant='success'>{otherMarks}</Badge>
-						</span>
-					</div>
-				</div>
-				<div className='flex items-center justify-between mb-4'>
-					<span className='text-md md:text-sm font-medium text-slate-700'>
-						Total Marks
-					</span>
-					<span className='text-md md:text-sm font-medium text-slate-700'>
-						<Badge variant='success'>{totalMarks}</Badge>
-					</span>
 				</div>
 				<CourseProgress
 					size='sm'

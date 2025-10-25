@@ -16,16 +16,18 @@ export default async function SingleCoursePage({ params }) {
 	const currentCourseId = course.id.toString();
 
 	// Get category IDs (handle both array and old single category format)
+	// Get category IDs (handle ObjectId objects properly)
 	const categoryIds = Array.isArray(course.category)
-		? course.category.map((cat) =>
-				typeof cat === 'string' ? cat : cat.toString()
-			)
+		? course.category.map((cat) => {
+				// Handle ObjectId objects from populated queries
+				if (cat && typeof cat === 'object' && cat._id) {
+					return cat._id.toString();
+				}
+				// Handle direct ObjectId references
+				return cat.toString();
+			})
 		: course.category
-			? [
-					typeof course.category === 'string'
-						? course.category
-						: course.category.toString(),
-				]
+			? [course.category.toString()]
 			: [];
 
 	// Fetch related courses (pass first category ID, or all categories)

@@ -50,18 +50,13 @@ const EnrolledCourseCard = async ({ enrollment }) => {
 		})
 		.filter((elem) => elem.length > 0)
 		.flat();
-
-	// Calculate total possible correct answers
-	const totalPossibleCorrect = quizzesTaken.reduce((sum, quiz) => {
-		return sum + quiz.options.length;
-	}, 0);
-
-	// Calculate quiz percentage
+	// Calculate quiz score percentage
+	// Each quiz is one question, so total questions = quizzesTaken.length
+	const totalQuestions = quizzesTaken.length;
 	const quizPercentage =
-		totalPossibleCorrect > 0
-			? Math.round((totalCorrect.length / totalPossibleCorrect) * 100)
+		totalQuestions > 0
+			? Math.round((totalCorrect.length / totalQuestions) * 100)
 			: 0;
-
 	return (
 		<div className='group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full'>
 			<div className='relative w-full aspect-video rounded-md overflow-hidden'>

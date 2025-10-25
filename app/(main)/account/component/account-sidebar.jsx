@@ -29,19 +29,9 @@ const AccountSidebar = async () => {
 							className='hidden'
 						/>
 						<div>
-							<div className='relative size-28 mx-auto'>
-								<Image
-									src={loggedInUser?.profilePicture}
-									className='rounded-full shadow dark:shadow-gray-800 ring-4 ring-slate-50 dark:ring-slate-800'
-									id='profile-banner'
-									alt={`${loggedInUser?.firstName}`}
-									width={112}
-									height={112}
-								/>
-								<label
-									className='absolute inset-0 cursor-pointer'
-									htmlFor='pro-img'
-								/>
+							<div className='size-28 mx-auto bg-primary text-white rounded-full flex items-center justify-center text-2xl font-semibold shadow ring-4 ring-slate-50 dark:ring-slate-800'>
+								{loggedInUser?.firstName?.[0]}
+								{loggedInUser?.lastName?.[0]}
 							</div>
 							<div className='mt-4'>
 								<h5 className='text-lg font-semibold'>

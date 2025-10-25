@@ -113,11 +113,10 @@ const MainNav = ({ items, children }) => {
 						<DropdownMenuTrigger asChild>
 							<div className='cursor-pointer'>
 								<Avatar>
-									<AvatarImage
-										src={loggedInUser?.profilePicture}
-										alt='@ariyan'
-									/>
-									<AvatarFallback>CN</AvatarFallback>
+									<AvatarFallback>
+										{loggedInUser?.firstName?.[0]}
+										{loggedInUser?.lastName?.[0]}
+									</AvatarFallback>
 								</Avatar>
 							</div>
 						</DropdownMenuTrigger>

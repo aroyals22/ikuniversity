@@ -121,7 +121,7 @@ const EditCourse = async ({ params }) => {
 							courseId={courseId}
 						/>
 						<CategoryForm
-							initialData={{ value: course?.category?.title }}
+							initialData={{ categoryIds: course?.category || [] }}
 							courseId={courseId}
 							options={mappedCategories}
 						/>

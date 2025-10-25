@@ -1,27 +1,30 @@
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
-import { Button } from "@/components/ui/button";
-import { Combobox } from "@/components/ui/combobox";
+import { Button } from '@/components/ui/button';
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import { cn } from "@/lib/utils";
-import { Pencil } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { toast } from "sonner";
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from '@/components/ui/form';
+import { Checkbox } from '@/components/ui/checkbox';
+import { cn } from '@/lib/utils';
+import { Pencil } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { toast } from 'sonner';
 import { updateCourse } from '@/app/actions/course';
 
 const formSchema = z.object({
-	value: z.string().min(1),
+	categoryIds: z.array(z.string()).min(1, {
+		message: 'At least one category is required',
+	}),
 });
 
 export const CategoryForm = ({ initialData, courseId, options }) => {
@@ -33,7 +36,7 @@ export const CategoryForm = ({ initialData, courseId, options }) => {
 	const form = useForm({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			value: initialData?.value || '',
+			categoryIds: initialData?.categoryIds || [],
 		},
 	});
 
@@ -41,10 +44,7 @@ export const CategoryForm = ({ initialData, courseId, options }) => {
 
 	const onSubmit = async (values) => {
 		try {
-			const selectedCategory = options.find(
-				(option) => option.value === values.value
-			);
-			await updateCourse(courseId, { category: selectedCategory.id });
+			await updateCourse(courseId, { category: values.categoryIds });
 			toast.success('Course updated');
 			toggleEdit();
 			router.refresh();
@@ -53,34 +53,43 @@ export const CategoryForm = ({ initialData, courseId, options }) => {
 		}
 	};
 
-	const selectedOptions = options.find(
-		(option) => option.value === initialData.value
+	// Get selected category labels for display
+	const selectedCategories = options.filter((option) =>
+		initialData?.categoryIds?.includes(option.id)
 	);
 
 	return (
 		<div className='mt-6 border bg-gray-50 rounded-md p-4'>
 			<div className='font-medium flex items-center justify-between'>
-				Course Category
+				Course Categories
 				<Button variant='ghost' onClick={toggleEdit}>
 					{isEditing ? (
 						<>Cancel</>
 					) : (
 						<>
 							<Pencil className='h-4 w-4 mr-2' />
-							Edit Category
+							Edit Categories
 						</>
 					)}
 				</Button>
 			</div>
 			{!isEditing && (
-				<p
-					className={cn(
-						'text-sm mt-2',
-						!initialData.value && 'text-slate-500 italic'
+				<div className='mt-2'>
+					{selectedCategories.length > 0 ? (
+						<div className='flex flex-wrap gap-2'>
+							{selectedCategories.map((cat) => (
+								<span
+									key={cat.id}
+									className='text-sm bg-primary/10 text-primary px-3 py-1 rounded-full'
+								>
+									{cat.label}
+								</span>
+							))}
+						</div>
+					) : (
+						<p className='text-sm text-slate-500 italic'>No categories</p>
 					)}
-				>
-					{selectedOptions?.label || 'No category'}
-				</p>
+				</div>
 			)}
 
 			{isEditing && (
@@ -91,12 +100,47 @@ export const CategoryForm = ({ initialData, courseId, options }) => {
 					>
 						<FormField
 							control={form.control}
-							name='value'
-							render={({ field }) => (
+							name='categoryIds'
+							render={() => (
 								<FormItem>
-									<FormControl>
-										<Combobox options={options} {...field} />
-									</FormControl>
+									<div className='space-y-2'>
+										{options.map((category) => (
+											<FormField
+												key={category.id}
+												control={form.control}
+												name='categoryIds'
+												render={({ field }) => {
+													return (
+														<FormItem
+															key={category.id}
+															className='flex flex-row items-start space-x-3 space-y-0'
+														>
+															<FormControl>
+																<Checkbox
+																	checked={field.value?.includes(category.id)}
+																	onCheckedChange={(checked) => {
+																		return checked
+																			? field.onChange([
+																					...field.value,
+																					category.id,
+																				])
+																			: field.onChange(
+																					field.value?.filter(
+																						(value) => value !== category.id
+																					)
+																				);
+																	}}
+																/>
+															</FormControl>
+															<FormLabel className='font-normal cursor-pointer'>
+																{category.label}
+															</FormLabel>
+														</FormItem>
+													);
+												}}
+											/>
+										))}
+									</div>
 									<FormMessage />
 								</FormItem>
 							)}

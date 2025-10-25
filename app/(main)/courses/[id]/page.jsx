@@ -14,10 +14,25 @@ export default async function SingleCoursePage({ params }) {
 	if (!course) return notFound();
 
 	const currentCourseId = course.id.toString();
-	const categoryId = course.category._id.toString();
 
-	// Fetch related courses
-	const relatedCourses = await getRelatedCourses(currentCourseId, categoryId);
+	// Get category IDs (handle both array and old single category format)
+	const categoryIds = Array.isArray(course.category)
+		? course.category.map((cat) =>
+				typeof cat === 'string' ? cat : cat.toString()
+			)
+		: course.category
+			? [
+					typeof course.category === 'string'
+						? course.category
+						: course.category.toString(),
+				]
+			: [];
+
+	// Fetch related courses (pass first category ID, or all categories)
+	const relatedCourses =
+		categoryIds.length > 0
+			? await getRelatedCourses(currentCourseId, categoryIds[0])
+			: [];
 
 	// Get first lesson from first module for free preview
 	const firstModule = course.modules?.sort((a, b) => a.order - b.order)[0];

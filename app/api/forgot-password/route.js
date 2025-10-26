@@ -1,7 +1,7 @@
 import { dbConnect } from '@/service/mongo';
 import { User } from '@/model/user-model';
 import { PasswordReset } from '@/model/password-reset-model';
-import { sendEmails } from '@/lib/email';
+import { sendEmails } from '@/lib/emails';
 import crypto from 'crypto';
 
 export async function POST(request) {

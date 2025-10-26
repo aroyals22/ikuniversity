@@ -15,8 +15,6 @@ const PersonalDetails = ({ userInfo }) => {
 		firstName: userInfo.firstName,
 		lastName: userInfo.lastName,
 		email: userInfo.email,
-		designation: userInfo.designation,
-		bio: userInfo.bio,
 	});
 
 	const handleChange = (event) => {
@@ -41,7 +39,7 @@ const PersonalDetails = ({ userInfo }) => {
 
 	return (
 		<div className='p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900'>
-			<h5 className='text-lg font-semibold mb-4'>Personal Detail :</h5>
+			<h5 className='text-lg font-semibold mb-4'>User Information :</h5>
 			<form onSubmit={handleUpdate}>
 				<div className='grid lg:grid-cols-2 grid-cols-1 gap-5'>
 					<div>
@@ -98,18 +96,7 @@ const PersonalDetails = ({ userInfo }) => {
 					</div>
 				</div>
 				{/*end grid*/}
-				<div className='grid grid-cols-1'>
-					<div className='mt-5'>
-						<Label className='mb-2 block'>Description :</Label>
-						<Textarea
-							id='bio'
-							name='bio'
-							value={infoState?.bio}
-							onChange={handleChange}
-							placeholder='Message :'
-						/>
-					</div>
-				</div>
+
 				{/*end row*/}
 				<Button className='mt-5' asChild>
 					<input type='submit' name='send' value='Save Changes' />

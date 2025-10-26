@@ -8,6 +8,33 @@ export const POST = async (request) => {
 	const { firstName, lastName, email, password, userRole } =
 		await request.json();
 
+	// Password validation
+	if (password.length < 8) {
+		return new NextResponse('Password must be at least 8 characters', {
+			status: 400,
+		});
+	}
+
+	if (password.length > 128) {
+		return new NextResponse('Password cannot exceed 128 characters', {
+			status: 400,
+		});
+	}
+
+	// Check against common weak passwords
+	const commonPasswords = [
+		'password',
+		'12345678',
+		'password123',
+		'admin',
+		'ikonix',
+	];
+	if (commonPasswords.includes(password.toLowerCase())) {
+		return new NextResponse('Please choose a stronger password', {
+			status: 400,
+		});
+	}
+
 	const hashedPassword = hashPassword(password);
 
 	const newUser = {

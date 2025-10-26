@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import PersonalDetails from '../component/personal-details';
 import ChangePassword from '../component/change-password';
-import ContactInfo from '../component/contact-info';
+// Remove: import ContactInfo from '../component/contact-info';
 import { auth } from '@/auth';
 import { getUserByEmail } from '@/queries/users';
 import { ChartNoAxesColumnDecreasing } from 'lucide-react';
@@ -19,13 +19,7 @@ async function Profile() {
 		<>
 			<PersonalDetails userInfo={loggedInUser} />
 			<div className='p-6 rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 mt-[30px]'>
-				<div className='grid lg:grid-cols-2 grid-cols-1 gap-5'>
-					<ContactInfo />
-
-					<ChangePassword email={loggedInUser?.email} />
-					{/*end col*/}
-				</div>
-				{/*end row*/}
+				<ChangePassword email={loggedInUser?.email} />
 			</div>
 		</>
 	);

@@ -3,9 +3,6 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import Image from 'next/image';
-import Link from 'next/link';
 import { changePassword } from '@/app/actions/account';
 import { toast } from 'sonner';
 
@@ -13,6 +10,7 @@ const ChangePassword = ({ email }) => {
 	const [passwordState, setPasswordState] = useState({
 		oldPassword: '',
 		newPassword: '',
+		confirmPassword: '',
 	});
 
 	const handleChange = (event) => {
@@ -27,6 +25,17 @@ const ChangePassword = ({ email }) => {
 	async function doPasswordChange(event) {
 		event.preventDefault();
 
+		// Frontend validation
+		if (passwordState.newPassword !== passwordState.confirmPassword) {
+			toast.error('New passwords do not match');
+			return;
+		}
+
+		if (passwordState.newPassword.length < 8) {
+			toast.error('Password must be at least 8 characters');
+			return;
+		}
+
 		try {
 			await changePassword(
 				email,
@@ -34,6 +43,12 @@ const ChangePassword = ({ email }) => {
 				passwordState?.newPassword
 			);
 			toast.success('Password changed successfully');
+			// Clear form after successful change
+			setPasswordState({
+				oldPassword: '',
+				newPassword: '',
+				confirmPassword: '',
+			});
 		} catch (error) {
 			toast.error(`Error: ${error.message}`);
 		}
@@ -51,18 +66,20 @@ const ChangePassword = ({ email }) => {
 							placeholder='Old password'
 							id='oldPassword'
 							name='oldPassword'
+							value={passwordState.oldPassword}
 							onChange={handleChange}
-							required=''
+							required
 						/>
 					</div>
 					<div>
 						<Label className='mb-2 block'>New password :</Label>
 						<Input
 							type='password'
-							placeholder='New password'
-							required=''
+							placeholder='New password (min 8 characters)'
+							required
 							id='newPassword'
 							name='newPassword'
+							value={passwordState.newPassword}
 							onChange={handleChange}
 						/>
 					</div>
@@ -71,11 +88,14 @@ const ChangePassword = ({ email }) => {
 						<Input
 							type='password'
 							placeholder='Re-type New password'
-							required=''
+							required
+							id='confirmPassword'
+							name='confirmPassword'
+							value={passwordState.confirmPassword}
+							onChange={handleChange}
 						/>
 					</div>
 				</div>
-				{/*end grid*/}
 				<Button className='mt-5' type='submit'>
 					Save password
 				</Button>

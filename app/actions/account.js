@@ -4,10 +4,10 @@ import { User } from '@/model/user-model';
 import { hashPassword } from '@/auth';
 import { revalidatePath } from 'next/cache';
 import { validatePassword } from '@/queries/users';
-import { dbConnect } from '@/service/mongo'; // ← ADD THIS IMPORT
+import { dbConnect } from '@/service/mongo';
 
 export async function updateUserInfo(email, updatedData) {
-	await dbConnect(); // ← ADD THIS
+	await dbConnect();
 	try {
 		const filter = { email: email };
 		await User.findOneAndUpdate(filter, updatedData);
@@ -18,7 +18,28 @@ export async function updateUserInfo(email, updatedData) {
 }
 
 export async function changePassword(email, oldPassword, newPassword) {
-	await dbConnect(); // ← ADD THIS (before the validatePassword call)
+	await dbConnect();
+
+	// Password strength validation
+	if (newPassword.length < 8) {
+		throw new Error('Password must be at least 8 characters');
+	}
+
+	if (newPassword.length > 128) {
+		throw new Error('Password cannot exceed 128 characters');
+	}
+
+	// Check against common weak passwords
+	const commonPasswords = [
+		'password',
+		'12345678',
+		'password123',
+		'admin',
+		'ikonix',
+	];
+	if (commonPasswords.includes(newPassword.toLowerCase())) {
+		throw new Error('Please choose a stronger password');
+	}
 
 	const isMatch = await validatePassword(email, oldPassword);
 
@@ -30,7 +51,6 @@ export async function changePassword(email, oldPassword, newPassword) {
 	const hashedPassword = hashPassword(newPassword);
 
 	const dataToUpdate = {
-		// ← Fixed typo: "dataToUpadate" → "dataToUpdate"
 		password: hashedPassword,
 	};
 

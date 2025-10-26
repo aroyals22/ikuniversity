@@ -38,6 +38,26 @@ export function SignupForm({ role }) {
 				return;
 			}
 
+			// 8 character requirement
+			if (password.length < 8) {
+				toast.error('Password must be at least 8 characters');
+				setIsLoading(false);
+				return;
+			}
+
+			const commonPasswords = [
+				'password',
+				'12345678',
+				'password123',
+				'admin',
+				'ikonix',
+			];
+			if (commonPasswords.includes(password.toLowerCase())) {
+				toast.error('Please choose a stronger password');
+				setIsLoading(false);
+				return;
+			}
+
 			const userRole =
 				role === 'student' || role === 'instructor' ? role : 'student';
 
@@ -143,6 +163,9 @@ export function SignupForm({ role }) {
 								required
 								disabled={isLoading}
 							/>
+							<p className='text-xs text-gray-500'>
+								Must be at least 8 characters and not a common password
+							</p>
 						</div>
 						<div className='grid gap-2'>
 							<Label htmlFor='confirmPassword'>Confirm Password</Label>

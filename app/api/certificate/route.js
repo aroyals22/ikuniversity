@@ -1,12 +1,12 @@
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
-
 import { getCourseDetails } from '@/queries/courses';
 import { getLoggedInUser } from '@/lib/loggedin-user';
 import { getReport } from '@/queries/reports';
 import { formatMyDate } from '@/lib/date';
 import { dbConnect } from '@/service/mongo';
 import { Certificate } from '@/model/certificate-model';
+import { Enrollment } from '@/model/enrollment-model';
 
 export async function GET(request) {
 	await dbConnect();
@@ -50,18 +50,13 @@ export async function GET(request) {
 		});
 
 		// Save certificate record to database
-		// Replace lines 49-73 with:
 		try {
-			const certificateLink = `${process.env.NEXT_PUBLIC_BASE_URL}/certificates/${loggedInUser.id}_${courseId}_certificate.pdf`;
-
 			const existingCert = await Certificate.findOne({
 				user_id: loggedInUser.id,
 				course_id: courseId,
 			});
 
 			if (!existingCert) {
-				// Find the enrollment record
-				const { Enrollment } = await import('@/model/enrollment-model');
 				const enrollment = await Enrollment.findOne({
 					course: courseId,
 					student: loggedInUser.id,
@@ -74,10 +69,9 @@ export async function GET(request) {
 				await Certificate.create({
 					user_id: loggedInUser.id,
 					course_id: courseId,
-					enrollment_id: enrollment._id.toString(),
+					enrollment_id: enrollment._id,
 				});
 
-				// Update enrollment status to completed
 				await Enrollment.findByIdAndUpdate(enrollment._id, {
 					status: 'completed',
 				});
@@ -87,6 +81,7 @@ export async function GET(request) {
 		} catch (certError) {
 			console.log('Certificate record creation failed:', certError);
 		}
+
 		const completionDate = report?.completion_date
 			? formatMyDate(report?.completion_date)
 			: formatMyDate(new Date());

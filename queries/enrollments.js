@@ -12,6 +12,22 @@ export async function getEnrollmentsForCourse(courseId) {
 	return replaceMongoIdInArray(enrollments);
 }
 
+export async function updateEnrollmentStatus(enrollmentId, newStatus) {
+	await dbConnect();
+	try {
+		await Enrollment.findByIdAndUpdate(enrollmentId, {
+			status: newStatus,
+		});
+		console.log(`Enrollment ${enrollmentId} status updated to: ${newStatus}`);
+	} catch (error) {
+		console.error('Failed to update enrollment status:', error);
+		throw new Error(error);
+	}
+}
+
+
+
+
 export async function enrollForCourse(courseId, userId, paymentMethod) {
 	await dbConnect();
 	const newEnrollment = {

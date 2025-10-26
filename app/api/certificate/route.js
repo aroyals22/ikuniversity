@@ -50,32 +50,44 @@ export async function GET(request) {
 		});
 
 		// Save certificate record to database
+		// Replace lines 49-73 with:
 		try {
-			// Generate certificate link
 			const certificateLink = `${process.env.NEXT_PUBLIC_BASE_URL}/certificates/${loggedInUser.id}_${courseId}_certificate.pdf`;
 
-			// Check if certificate already exists to avoid duplicates
 			const existingCert = await Certificate.findOne({
 				user_id: loggedInUser.id,
 				course_id: courseId,
 			});
 
 			if (!existingCert) {
+				// Find the enrollment record
+				const { Enrollment } = await import('@/model/enrollment-model');
+				const enrollment = await Enrollment.findOne({
+					course: courseId,
+					student: loggedInUser.id,
+				});
+
+				if (!enrollment) {
+					throw new Error('No enrollment found');
+				}
+
 				await Certificate.create({
 					user_id: loggedInUser.id,
 					course_id: courseId,
-					enrollment_id: report?.enrollment?.toString() || '',
+					enrollment_id: enrollment._id.toString(),
 					certificate_link: certificateLink,
 				});
-				console.log('Certificate record saved successfully');
-			} else {
-				console.log('Certificate record already exists');
+
+				// Update enrollment status to completed
+				await Enrollment.findByIdAndUpdate(enrollment._id, {
+					status: 'completed',
+				});
+
+				console.log('Certificate record saved and enrollment completed');
 			}
 		} catch (certError) {
 			console.log('Certificate record creation failed:', certError);
-			// Continue with PDF generation even if DB save fails
 		}
-
 		const completionDate = report?.completion_date
 			? formatMyDate(report?.completion_date)
 			: formatMyDate(new Date());

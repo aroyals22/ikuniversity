@@ -14,10 +14,6 @@ const certificateSchema = new Schema(
 			type: String,
 			required: true,
 		},
-		certificate_link: {
-			type: String,
-			required: true,
-		},
 	},
 	{
 		timestamps: true,

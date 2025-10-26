@@ -74,8 +74,7 @@ export async function GET(request) {
 				await Certificate.create({
 					user_id: loggedInUser.id,
 					course_id: courseId,
-					enrollment_id: enrollment._id.toString(),
-					certificate_link: certificateLink,
+					enrollment_id: enrollment._id,
 				});
 
 				// Update enrollment status to completed

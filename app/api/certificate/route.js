@@ -6,6 +6,7 @@ import { getLoggedInUser } from '@/lib/loggedin-user';
 import { getReport } from '@/queries/reports';
 import { formatMyDate } from '@/lib/date';
 import { dbConnect } from '@/service/mongo';
+import { Certificate } from '@/model/certificate-model';
 
 export async function GET(request) {
 	await dbConnect();
@@ -47,6 +48,33 @@ export async function GET(request) {
 			course: courseId,
 			student: loggedInUser.id,
 		});
+
+		// Save certificate record to database
+		try {
+			// Generate certificate link
+			const certificateLink = `${process.env.NEXT_PUBLIC_BASE_URL}/certificates/${loggedInUser.id}_${courseId}_certificate.pdf`;
+
+			// Check if certificate already exists to avoid duplicates
+			const existingCert = await Certificate.findOne({
+				user_id: loggedInUser.id,
+				course_id: courseId,
+			});
+
+			if (!existingCert) {
+				await Certificate.create({
+					user_id: loggedInUser.id,
+					course_id: courseId,
+					enrollment_id: report?.enrollment?.toString() || '',
+					certificate_link: certificateLink,
+				});
+				console.log('Certificate record saved successfully');
+			} else {
+				console.log('Certificate record already exists');
+			}
+		} catch (certError) {
+			console.log('Certificate record creation failed:', certError);
+			// Continue with PDF generation even if DB save fails
+		}
 
 		const completionDate = report?.completion_date
 			? formatMyDate(report?.completion_date)

@@ -3,6 +3,7 @@ import { User } from '@/model/user-model';
 import { PasswordReset } from '@/model/password-reset-model';
 import { sendEmails } from '@/lib/emails';
 import crypto from 'crypto';
+import React from 'react';
 
 export async function POST(request) {
 	await dbConnect();
@@ -37,22 +38,51 @@ export async function POST(request) {
 			expires,
 		});
 
-		// Send reset email using your existing utility
+		// Create reset link
+		const resetLink = `${process.env.NEXT_PUBLIC_BASE_URL}/reset-password?token=${token}`;
+
+		// Send reset email using your existing utility with JSX
 		const emailInfo = [
 			{
 				to: email,
 				subject: 'Reset Your Password - IKU Training',
-				message: `
-				<h2>Password Reset Request</h2>
-				<p>You requested to reset your password for IKU Training.</p>
-				<p>Click the link below to reset your password:</p>
-				<a href="${process.env.NEXT_PUBLIC_BASE_URL}/reset-password?token=${token}" 
-				   style="background: #0066cc; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 0;">
-				   Reset Password
-				</a>
-				<p>This link will expire in 1 hour.</p>
-				<p>If you didn't request this, please ignore this email.</p>
-			`,
+				message: React.createElement(
+					'div',
+					null,
+					React.createElement('h2', null, 'Password Reset Request'),
+					React.createElement(
+						'p',
+						null,
+						'You requested to reset your password for IKU Training.'
+					),
+					React.createElement(
+						'p',
+						null,
+						'Click the link below to reset your password:'
+					),
+					React.createElement(
+						'a',
+						{
+							href: resetLink,
+							style: {
+								background: '#0066cc',
+								color: 'white',
+								padding: '10px 20px',
+								textDecoration: 'none',
+								borderRadius: '5px',
+								display: 'inline-block',
+								margin: '10px 0',
+							},
+						},
+						'Reset Password'
+					),
+					React.createElement('p', null, 'This link will expire in 1 hour.'),
+					React.createElement(
+						'p',
+						null,
+						"If you didn't request this, please ignore this email."
+					)
+				),
 			},
 		];
 

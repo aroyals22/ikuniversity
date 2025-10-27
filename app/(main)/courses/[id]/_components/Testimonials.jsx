@@ -5,7 +5,6 @@ import {
 	CarouselNext,
 	CarouselPrevious,
 } from '@/components/ui/carousel';
-import Image from 'next/image';
 import { SectionTitle } from '@/components/SectionTitle';
 import StarRating from '@/components/StarRating';
 
@@ -31,19 +30,13 @@ const Testimonials = ({ testimonials }) => {
 								<div className='sm:break-inside-avoid'>
 									<blockquote className='rounded-lg bg-gray-50 p-6  sm:p-8 shadow-sm'>
 										<div className='flex items-center gap-4'>
-											<Image
-												alt={`Profile ${testimonial?.user?.firstName} `}
-												src={testimonial?.user?.profilePicture}
-												width='56'
-												height='56'
-												className='size-14 rounded-full object-cover'
-											/>
 											<div>
 												<p className='mt-0.5 text-lg font-medium text-gray-900'>
-													{testimonial?.user?.firstName}{' '}
-													{testimonial?.user?.lastName}
+													{testimonial?.user?.firstName?.[0]?.toUpperCase()}
+													{testimonial?.user?.firstName?.slice(1)}{' '}
+													{testimonial?.user?.lastName?.[0]?.toUpperCase()}.
 												</p>
-												<div className='flex justify-center gap-0.5 text-yellow-600'>
+												<div className='flex gap-0.5 text-yellow-600'>
 													<StarRating rating={testimonial?.rating} />
 												</div>
 											</div>

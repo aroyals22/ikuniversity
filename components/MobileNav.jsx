@@ -61,9 +61,6 @@ const MobileNav = ({ items, children }) => {
 								<DropdownMenuItem className='cursor-pointer'>
 									<Link href='/register/student'>Student</Link>
 								</DropdownMenuItem>
-								<DropdownMenuItem className='cursor-pointer'>
-									<Link href='/register/instructor'>Instructor</Link>
-								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</DropdownMenu>
 					</div>

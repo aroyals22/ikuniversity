@@ -59,12 +59,6 @@ const HomePage = async () => {
 						>
 							Explore Now
 						</Link>
-						<Link
-							href='/register/instructor'
-							className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))}
-						>
-							Become An Instructor
-						</Link>
 					</div>
 				</div>
 			</section>

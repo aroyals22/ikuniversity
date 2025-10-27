@@ -99,10 +99,6 @@ const MainNav = ({ items, children }) => {
 								<DropdownMenuItem className='cursor-pointer' asChild>
 									<Link href='/register/student'>Student</Link>
 								</DropdownMenuItem>
-
-								<DropdownMenuItem className='cursor-pointer' asChild>
-									<Link href='/register/instructor'>Instructor</Link>
-								</DropdownMenuItem>
 							</DropdownMenuContent>
 						</DropdownMenu>
 					</div>

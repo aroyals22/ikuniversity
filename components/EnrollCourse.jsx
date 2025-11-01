@@ -25,7 +25,13 @@ const EnrollCourse = ({ asLink, courseId }) => {
 						<ArrowRight className='w-3' />
 					</Button>
 				) : (
-					<Button type='submit' className={cn(buttonVariants({ size: 'lg' }))}>
+					<Button
+						type='submit'
+						className={cn(
+							buttonVariants({ size: 'lg' }),
+							'bg-green-600 hover:bg-green-700 text-white'
+						)}
+					>
 						Enroll Now
 					</Button>
 				)}

@@ -62,7 +62,7 @@ const CourseDetailsIntro = async ({ course }) => {
 										<EnrollCourse courseId={course?.id} />
 									)}
 									<div className='px-6 py-3 bg-gray-100 text-gray-900 rounded-lg text-lg font-semibold'>
-										${course?.price}
+										Price: ${course?.price}
 									</div>
 								</div>
 

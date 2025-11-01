@@ -60,21 +60,16 @@ const CourseDetailsIntro = async ({ course }) => {
 									<EnrollCourse courseId={course?.id} />
 								)}
 								<Link
-									href=''
+									href='#preview'
 									className={cn(
 										buttonVariants({ variant: 'outline', size: 'lg' })
 									)}
 								>
-									See Intro
+									Preview Course
 								</Link>
-								<Link
-									href=''
-									className={cn(
-										buttonVariants({ variant: 'destructive', size: 'lg' })
-									)}
-								>
-									Price : ${course?.price}
-								</Link>
+								<div className='px-6 py-3 bg-gray-100 text-gray-900 rounded-lg text-lg font-semibold'>
+									${course?.price}
+								</div>
 							</div>
 						</div>
 					</div>

@@ -48,28 +48,31 @@ const CourseDetailsIntro = async ({ course }) => {
 								{course?.subtitle}
 							</p>
 
-							<div className='mt-6 flex items-center justify-center flex-wrap gap-3'>
-								{hasEnrollment ? (
-									<Link
-										href={`/courses/${course?.id}/lesson`}
-										className={cn(buttonVariants({ size: 'lg' }))}
-									>
-										Access Course
-									</Link>
-								) : (
-									<EnrollCourse courseId={course?.id} />
-								)}
+							<div className='mt-6 flex flex-col items-center gap-3'>
+								{/* Top row: Primary action + Price */}
+								<div className='flex items-center justify-center flex-wrap gap-3'>
+									{hasEnrollment ? (
+										<Link
+											href={`/courses/${course?.id}/lesson`}
+											className={cn(buttonVariants({ size: 'lg' }))}
+										>
+											Access Course
+										</Link>
+									) : (
+										<EnrollCourse courseId={course?.id} />
+									)}
+									<div className='px-6 py-3 bg-gray-100 text-gray-900 rounded-lg text-lg font-semibold'>
+										${course?.price}
+									</div>
+								</div>
+
+								{/* Bottom row: Secondary action - BLACK button */}
 								<Link
 									href='#preview'
-									className={cn(
-										buttonVariants({ variant: 'outline', size: 'lg' })
-									)}
+									className={cn(buttonVariants({ size: 'lg' }))}
 								>
 									Preview Course
 								</Link>
-								<div className='px-6 py-3 bg-gray-100 text-gray-900 rounded-lg text-lg font-semibold'>
-									${course?.price}
-								</div>
 							</div>
 						</div>
 					</div>

@@ -36,8 +36,9 @@ export function LoginForm() {
 
 			if (result?.error) {
 				console.log('Error:', result.error);
-				setError(result.error);
-				toast.error('Login failed');
+				const errorMessage = 'Invalid email or password';
+				setError(errorMessage);
+				toast.error(errorMessage);
 			} else if (result?.ok) {
 				// Change this line - check for ok explicitly
 				toast.success('Login Successful!');
@@ -83,6 +84,7 @@ export function LoginForm() {
 								<Label htmlFor='password'>Password</Label>
 							</div>
 							<Input id='password' name='password' type='password' required />
+							{error && <p className='text-sm text-red-600 mt-1'>{error}</p>}
 						</div>
 						<Button type='submit' className='w-full'>
 							Login

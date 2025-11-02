@@ -26,7 +26,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
 					if (!user) {
 						console.log('[AUTH] User not found');
-						return null;
+						throw new Error('Invalid email or password');
 					}
 
 					console.log('[AUTH] User found');
@@ -44,10 +44,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 						};
 					}
 
-					return null;
+					console.log('[AUTH] Password mismatch');
+					throw new Error('Invalid email or password');
 				} catch (err) {
 					console.error('[AUTH] Error:', err.message);
-					return null;
+					throw err;
 				}
 			},
 		}),

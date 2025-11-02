@@ -48,8 +48,9 @@ const HomePage = async () => {
 							</h2>
 
 							<p className='text-lg text-gray-200 leading-relaxed'>
-								Utilize our training modules to qualify your team. This ensures
-								safe workstations, valid testing results and on-time production.
+								Empower your team with the knowledge to work safely, achieve
+								avlid test results, and resolve challenges efficiently, ensuring
+								consistent, on-time production
 							</p>
 
 							<div>

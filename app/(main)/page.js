@@ -22,17 +22,17 @@ const HomePage = async () => {
 		<>
 			<section className='pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32 grainy relative isolate'>
 				<div className='container flex max-w-[64rem] flex-col items-center gap-4 text-center relative'>
-					{/* Large impactful gradient blob */}
+					{/* Large impactful gradient blob - moved higher and lighter navy */}
 					<div
 						aria-hidden='true'
-						className='pointer-events-none absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80'
+						className='pointer-events-none absolute inset-x-0 -top-60 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-96'
 					>
 						<div
 							style={{
 								clipPath:
 									'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
 							}}
-							className='relative left-[calc(50%-11rem)] aspect-[1155/678] w-[72rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#670c0c] via-[#1e3a8a] to-[#3b82f6] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[100rem]'
+							className='relative left-[calc(50%-11rem)] aspect-[1155/678] w-[72rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#670c0c] via-[#3b82f6] to-[#60a5fa] opacity-25 sm:left-[calc(50%-30rem)] sm:w-[100rem]'
 						/>
 					</div>
 

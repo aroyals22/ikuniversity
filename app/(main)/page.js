@@ -38,13 +38,15 @@ const HomePage = async () => {
 								<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-white/50 rounded-full mt-3 max-w-md' />
 							</div>
 
-							<h2 className='text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight text-center lg:text-left'>
+							<h2 className='text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight text-center'>
 								Press{' '}
 								<Play className='inline h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 text-white' />{' '}
-								Before You Press{' '}
-								<span className='inline-block text-white bg-green-500 px-3 py-1.5 rounded-lg shadow-lg border-b-4 border-green-700 text-2xl sm:text-3xl lg:text-4xl font-bold'>
-									TEST
-								</span>
+								Before You Press
+								<div className='flex justify-center mt-4'>
+									<span className='inline-block text-white bg-green-500 px-3 py-1.5 rounded-lg shadow-lg border-b-4 border-green-700 text-2xl sm:text-3xl lg:text-4xl font-bold'>
+										TEST
+									</span>
+								</div>
 							</h2>
 
 							<p className='text-lg text-gray-200 leading-relaxed'>

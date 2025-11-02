@@ -31,11 +31,11 @@ const HomePage = async () => {
 					<div className='grid lg:grid-cols-2 gap-12 items-center py-20 lg:py-32'>
 						{/* Left side - Your catchphrase hero */}
 						<div className='space-y-8'>
-							<div>
-								<h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold text-white '>
+							<div className='text-center'>
+								<h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold text-white'>
 									Ikonix Training
 								</h1>
-								<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-white/50 rounded-full mt-3 max-w-md' />
+								<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-white/50 rounded-full mt-3 max-w-md mx-auto' />
 							</div>
 
 							<h2 className='text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight text-center'>
@@ -49,16 +49,20 @@ const HomePage = async () => {
 								</div>
 							</h2>
 
-							<p className='text-base text-gray-300 leading-relaxed text-center max-w-2xl mx-auto mt-6'>
-								Empower your team with the knowledge to work safely, achieve
-								valid test results, and resolve challenges efficiently, ensuring
-								consistent, on-time production.
-							</p>
+							{/* White badge with paragraph */}
+							<div className='bg-white rounded-full px-8 py-5 mt-6 max-w-3xl mx-auto shadow-lg'>
+								<p className='text-base text-gray-900 leading-relaxed text-center font-medium'>
+									Empower your team with the knowledge to work safely, achieve
+									valid test results, and resolve challenges efficiently,
+									ensuring consistent, on-time production.
+								</p>
+							</div>
 
-							<div>
+							{/* Explore Courses button centered below */}
+							<div className='mt-6 flex justify-center'>
 								<Link
 									href='/courses'
-									className={cn(buttonVariants({ size: 'lg' }))}
+									className='bg-black text-white hover:bg-gray-900 px-10 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg'
 								>
 									Explore Courses
 								</Link>

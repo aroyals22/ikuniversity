@@ -36,9 +36,13 @@ const HomePage = async () => {
 						/>
 					</div>
 
-					<h1 className='font-heading text-3xl font-semibold sm:text-5xl md:text-6xl lg:text-7xl'>
-						Ikonix Training
-					</h1>
+					<div>
+						<h1 className='font-heading text-3xl font-semibold sm:text-5xl md:text-6xl lg:text-7xl'>
+							Ikonix Training
+						</h1>
+						<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-[#d1d5db] rounded-full mt-3 max-w-xs mx-auto'></div>
+					</div>
+
 					<h2 className='font-heading text-3xl font-medium sm:text-5xl md:text-6xl lg:text-7xl'>
 						Press{' '}
 						<Play className='inline h-8 w-8 sm:h-12 sm:w-12 md:h-14 md:w-14 lg:h-16 lg:w-16' />{' '}
@@ -61,7 +65,6 @@ const HomePage = async () => {
 					</div>
 				</div>
 			</section>
-
 			<Element />
 
 			{/* Categories Section */}

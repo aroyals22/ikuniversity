@@ -53,7 +53,7 @@ export default async function SingleCoursePage({ params }) {
 					<div className='container mx-auto px-4 max-w-4xl'>
 						<h2 className='text-3xl font-semibold text-center mb-4'>
 							<span className='relative inline-flex'>
-								<span className='bg-gradient-to-r from-[#0d9488] via-[#06b6d4] to-[#3b82f6] blur-lg filter opacity-30 w-full h-full absolute inset-0'></span>
+								<span className='bg-gradient-to-r from-[#0f172a] to-[#1e40af] blur-lg filter opacity-30 w-full h-full absolute inset-0'></span>{' '}
 								<span className='relative'>Free access to first lesson!</span>
 							</span>
 						</h2>

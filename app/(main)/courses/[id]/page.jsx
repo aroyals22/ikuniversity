@@ -51,17 +51,14 @@ export default async function SingleCoursePage({ params }) {
 			{previewVideoUrl && (
 				<section id='preview' className='bg-gray-50 py-4 scroll-mt-20'>
 					<div className='container mx-auto px-4 max-w-4xl'>
-						<h2 className='text-3xl font-semibold text-center mb-4'>
-							<span className='relative inline-flex'>
-								<span className='bg-gradient-to-r from-[#0f172a] to-[#1e40af] blur-lg filter opacity-30 w-full h-full absolute inset-0'></span>{' '}
-								<span className='relative'>Free access to first lesson!</span>
-							</span>
+						<h2 className='text-4xl font-bold text-center mb-6 text-blue-900'>
+							🎓 Free Preview Available
 						</h2>
 						<div className='rounded-lg overflow-hidden shadow-lg'>
 							<PreviewPlayer videoUrl={previewVideoUrl} />
 						</div>
 						<p className='text-center text-gray-600 mt-4 text-lg'>
-							Have peace of mind that this course is for you.
+							Watch the first lesson free - no commitment required
 						</p>
 					</div>
 				</section>

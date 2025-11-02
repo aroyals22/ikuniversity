@@ -25,12 +25,6 @@ const PersonalDetails = ({ userInfo }) => {
 						{userInfo.email}
 					</p>
 				</div>
-				<div>
-					<Label className='mb-2 block'>Occupation :</Label>
-					<p className='text-gray-900 dark:text-gray-100 font-medium'>
-						{userInfo.designation || 'Not specified'}
-					</p>
-				</div>
 			</div>
 		</div>
 	);

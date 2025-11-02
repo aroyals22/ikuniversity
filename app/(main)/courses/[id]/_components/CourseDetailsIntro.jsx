@@ -54,7 +54,10 @@ const CourseDetailsIntro = async ({ course }) => {
 									{hasEnrollment ? (
 										<Link
 											href={`/courses/${course?.id}/lesson`}
-											className={cn(buttonVariants({ size: 'lg' }))}
+											className={cn(
+												buttonVariants({ size: 'lg' }),
+												'bg-green-600 hover:bg-green-700 text-white'
+											)}
 										>
 											Access Course
 										</Link>

@@ -49,10 +49,10 @@ const HomePage = async () => {
 								</div>
 							</h2>
 
-							<p className='text-lg text-gray-200 leading-relaxed'>
+							<p className='text-base text-gray-300 leading-relaxed text-center max-w-2xl mx-auto mt-6'>
 								Empower your team with the knowledge to work safely, achieve
-								avlid test results, and resolve challenges efficiently, ensuring
-								consistent, on-time production
+								valid test results, and resolve challenges efficiently, ensuring
+								consistent, on-time production.
 							</p>
 
 							<div>

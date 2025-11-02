@@ -38,11 +38,9 @@ const CourseDetailsIntro = async ({ course }) => {
 					<div className='px-4 mx-auto max-w-7xl sm:px-6 lg:px-8'>
 						<div className='max-w-2xl mx-auto text-center'>
 							<h1 className='text-4xl font-bold leading-tight text-gray-900 sm:leading-tight sm:text-5xl lg:text-6xl lg:leading-tight font-pj'>
-								<span className='relative inline-flex sm:inline'>
-									<span className='bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] blur-lg filter opacity-30 w-full h-full absolute inset-0'></span>
-									<span className='relative'>{course?.title}</span>
-								</span>
+								{course?.title}
 							</h1>
+							<div className='h-1.5 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full mt-3 max-w-xs mx-auto'></div>
 
 							<p className='mt-5 px-6 text-lg text-gray-600 font-inter'>
 								{course?.subtitle}

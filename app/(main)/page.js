@@ -20,63 +20,51 @@ const HomePage = async () => {
 
 	return (
 		<>
-			<section className='relative overflow-hidden bg-gradient-to-br from-slate-50 to-white'>
-				{/* Subtle gradient blob in background */}
-				<div
-					aria-hidden='true'
-					className='pointer-events-none absolute inset-0 -z-10 transform-gpu overflow-hidden blur-3xl'
-				>
-					<div
-						style={{
-							clipPath:
-								'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-						}}
-						className='relative left-[20%] top-[10%] aspect-[1155/678] w-[50rem] bg-gradient-to-tr from-[#670c0c] via-[#8b5cf6] to-[#60a5fa] opacity-20'
+			<section className='relative overflow-hidden'>
+				{/* Background Image with Overlay */}
+				<div className='absolute inset-0 -z-10'>
+					<Image
+						src='/assets/images/hero-equipment.jpg'
+						alt='Electrical Testing Equipment'
+						fill
+						className='object-cover'
+						priority
 					/>
+					{/* Dark overlay for text readability */}
+					<div className='absolute inset-0 bg-gradient-to-r from-gray-900/95 via-gray-900/90 to-gray-900/70' />
 				</div>
 
-				<div className='container'>
+				<div className='container relative z-10'>
 					<div className='grid lg:grid-cols-2 gap-12 items-center py-20 lg:py-32'>
 						{/* Left side - Your catchphrase hero */}
 						<div className='space-y-8'>
 							<div>
-								<h1 className='text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900'>
+								<h1 className='text-4xl sm:text-5xl lg:text-6xl font-bold text-white'>
 									Ikonix Training
 								</h1>
-								<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-[#d1d5db] rounded-full mt-3 max-w-xs' />
+								<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-white/50 rounded-full mt-3 max-w-xs' />
 							</div>
 
-							<h2 className='text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 leading-tight'>
+							<h2 className='text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight text-center lg:text-left'>
 								Press{' '}
-								<Play className='inline h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12' />{' '}
+								<Play className='inline h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 text-white' />{' '}
 								Before You Press{' '}
 								<span className='inline-block text-white bg-green-500 px-3 py-1.5 rounded-lg shadow-lg border-b-4 border-green-700 text-2xl sm:text-3xl lg:text-4xl font-bold'>
 									TEST
 								</span>
 							</h2>
 
-							<p className='text-lg text-gray-600 leading-relaxed'>
+							<p className='text-lg text-gray-200 leading-relaxed'>
 								Utilize our training modules to qualify your team. This ensures
 								safe workstations, valid testing results and on-time production.
 							</p>
 
-							<div className='flex flex-col sm:flex-row gap-4'>
+							<div>
 								<Link
 									href='/courses'
-									className={cn(
-										buttonVariants({ size: 'lg' }),
-										'bg-[#670c0c] hover:bg-[#7d0e0e] text-white'
-									)}
+									className={cn(buttonVariants({ size: 'lg' }))}
 								>
 									Explore Courses
-								</Link>
-								<Link
-									href='#preview'
-									className={cn(
-										buttonVariants({ size: 'lg', variant: 'outline' })
-									)}
-								>
-									Watch Demo
 								</Link>
 							</div>
 						</div>
@@ -84,54 +72,52 @@ const HomePage = async () => {
 						{/* Right side - Trust signals & stats */}
 						<div className='space-y-6'>
 							{/* Trust badge */}
-							<div className='inline-flex items-center gap-2 bg-blue-50 text-blue-900 px-4 py-2.5 rounded-full text-sm font-semibold border border-blue-200'>
+							<div className='inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-4 py-2.5 rounded-full text-sm font-semibold border border-white/20'>
 								<span className='w-2 h-2 bg-green-500 rounded-full animate-pulse' />
 								Trusted by Engineering Teams Worldwide
 							</div>
 
-							{/* Stats cards */}
+							{/* Stats cards with glass morphism */}
 							<div className='grid grid-cols-2 gap-4'>
-								<div className='bg-white rounded-xl shadow-lg p-6 border border-gray-200'>
-									<div className='text-4xl font-bold text-[#670c0c] mb-2'>
+								<div className='bg-white/10 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/20'>
+									<div className='text-4xl font-bold text-gray-900 mb-2'>
 										2,500+
 									</div>
-									<div className='text-sm text-gray-600'>
+									<div className='text-sm text-gray-200'>
 										Engineers Certified
 									</div>
 								</div>
 
-								<div className='bg-white rounded-xl shadow-lg p-6 border border-gray-200'>
-									<div className='text-4xl font-bold text-green-600 mb-2'>
+								<div className='bg-white/10 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/20'>
+									<div className='text-4xl font-bold text-gray-900 mb-2'>
 										4.9★
 									</div>
-									<div className='text-sm text-gray-600'>Average Rating</div>
+									<div className='text-sm text-gray-200'>Average Rating</div>
 								</div>
 
-								<div className='bg-white rounded-xl shadow-lg p-6 border border-gray-200'>
-									<div className='text-4xl font-bold text-blue-600 mb-2'>
+								<div className='bg-white/10 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/20'>
+									<div className='text-4xl font-bold text-gray-900 mb-2'>
 										100%
 									</div>
-									<div className='text-sm text-gray-600'>Pass Rate</div>
+									<div className='text-sm text-gray-200'>Pass Rate</div>
 								</div>
 
-								<div className='bg-white rounded-xl shadow-lg p-6 border border-gray-200'>
-									<div className='text-4xl font-bold text-purple-600 mb-2'>
+								<div className='bg-white/10 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/20'>
+									<div className='text-4xl font-bold text-gray-900 mb-2'>
 										24/7
 									</div>
-									<div className='text-sm text-gray-600'>Access Anytime</div>
+									<div className='text-sm text-gray-200'>Access Anytime</div>
 								</div>
 							</div>
 
-							{/* Value props checklist */}
-							<div className='bg-white rounded-xl shadow-lg p-6 border border-gray-200 space-y-4'>
-								<h3 className='font-semibold text-gray-900 mb-4'>
-									What You Get:
-								</h3>
+							{/* Value props checklist with glass morphism */}
+							<div className='bg-white/10 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/20 space-y-4'>
+								<h3 className='font-semibold text-white mb-4'>What You Get:</h3>
 								<div className='space-y-3'>
 									<div className='flex items-start gap-3'>
-										<div className='w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5'>
+										<div className='w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 mt-0.5 border border-green-500/30'>
 											<svg
-												className='w-3 h-3 text-green-600'
+												className='w-3 h-3 text-green-400'
 												fill='none'
 												viewBox='0 0 24 24'
 												stroke='currentColor'
@@ -145,19 +131,19 @@ const HomePage = async () => {
 											</svg>
 										</div>
 										<div>
-											<div className='font-medium text-gray-900'>
+											<div className='font-medium text-white'>
 												Industry Certified Content
 											</div>
-											<div className='text-sm text-gray-600'>
+											<div className='text-sm text-gray-300'>
 												Approved training materials
 											</div>
 										</div>
 									</div>
 
 									<div className='flex items-start gap-3'>
-										<div className='w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5'>
+										<div className='w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 mt-0.5 border border-green-500/30'>
 											<svg
-												className='w-3 h-3 text-green-600'
+												className='w-3 h-3 text-green-400'
 												fill='none'
 												viewBox='0 0 24 24'
 												stroke='currentColor'
@@ -171,19 +157,19 @@ const HomePage = async () => {
 											</svg>
 										</div>
 										<div>
-											<div className='font-medium text-gray-900'>
+											<div className='font-medium text-white'>
 												Self-Paced Learning
 											</div>
-											<div className='text-sm text-gray-600'>
+											<div className='text-sm text-gray-300'>
 												Learn at your own speed
 											</div>
 										</div>
 									</div>
 
 									<div className='flex items-start gap-3'>
-										<div className='w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5'>
+										<div className='w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 mt-0.5 border border-green-500/30'>
 											<svg
-												className='w-3 h-3 text-green-600'
+												className='w-3 h-3 text-green-400'
 												fill='none'
 												viewBox='0 0 24 24'
 												stroke='currentColor'
@@ -197,10 +183,10 @@ const HomePage = async () => {
 											</svg>
 										</div>
 										<div>
-											<div className='font-medium text-gray-900'>
+											<div className='font-medium text-white'>
 												Instant Certificates
 											</div>
-											<div className='text-sm text-gray-600'>
+											<div className='text-sm text-gray-300'>
 												Download upon completion
 											</div>
 										</div>

@@ -40,7 +40,7 @@ const CourseDetailsIntro = async ({ course }) => {
 							<h1 className='text-4xl font-bold leading-tight text-gray-900 sm:leading-tight sm:text-5xl lg:text-6xl lg:leading-tight font-pj'>
 								{course?.title}
 							</h1>
-							<div className='h-1.5 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full mt-3 max-w-xs mx-auto'></div>
+							<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-white rounded-full mt-3 max-w-xs mx-auto'></div>
 
 							<p className='mt-5 px-6 text-lg text-gray-600 font-inter'>
 								{course?.subtitle}

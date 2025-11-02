@@ -58,7 +58,7 @@ export default async function SingleCoursePage({ params }) {
 							<PreviewPlayer videoUrl={previewVideoUrl} />
 						</div>
 						<p className='text-center text-gray-600 mt-4'>
-							Have peace of mind that this course is for you.
+							Have peace of mind that this course is for you
 						</p>
 					</div>
 				</section>

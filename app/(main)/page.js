@@ -31,13 +31,15 @@ const HomePage = async () => {
 					<div className='grid lg:grid-cols-2 gap-12 items-center py-20 lg:py-32'>
 						{/* Left side - Your catchphrase hero */}
 						<div className='space-y-8'>
+							{/* Title with left-aligned underline */}
 							<div className='text-center'>
 								<h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold text-white'>
 									Ikonix Training
 								</h1>
-								<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-white/50 rounded-full mt-3 max-w-md mx-auto' />
+								<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-white/50 rounded-full mt-3 max-w-md' />
 							</div>
 
+							{/* Catchphrase and TEST button */}
 							<h2 className='text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight text-center'>
 								Press{' '}
 								<Play className='inline h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 text-white' />{' '}
@@ -49,8 +51,8 @@ const HomePage = async () => {
 								</div>
 							</h2>
 
-							{/* White badge with paragraph */}
-							<div className='bg-white rounded-full px-8 py-5 mt-6 max-w-3xl mx-auto shadow-lg'>
+							{/* Rectangular white badge with paragraph */}
+							<div className='bg-white rounded-xl px-8 py-6 mt-8 max-w-3xl mx-auto shadow-lg'>
 								<p className='text-base text-gray-900 leading-relaxed text-center font-medium'>
 									Empower your team with the knowledge to work safely, achieve
 									valid test results, and resolve challenges efficiently,
@@ -58,7 +60,7 @@ const HomePage = async () => {
 								</p>
 							</div>
 
-							{/* Explore Courses button centered below */}
+							{/* Explore Courses button */}
 							<div className='mt-6 flex justify-center'>
 								<Link
 									href='/courses'

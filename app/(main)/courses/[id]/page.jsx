@@ -49,7 +49,7 @@ export default async function SingleCoursePage({ params }) {
 
 			{/* Free Preview Section */}
 			{previewVideoUrl && (
-				<section id='preview' className='bg-gray-50 py-4'>
+				<section id='preview' className='bg-gray-50 py-4 scroll-mt-20'>
 					<div className='container mx-auto px-4 max-w-4xl'>
 						<h2 className='text-3xl font-semi-bold text-center mb-4'>
 							Free access to first lesson!

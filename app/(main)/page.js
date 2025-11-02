@@ -40,7 +40,7 @@ const HomePage = async () => {
 						{/* Left side - Your catchphrase hero */}
 						<div className='space-y-8'>
 							<div>
-								<h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold text-white'>
+								<h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold text-white lg:text-center'>
 									Ikonix Training
 								</h1>
 								<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-white/50 rounded-full mt-3 max-w-md' />

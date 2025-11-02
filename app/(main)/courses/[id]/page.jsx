@@ -51,9 +51,9 @@ export default async function SingleCoursePage({ params }) {
 			{previewVideoUrl && (
 				<section id='preview' className='bg-gray-50 py-4 scroll-mt-20'>
 					<div className='container mx-auto px-4 max-w-4xl'>
-						<h2 className='text-3xl font-bold text-center mb-4'>
+						<h2 className='text-3xl font-semibold text-center mb-4'>
 							<span className='relative inline-flex'>
-								<span className='bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] blur-lg filter opacity-30 w-full h-full absolute inset-0'></span>
+								<span className='bg-gradient-to-r from-[#670c0c] via-[#dc2626] to-[#f59e0b] blur-lg filter opacity-30 w-full h-full absolute inset-0'></span>
 								<span className='relative'>Free access to first lesson!</span>
 							</span>
 						</h2>

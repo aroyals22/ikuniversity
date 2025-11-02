@@ -40,13 +40,13 @@ const HomePage = async () => {
 						{/* Left side - Your catchphrase hero */}
 						<div className='space-y-8'>
 							<div>
-								<h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold text-white lg:text-center'>
+								<h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold text-white '>
 									Ikonix Training
 								</h1>
 								<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-white/50 rounded-full mt-3 max-w-md' />
 							</div>
 
-							<h2 className='text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight text-center lg:text-center'>
+							<h2 className='text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight text-center lg:text-left'>
 								Press{' '}
 								<Play className='inline h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 text-white' />{' '}
 								Before You Press{' '}

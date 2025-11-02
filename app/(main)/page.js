@@ -73,17 +73,15 @@ const HomePage = async () => {
 							{/* Trust badge */}
 							<div className='inline-flex items-center gap-2 bg-white/20 backdrop-blur-md text-white px-4 py-2.5 rounded-full text-sm font-semibold border border-white/30'>
 								<span className='w-2 h-2 bg-green-500 rounded-full animate-pulse' />
-								Trusted by Engineering Teams Worldwide
+								Courses Live & Ready to Enroll
 							</div>
 
 							{/* Stats cards with white frosted glass */}
 							<div className='grid grid-cols-2 gap-4'>
 								<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/30'>
-									<div className='text-4xl font-bold text-white mb-2'>
-										2,500+
-									</div>
+									<div className='text-4xl font-bold text-white mb-2'>10+</div>
 									<div className='text-sm text-gray-200'>
-										Engineers Certified
+										Years Training Engineers and Test Operators
 									</div>
 								</div>
 
@@ -101,8 +99,10 @@ const HomePage = async () => {
 								</div>
 
 								<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/30'>
-									<div className='text-4xl font-bold text-white mb-2'>100%</div>
-									<div className='text-sm text-gray-200'>Pass Rate</div>
+									<div className='text-4xl font-bold text-white mb-2'>
+										Since 1936
+									</div>
+									<div className='text-sm text-gray-200'>Industry Leader</div>
 								</div>
 
 								<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/30'>

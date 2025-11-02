@@ -25,15 +25,7 @@ const HomePage = async () => {
 				<div
 					aria-hidden='true'
 					className='pointer-events-none absolute inset-0 -z-10 transform-gpu overflow-hidden blur-3xl'
-				>
-					<div
-						style={{
-							clipPath:
-								'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-						}}
-						className='relative left-[20%] top-[10%] aspect-[1155/678] w-[50rem] bg-gradient-to-tr from-[#670c0c] via-[#8b5cf6] to-[#60a5fa] opacity-20'
-					/>
-				</div>
+				></div>
 
 				<div className='container relative z-10'>
 					<div className='grid lg:grid-cols-2 gap-12 items-center py-20 lg:py-32'>
@@ -46,19 +38,16 @@ const HomePage = async () => {
 								<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-white/50 rounded-full mt-3 max-w-md' />
 							</div>
 
-							<h2 className='text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight text-center lg:text-left'>
+							<h2 className='text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight'>
 								Press{' '}
 								<Play className='inline h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 text-white' />{' '}
-								Before You Press{' '}
-								<span className='inline-block text-white bg-green-500 px-3 py-1.5 rounded-lg shadow-lg border-b-4 border-green-700 text-2xl sm:text-3xl lg:text-4xl font-bold'>
-									TEST
-								</span>
+								Before You Press
+								<div className='flex justify-center mt-4'>
+									<span className='inline-block text-white bg-green-500 px-3 py-1.5 rounded-lg shadow-lg border-b-4 border-green-700 text-2xl sm:text-3xl lg:text-4xl font-bold'>
+										TEST
+									</span>
+								</div>
 							</h2>
-
-							<p className='text-lg text-gray-200 leading-relaxed'>
-								Utilize our training modules to qualify your team. This ensures
-								safe workstations, valid testing results and on-time production.
-							</p>
 
 							<div>
 								<Link

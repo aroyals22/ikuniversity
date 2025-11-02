@@ -27,11 +27,11 @@ const HomePage = async () => {
 						src='/assets/images/hero-equipment.jpg'
 						alt='Electrical Testing Equipment'
 						fill
-						className='object-contain'
+						className='object-cover object-center'
 						priority
 					/>
-					{/* Dark overlay for text readability */}
-					<div className='absolute inset-0 bg-gradient-to-r from-gray-900/95 via-gray-900/90 to-gray-900/70' />
+					{/* Much lighter overlay - just enough for text readability */}
+					<div className='absolute inset-0 bg-gradient-to-r from-gray-900/60 via-gray-900/40 to-gray-900/30' />
 				</div>
 
 				<div className='container relative z-10'>

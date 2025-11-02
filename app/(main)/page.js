@@ -20,18 +20,19 @@ const HomePage = async () => {
 
 	return (
 		<>
-			<section className='relative overflow-hidden'>
-				{/* Background Image with Overlay */}
-				<div className='absolute inset-0 -z-10'>
-					<Image
-						src='/assets/images/hero-equipment.jpg'
-						alt='Electrical Testing Equipment'
-						fill
-						className='object-cover object-center'
-						priority
+			<section className='relative overflow-hidden bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900'>
+				{/* Subtle gradient accent */}
+				<div
+					aria-hidden='true'
+					className='pointer-events-none absolute inset-0 -z-10 transform-gpu overflow-hidden blur-3xl'
+				>
+					<div
+						style={{
+							clipPath:
+								'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+						}}
+						className='relative left-[20%] top-[10%] aspect-[1155/678] w-[50rem] bg-gradient-to-tr from-[#670c0c] via-[#8b5cf6] to-[#60a5fa] opacity-20'
 					/>
-					{/* Dark overlay for text readability */}
-					<div className='absolute inset-0 bg-gradient-to-r from-gray-900/60 via-gray-900/40 to-gray-900/30' />
 				</div>
 
 				<div className='container relative z-10'>
@@ -80,31 +81,35 @@ const HomePage = async () => {
 							{/* Stats cards with white frosted glass */}
 							<div className='grid grid-cols-2 gap-4'>
 								<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/30'>
-									<div className='text-4xl font-bold text-gray-900 mb-2'>
+									<div className='text-4xl font-bold text-white mb-2'>
 										2,500+
 									</div>
-									<div className='text-sm text-white'>Engineers Certified</div>
+									<div className='text-sm text-gray-200'>
+										Engineers Certified
+									</div>
 								</div>
 
 								<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/30'>
-									<div className='text-4xl font-bold text-yellow-500 mb-2'>
+									<div
+										className='text-4xl font-bold text-yellow-400 mb-2'
+										style={{
+											textShadow:
+												'2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(0,0,0,0.6)',
+										}}
+									>
 										4.9★
 									</div>
-									<div className='text-sm text-white'>Average Rating</div>
+									<div className='text-sm text-gray-200'>Average Rating</div>
 								</div>
 
 								<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/30'>
-									<div className='text-4xl font-bold text-gray-900 mb-2'>
-										100%
-									</div>
-									<div className='text-sm text-white'>Pass Rate</div>
+									<div className='text-4xl font-bold text-white mb-2'>100%</div>
+									<div className='text-sm text-gray-200'>Pass Rate</div>
 								</div>
 
 								<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/30'>
-									<div className='text-4xl font-bold text-gray-900 mb-2'>
-										24/7
-									</div>
-									<div className='text-sm text-white'>Access Anytime</div>
+									<div className='text-4xl font-bold text-white mb-2'>24/7</div>
+									<div className='text-sm text-gray-200'>Access Anytime</div>
 								</div>
 							</div>
 
@@ -113,17 +118,17 @@ const HomePage = async () => {
 								<h3 className='font-semibold text-white mb-4'>What You Get:</h3>
 								<div className='space-y-3'>
 									<div className='flex items-start gap-3'>
-										<div className='w-5 h-5 rounded-full bg-green-500/30 flex items-center justify-center flex-shrink-0 mt-0.5 border border-green-400/40'>
+										<div className='w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
 											<svg
-												className='w-3 h-3 text-green-400'
+												className='w-3 h-3 text-white'
 												fill='none'
 												viewBox='0 0 24 24'
 												stroke='currentColor'
+												strokeWidth={3}
 											>
 												<path
 													strokeLinecap='round'
 													strokeLinejoin='round'
-													strokeWidth={2}
 													d='M5 13l4 4L19 7'
 												/>
 											</svg>
@@ -139,17 +144,17 @@ const HomePage = async () => {
 									</div>
 
 									<div className='flex items-start gap-3'>
-										<div className='w-5 h-5 rounded-full bg-green-500/30 flex items-center justify-center flex-shrink-0 mt-0.5 border border-green-400/40'>
+										<div className='w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
 											<svg
-												className='w-3 h-3 text-green-400'
+												className='w-3 h-3 text-white'
 												fill='none'
 												viewBox='0 0 24 24'
 												stroke='currentColor'
+												strokeWidth={3}
 											>
 												<path
 													strokeLinecap='round'
 													strokeLinejoin='round'
-													strokeWidth={2}
 													d='M5 13l4 4L19 7'
 												/>
 											</svg>
@@ -165,17 +170,17 @@ const HomePage = async () => {
 									</div>
 
 									<div className='flex items-start gap-3'>
-										<div className='w-5 h-5 rounded-full bg-green-500/30 flex items-center justify-center flex-shrink-0 mt-0.5 border border-green-400/40'>
+										<div className='w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
 											<svg
-												className='w-3 h-3 text-green-400'
+												className='w-3 h-3 text-white'
 												fill='none'
 												viewBox='0 0 24 24'
 												stroke='currentColor'
+												strokeWidth={3}
 											>
 												<path
 													strokeLinecap='round'
 													strokeLinejoin='round'
-													strokeWidth={2}
 													d='M5 13l4 4L19 7'
 												/>
 											</svg>

@@ -36,7 +36,7 @@ const HomePage = async () => {
 								<h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold text-white'>
 									Ikonix Training
 								</h1>
-								<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-white/50 rounded-full mt-3 max-w-md' />
+								<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-white/50 rounded-full mt-3 max-w-lg' />
 							</div>
 
 							{/* Catchphrase and TEST button */}
@@ -51,14 +51,11 @@ const HomePage = async () => {
 								</div>
 							</h2>
 
-							{/* Rectangular white badge with paragraph */}
-							<div className='bg-white rounded-xl px-8 py-6 mt-8 max-w-3xl mx-auto shadow-lg'>
-								<p className='text-base text-gray-900 leading-relaxed text-center font-medium'>
-									Empower your team with the knowledge to work safely, achieve
-									valid test results, and resolve challenges efficiently,
-									ensuring consistent, on-time production.
-								</p>
-							</div>
+							<p className='text-lg text-gray-200 leading-relaxed text-center max-w-2xl mx-auto mt-8'>
+								Empower your team with the knowledge to work safely, achieve
+								valid test results, and resolve challenges efficiently, ensuring
+								consistent, on-time production.
+							</p>
 
 							{/* Explore Courses button */}
 							<div className='mt-6 flex justify-center'>

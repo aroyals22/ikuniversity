@@ -27,7 +27,7 @@ const HomePage = async () => {
 						src='/assets/images/hero-equipment.jpg'
 						alt='Electrical Testing Equipment'
 						fill
-						className='object-cover'
+						className='object-contain'
 						priority
 					/>
 					{/* Dark overlay for text readability */}

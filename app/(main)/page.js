@@ -112,9 +112,10 @@ const HomePage = async () => {
 							</div>
 
 							{/* Value props checklist with white frosted glass */}
+							{/* Value props checklist with white frosted glass */}
 							<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/30 space-y-4'>
 								<h3 className='font-semibold text-white mb-4'>What You Get:</h3>
-								<div className='space-y-3'>
+								<div className='grid grid-cols-2 gap-x-6 gap-y-4'>
 									<div className='flex items-start gap-3'>
 										<div className='w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
 											<svg
@@ -133,10 +134,10 @@ const HomePage = async () => {
 										</div>
 										<div>
 											<div className='font-medium text-white'>
-												Industry Certified Content
+												OSHA Compliant Training
 											</div>
 											<div className='text-sm text-gray-200'>
-												Approved training materials
+												Industry-approved content
 											</div>
 										</div>
 									</div>
@@ -189,6 +190,84 @@ const HomePage = async () => {
 											</div>
 											<div className='text-sm text-gray-200'>
 												Download upon completion
+											</div>
+										</div>
+									</div>
+
+									<div className='flex items-start gap-3'>
+										<div className='w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
+											<svg
+												className='w-3 h-3 text-white'
+												fill='none'
+												viewBox='0 0 24 24'
+												stroke='currentColor'
+												strokeWidth={3}
+											>
+												<path
+													strokeLinecap='round'
+													strokeLinejoin='round'
+													d='M5 13l4 4L19 7'
+												/>
+											</svg>
+										</div>
+										<div>
+											<div className='font-medium text-white'>
+												Real-World Scenarios
+											</div>
+											<div className='text-sm text-gray-200'>
+												Practical troubleshooting
+											</div>
+										</div>
+									</div>
+
+									<div className='flex items-start gap-3'>
+										<div className='w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
+											<svg
+												className='w-3 h-3 text-white'
+												fill='none'
+												viewBox='0 0 24 24'
+												stroke='currentColor'
+												strokeWidth={3}
+											>
+												<path
+													strokeLinecap='round'
+													strokeLinejoin='round'
+													d='M5 13l4 4L19 7'
+												/>
+											</svg>
+										</div>
+										<div>
+											<div className='font-medium text-white'>
+												Expert Support
+											</div>
+											<div className='text-sm text-gray-200'>
+												Applications engineers
+											</div>
+										</div>
+									</div>
+
+									<div className='flex items-start gap-3'>
+										<div className='w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
+											<svg
+												className='w-3 h-3 text-white'
+												fill='none'
+												viewBox='0 0 24 24'
+												stroke='currentColor'
+												strokeWidth={3}
+											>
+												<path
+													strokeLinecap='round'
+													strokeLinejoin='round'
+													d='M5 13l4 4L19 7'
+												/>
+											</svg>
+										</div>
+										<div>
+											<div className='font-medium text-white'>
+												Mobile Accessible
+											</div>
+											<div className='text-sm text-gray-200'>
+												Learn anywhere, anytime
 											</div>
 										</div>
 									</div>

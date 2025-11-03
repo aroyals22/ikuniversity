@@ -20,23 +20,23 @@ const HomePage = async () => {
 
 	return (
 		<>
-			<section className='relative overflow-hidden bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900'>
+			<section className='relative overflow-hidden bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 min-h-screen flex items-center'>
 				{/* Subtle gradient accent */}
 				<div
 					aria-hidden='true'
 					className='pointer-events-none absolute inset-0 -z-10 transform-gpu overflow-hidden blur-3xl'
 				></div>
 
-				<div className='container relative z-10'>
-					<div className='grid lg:grid-cols-2 gap-12 items-center py-20 lg:py-32'>
+				<div className='container relative z-10 py-8'>
+					<div className='grid lg:grid-cols-2 gap-8 items-center'>
 						{/* Left side - Your catchphrase hero */}
-						<div className='space-y-8'>
+						<div className='space-y-6'>
 							{/* Title with left-aligned underline */}
 							<div className='text-center'>
 								<h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold text-white'>
 									Ikonix Training
 								</h1>
-								<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-white/50 rounded-full mt-3 max-w-lg' />
+								<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-white/50 rounded-full mt-3 max-w-lg mx-auto' />
 							</div>
 
 							{/* Catchphrase and TEST button */}
@@ -44,21 +44,21 @@ const HomePage = async () => {
 								Press{' '}
 								<Play className='inline h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 text-white' />{' '}
 								Before You Press
-								<div className='flex justify-center mt-4'>
+								<div className='flex justify-center mt-3'>
 									<span className='inline-block text-white bg-green-500 px-3 py-1.5 rounded-lg shadow-lg border-b-4 border-green-700 text-2xl sm:text-3xl lg:text-4xl font-bold'>
 										TEST
 									</span>
 								</div>
 							</h2>
 
-							<p className='text-lg text-gray-200 leading-relaxed text-center max-w-2xl mx-auto mt-8'>
+							<p className='text-lg text-gray-200 leading-relaxed text-center max-w-2xl mx-auto'>
 								Empower your team with the knowledge to work safely, achieve
 								valid test results, and resolve challenges efficiently, ensuring
 								consistent, on-time production.
 							</p>
 
 							{/* Explore Courses button */}
-							<div className='mt-6 flex justify-center'>
+							<div className='flex justify-center'>
 								<Link
 									href='/courses'
 									className='bg-black text-white hover:bg-gray-900 px-10 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg'
@@ -69,7 +69,7 @@ const HomePage = async () => {
 						</div>
 
 						{/* Right side - Trust signals & stats */}
-						<div className='space-y-6'>
+						<div className='space-y-4'>
 							{/* Trust badge */}
 							<div className='inline-flex items-center gap-2 bg-white/20 backdrop-blur-md text-white px-4 py-2.5 rounded-full text-sm font-semibold border border-white/30'>
 								<span className='w-2 h-2 bg-green-500 rounded-full animate-pulse' />
@@ -78,16 +78,16 @@ const HomePage = async () => {
 
 							{/* Stats cards with white frosted glass */}
 							<div className='grid grid-cols-2 gap-4'>
-								<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/30'>
-									<div className='text-4xl font-bold text-white mb-2'>10+</div>
-									<div className='text-sm text-gray-200'>
-										Years Training Engineers and Test Operators
+								<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-4 border border-white/30'>
+									<div className='text-3xl font-bold text-white mb-1'>10+</div>
+									<div className='text-xs text-gray-200'>
+										Years Training Engineers
 									</div>
 								</div>
 
-								<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/30'>
+								<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-4 border border-white/30'>
 									<div
-										className='text-4xl font-bold text-yellow-400 mb-2'
+										className='text-3xl font-bold text-yellow-400 mb-1'
 										style={{
 											textShadow:
 												'2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(0,0,0,0.6)',
@@ -95,31 +95,32 @@ const HomePage = async () => {
 									>
 										4.9★
 									</div>
-									<div className='text-sm text-gray-200'>Average Rating</div>
+									<div className='text-xs text-gray-200'>Average Rating</div>
 								</div>
 
-								<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/30'>
-									<div className='text-4xl font-bold text-white mb-2'>
+								<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-4 border border-white/30'>
+									<div className='text-3xl font-bold text-white mb-1'>
 										Since 1936
 									</div>
-									<div className='text-sm text-gray-200'>Industry Leader</div>
+									<div className='text-xs text-gray-200'>Industry Leader</div>
 								</div>
 
-								<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/30'>
-									<div className='text-4xl font-bold text-white mb-2'>24/7</div>
-									<div className='text-sm text-gray-200'>Access Anytime</div>
+								<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-4 border border-white/30'>
+									<div className='text-3xl font-bold text-white mb-1'>24/7</div>
+									<div className='text-xs text-gray-200'>Access Anytime</div>
 								</div>
 							</div>
 
 							{/* Value props checklist with white frosted glass */}
-							{/* Value props checklist with white frosted glass */}
-							<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-6 border border-white/30 space-y-4'>
-								<h3 className='font-semibold text-white mb-4'>What You Get:</h3>
-								<div className='grid grid-cols-2 gap-x-6 gap-y-4'>
-									<div className='flex items-start gap-3'>
-										<div className='w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
+							<div className='bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-4 border border-white/30'>
+								<h3 className='font-semibold text-white mb-3 text-sm'>
+									What You Get:
+								</h3>
+								<div className='grid grid-cols-2 gap-x-4 gap-y-3'>
+									<div className='flex items-start gap-2'>
+										<div className='w-4 h-4 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
 											<svg
-												className='w-3 h-3 text-white'
+												className='w-2.5 h-2.5 text-white'
 												fill='none'
 												viewBox='0 0 24 24'
 												stroke='currentColor'
@@ -133,19 +134,19 @@ const HomePage = async () => {
 											</svg>
 										</div>
 										<div>
-											<div className='font-medium text-white'>
+											<div className='font-medium text-white text-sm'>
 												Model Specific Training
 											</div>
-											<div className='text-sm text-gray-200'>
-												Direct from Ikonix Applications Engineers
+											<div className='text-xs text-gray-200'>
+												From Applications Engineers
 											</div>
 										</div>
 									</div>
 
-									<div className='flex items-start gap-3'>
-										<div className='w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
+									<div className='flex items-start gap-2'>
+										<div className='w-4 h-4 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
 											<svg
-												className='w-3 h-3 text-white'
+												className='w-2.5 h-2.5 text-white'
 												fill='none'
 												viewBox='0 0 24 24'
 												stroke='currentColor'
@@ -159,19 +160,19 @@ const HomePage = async () => {
 											</svg>
 										</div>
 										<div>
-											<div className='font-medium text-white'>
+											<div className='font-medium text-white text-sm'>
 												Self-Paced Learning
 											</div>
-											<div className='text-sm text-gray-200'>
-												Learn at your own speed
+											<div className='text-xs text-gray-200'>
+												Learn at your speed
 											</div>
 										</div>
 									</div>
 
-									<div className='flex items-start gap-3'>
-										<div className='w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
+									<div className='flex items-start gap-2'>
+										<div className='w-4 h-4 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
 											<svg
-												className='w-3 h-3 text-white'
+												className='w-2.5 h-2.5 text-white'
 												fill='none'
 												viewBox='0 0 24 24'
 												stroke='currentColor'
@@ -185,19 +186,19 @@ const HomePage = async () => {
 											</svg>
 										</div>
 										<div>
-											<div className='font-medium text-white'>
+											<div className='font-medium text-white text-sm'>
 												Knowledge Assessments
 											</div>
-											<div className='text-sm text-gray-200'>
-												Validate retention with quizzes
+											<div className='text-xs text-gray-200'>
+												Retention quizzes
 											</div>
 										</div>
 									</div>
 
-									<div className='flex items-start gap-3'>
-										<div className='w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
+									<div className='flex items-start gap-2'>
+										<div className='w-4 h-4 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
 											<svg
-												className='w-3 h-3 text-white'
+												className='w-2.5 h-2.5 text-white'
 												fill='none'
 												viewBox='0 0 24 24'
 												stroke='currentColor'
@@ -211,19 +212,19 @@ const HomePage = async () => {
 											</svg>
 										</div>
 										<div>
-											<div className='font-medium text-white'>
-												Real-World Line-Down Scenarios
+											<div className='font-medium text-white text-sm'>
+												Real-World Scenarios
 											</div>
-											<div className='text-sm text-gray-200'>
+											<div className='text-xs text-gray-200'>
 												Practical troubleshooting
 											</div>
 										</div>
 									</div>
 
-									<div className='flex items-start gap-3'>
-										<div className='w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
+									<div className='flex items-start gap-2'>
+										<div className='w-4 h-4 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
 											<svg
-												className='w-3 h-3 text-white'
+												className='w-2.5 h-2.5 text-white'
 												fill='none'
 												viewBox='0 0 24 24'
 												stroke='currentColor'
@@ -237,19 +238,19 @@ const HomePage = async () => {
 											</svg>
 										</div>
 										<div>
-											<div className='font-medium text-white'>
+											<div className='font-medium text-white text-sm'>
 												Instant Certificates
 											</div>
-											<div className='text-sm text-gray-200'>
-												Download upon course completion
+											<div className='text-xs text-gray-200'>
+												Download on completion
 											</div>
 										</div>
 									</div>
 
-									<div className='flex items-start gap-3'>
-										<div className='w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
+									<div className='flex items-start gap-2'>
+										<div className='w-4 h-4 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5'>
 											<svg
-												className='w-3 h-3 text-white'
+												className='w-2.5 h-2.5 text-white'
 												fill='none'
 												viewBox='0 0 24 24'
 												stroke='currentColor'
@@ -263,11 +264,11 @@ const HomePage = async () => {
 											</svg>
 										</div>
 										<div>
-											<div className='font-medium text-white'>
+											<div className='font-medium text-white text-sm'>
 												Mobile Accessible
 											</div>
-											<div className='text-sm text-gray-200'>
-												Learn anywhere, anytime
+											<div className='text-xs text-gray-200'>
+												Learn anywhere
 											</div>
 										</div>
 									</div>

@@ -36,7 +36,7 @@ const HomePage = async () => {
 								<h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold text-white'>
 									Ikonix Training
 								</h1>
-								<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-white/50 rounded-full mt-3 max-w-lg mx-auto' />
+								<div className='h-1.5 bg-gradient-to-r from-[#670c0c] to-white/50 rounded-full mt-3 max-w-lg ' />
 							</div>
 
 							{/* Catchphrase and TEST button */}

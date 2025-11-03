@@ -5,13 +5,6 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 
 import { Button } from '@/components/ui/button';
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
@@ -32,7 +25,7 @@ export function LoginForm() {
 				redirect: false,
 			});
 
-			console.log('SignIn result:', result); // Add this
+			console.log('SignIn result:', result);
 
 			if (result?.error) {
 				console.log('Error:', result.error);
@@ -40,9 +33,8 @@ export function LoginForm() {
 				setError(errorMessage);
 				toast.error(errorMessage);
 			} else if (result?.ok) {
-				// Change this line - check for ok explicitly
 				toast.success('Login Successful!');
-				window.location.href = '/courses'; // Force a full page redirect instead of router.push
+				window.location.href = '/courses';
 			}
 		} catch (e) {
 			console.error('Exception:', e);
@@ -52,65 +44,78 @@ export function LoginForm() {
 	}
 
 	return (
-		<Card className='mx-auto max-w-sm w-full'>
-			<CardHeader>
-				<CardTitle className='text-2xl'>
-					<p className='mt-5 text-3xl font-bold leading-tight text-gray-900 sm:leading-tight sm:text-5xl lg:text-3xl lg:leading-tight font-pj'>
-						<span className='relative inline-flex sm:inline'>
-							<span className='bg-gradient-to-r from-[#670c0c] via-[#cfd2ee] to-[#1d1744] blur-lg filter opacity-30 w-full h-full absolute inset-0'></span>
-							<span className='relative'>Login</span>
-						</span>
-					</p>
-				</CardTitle>
-				<CardDescription>
+		<div className='mx-auto max-w-sm w-full bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 rounded-lg shadow-xl p-8 border border-white/10'>
+			<div className='mb-6'>
+				<h1 className='text-3xl font-bold text-white mb-2'>Login</h1>
+				<p className='text-gray-300 text-sm'>
 					Enter your email below to login to your account
-				</CardDescription>
-			</CardHeader>
-			<CardContent>
-				<form onSubmit={onSubmit}>
-					<div className='grid gap-4'>
-						<div className='grid gap-2'>
-							<Label htmlFor='email'>Email</Label>
-							<Input
-								id='email'
-								name='email'
-								type='email'
-								placeholder='m@example.com'
-								required
-							/>
-						</div>
-						<div className='grid gap-2'>
-							<div className='flex items-center'>
-								<Label htmlFor='password'>Password</Label>
-							</div>
-							<Input id='password' name='password' type='password' required />
-							{error && <p className='text-sm text-red-600 mt-1'>{error}</p>}
-						</div>
-						<Button type='submit' className='w-full'>
-							Login
-						</Button>
-					</div>
+				</p>
+			</div>
 
-					<div className='flex items-center justify-between mt-4'>
-						<Link
-							href='/forgot-password'
-							className='text-sm text-blue-600 hover:underline'
+			<form onSubmit={onSubmit}>
+				<div className='grid gap-4'>
+					<div className='grid gap-2'>
+						<Label htmlFor='email' className='text-white text-sm font-medium'>
+							Email
+						</Label>
+						<Input
+							id='email'
+							name='email'
+							type='email'
+							placeholder='m@example.com'
+							required
+							className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500'
+						/>
+					</div>
+					<div className='grid gap-2'>
+						<Label
+							htmlFor='password'
+							className='text-white text-sm font-medium'
 						>
-							Forgot your password?
-						</Link>
+							Password
+						</Label>
+						<Input
+							id='password'
+							name='password'
+							type='password'
+							required
+							className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500'
+						/>
+						{error && <p className='text-sm text-red-400 mt-1'>{error}</p>}
 					</div>
-					<div className='mt-4 text-center text-sm'>
-						Don&apos;t have an account?{' '}
-						<Link href='/register/instructor' className='underline'>
-							Instructor
-						</Link>{' '}
-						or{' '}
-						<Link href='/register/student' className='underline'>
-							Student
-						</Link>
-					</div>
-				</form>
-			</CardContent>
-		</Card>
+					<Button
+						type='submit'
+						className='w-full bg-black text-white hover:bg-gray-900 py-3'
+					>
+						Login
+					</Button>
+				</div>
+
+				<div className='flex items-center justify-center mt-4'>
+					<Link
+						href='/forgot-password'
+						className='text-sm text-blue-400 hover:text-blue-300 hover:underline'
+					>
+						Forgot your password?
+					</Link>
+				</div>
+				<div className='mt-4 text-center text-sm text-gray-300'>
+					Don&apos;t have an account?{' '}
+					<Link
+						href='/register/instructor'
+						className='text-blue-400 hover:text-blue-300 underline'
+					>
+						Instructor
+					</Link>{' '}
+					or{' '}
+					<Link
+						href='/register/student'
+						className='text-blue-400 hover:text-blue-300 underline'
+					>
+						Student
+					</Link>
+				</div>
+			</form>
+		</div>
 	);
 }

@@ -5,13 +5,6 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
@@ -104,91 +97,117 @@ export function SignupForm({ role }) {
 	}
 
 	return (
-		<Card className='mx-auto max-w-sm'>
-			<CardHeader>
-				<CardTitle className='text-xl'>
-					<p className='mt-5 text-3xl font-bold leading-tight text-gray-900 sm:leading-tight sm:text-5xl lg:text-3xl lg:leading-tight font-pj'>
-						<span className='relative inline-flex sm:inline'>
-							<span className='bg-gradient-to-r from-[#7d2f2f] via-[#b4b7f3] to-[#1e0b53] blur-lg filter opacity-30 w-full h-full absolute inset-0'></span>
-							<span className='relative'>Sign Up</span>
-						</span>
-					</p>
-				</CardTitle>
-				<CardDescription>
+		<div className='mx-auto max-w-sm w-full bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 rounded-lg shadow-xl p-8 border border-white/10'>
+			<div className='mb-6'>
+				<h1 className='text-3xl font-bold text-white mb-2'>Sign Up</h1>
+				<p className='text-gray-300 text-sm'>
 					Enter your information to create an account
-				</CardDescription>
-			</CardHeader>
-			<CardContent>
-				<form onSubmit={onSubmit}>
-					<div className='grid gap-4'>
-						<div className='grid grid-cols-2 gap-4'>
-							<div className='grid gap-2'>
-								<Label htmlFor='first-name'>First name</Label>
-								<Input
-									id='first-name'
-									name='first-name'
-									placeholder='Max'
-									required
-									disabled={isLoading}
-								/>
-							</div>
-							<div className='grid gap-2'>
-								<Label htmlFor='last-name'>Last name</Label>
-								<Input
-									id='last-name'
-									name='last-name'
-									placeholder='Robinson'
-									required
-									disabled={isLoading}
-								/>
-							</div>
-						</div>
+				</p>
+			</div>
+
+			<form onSubmit={onSubmit}>
+				<div className='grid gap-4'>
+					<div className='grid grid-cols-2 gap-4'>
 						<div className='grid gap-2'>
-							<Label htmlFor='email'>Email</Label>
+							<Label
+								htmlFor='first-name'
+								className='text-white text-sm font-medium'
+							>
+								First name
+							</Label>
 							<Input
-								id='email'
-								name='email'
-								type='email'
-								placeholder='m@example.com'
+								id='first-name'
+								name='first-name'
+								placeholder='Max'
 								required
 								disabled={isLoading}
+								className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500'
 							/>
 						</div>
 						<div className='grid gap-2'>
-							<Label htmlFor='password'>Password</Label>
+							<Label
+								htmlFor='last-name'
+								className='text-white text-sm font-medium'
+							>
+								Last name
+							</Label>
 							<Input
-								id='password'
-								name='password'
-								type='password'
+								id='last-name'
+								name='last-name'
+								placeholder='Robinson'
 								required
 								disabled={isLoading}
-							/>
-							<p className='text-xs text-gray-500'>
-								Must be at least 8 characters and not a common password
-							</p>
-						</div>
-						<div className='grid gap-2'>
-							<Label htmlFor='confirmPassword'>Confirm Password</Label>
-							<Input
-								id='confirmPassword'
-								name='confirmPassword'
-								type='password'
-								required
-								disabled={isLoading}
+								className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500'
 							/>
 						</div>
-						<Button type='submit' className='w-full' disabled={isLoading}>
-							{isLoading ? 'Creating account...' : 'Create an account'}
-						</Button>
 					</div>
-					<div className='mt-4 text-center text-sm'>
-						Already have an account?{' '}
-						<Link href='/login' className='underline'>
-							Sign in
-						</Link>
+					<div className='grid gap-2'>
+						<Label htmlFor='email' className='text-white text-sm font-medium'>
+							Email
+						</Label>
+						<Input
+							id='email'
+							name='email'
+							type='email'
+							placeholder='m@example.com'
+							required
+							disabled={isLoading}
+							className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500'
+						/>
 					</div>
-				</form>
-			</CardContent>
-		</Card>
+					<div className='grid gap-2'>
+						<Label
+							htmlFor='password'
+							className='text-white text-sm font-medium'
+						>
+							Password
+						</Label>
+						<Input
+							id='password'
+							name='password'
+							type='password'
+							required
+							disabled={isLoading}
+							className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500'
+						/>
+						<p className='text-xs text-gray-400'>
+							Must be at least 8 characters and not a common password
+						</p>
+					</div>
+					<div className='grid gap-2'>
+						<Label
+							htmlFor='confirmPassword'
+							className='text-white text-sm font-medium'
+						>
+							Confirm Password
+						</Label>
+						<Input
+							id='confirmPassword'
+							name='confirmPassword'
+							type='password'
+							required
+							disabled={isLoading}
+							className='w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500'
+						/>
+					</div>
+					<Button
+						type='submit'
+						className='w-full bg-black text-white hover:bg-gray-900 py-3'
+						disabled={isLoading}
+					>
+						{isLoading ? 'Creating account...' : 'Create an account'}
+					</Button>
+				</div>
+				<div className='mt-4 text-center text-sm text-gray-300'>
+					Already have an account?{' '}
+					<Link
+						href='/login'
+						className='text-blue-400 hover:text-blue-300 underline'
+					>
+						Sign in
+					</Link>
+				</div>
+			</form>
+		</div>
 	);
 }

@@ -134,10 +134,10 @@ const HomePage = async () => {
 										</div>
 										<div>
 											<div className='font-medium text-white'>
-												OSHA Compliant Training
+												Model Specific Training
 											</div>
 											<div className='text-sm text-gray-200'>
-												Industry-approved content
+												Direct from Ikonix Applications Engineers
 											</div>
 										</div>
 									</div>
@@ -186,10 +186,10 @@ const HomePage = async () => {
 										</div>
 										<div>
 											<div className='font-medium text-white'>
-												Instant Certificates
+												Knowledge Assessments
 											</div>
 											<div className='text-sm text-gray-200'>
-												Download upon completion
+												Validate retention with quizzes
 											</div>
 										</div>
 									</div>
@@ -212,7 +212,7 @@ const HomePage = async () => {
 										</div>
 										<div>
 											<div className='font-medium text-white'>
-												Real-World Scenarios
+												Real-World Line-Down Scenarios
 											</div>
 											<div className='text-sm text-gray-200'>
 												Practical troubleshooting
@@ -238,10 +238,10 @@ const HomePage = async () => {
 										</div>
 										<div>
 											<div className='font-medium text-white'>
-												Expert Support
+												Instant Certificates
 											</div>
 											<div className='text-sm text-gray-200'>
-												Applications engineers
+												Download upon course completion
 											</div>
 										</div>
 									</div>

@@ -27,10 +27,10 @@ const HomePage = async () => {
 					className='pointer-events-none absolute inset-0 -z-10 transform-gpu overflow-hidden blur-3xl'
 				></div>
 
-				<div className='container relative z-10 py-8'>
+				<div className='container relative z-10 py-5'>
 					<div className='grid lg:grid-cols-2 gap-8 items-center'>
 						{/* Left side - Your catchphrase hero */}
-						<div className='space-y-6'>
+						<div className='space-y-4'>
 							{/* Title with left-aligned underline */}
 							<div className='text-center'>
 								<h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold text-white'>

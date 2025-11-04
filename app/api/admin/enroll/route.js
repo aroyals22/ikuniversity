@@ -7,7 +7,7 @@ import { sendEmails } from '@/lib/emails';
 import { dbConnect } from '@/service/mongo';
 
 export async function POST(req) {
-	await dbConnect(); // OUTSIDE try block
+	await dbConnect();
 
 	try {
 		// Check authentication
@@ -84,18 +84,38 @@ export async function POST(req) {
 		// Send notification email if requested and enrollments were successful
 		if (sendNotification && results.enrolled.length > 0) {
 			const studentName = `${student.firstName} ${student.lastName}`;
-			const courseList = results.enrolled.join(', ');
+			const studentEmail = student.email;
 
-			const emailsToSend = [
-				{
-					to: email,
-					subject: `You've been enrolled in ${results.enrolled.length} course${results.enrolled.length > 1 ? 's' : ''}`,
-					message: `Hello ${studentName},\n\nYou have been enrolled in the following course(s):\n\n${courseList}\n\nLogin to ikutraining.com to start learning!\n\nBest regards,\nIkonix Training Team`,
-				},
-			];
+			const emailsToSend = [];
+
+			// Loop through courseIds and send emails for successfully enrolled courses
+			for (const courseId of courseIds) {
+				const course = await getCourseDetails(courseId);
+
+				// Only send email if this course was successfully enrolled
+				if (results.enrolled.includes(course.title)) {
+					const instructorName = `${course.instructor.firstName} ${course.instructor.lastName}`;
+					const instructorEmail = course.instructor.email;
+					const courseName = course.title;
+
+					// Email to instructor (EXACTLY like Stripe)
+					emailsToSend.push({
+						to: instructorEmail,
+						subject: `New Enrollment For ${courseName}`,
+						message: `Congratulations, ${instructorName}. A new student, ${studentName} has enrolled to your course ${courseName} just now. `,
+					});
+
+					// Email to student (EXACTLY like Stripe)
+					emailsToSend.push({
+						to: studentEmail,
+						subject: `Enrollment success for ${courseName}`,
+						message: `Hey, ${studentName}. You have successfully enrolled for the course ${courseName} `,
+					});
+				}
+			}
 
 			try {
-				await sendEmails(emailsToSend);
+				const emailSendResponse = await sendEmails(emailsToSend);
 			} catch (emailError) {
 				console.error('Failed to send notification email:', emailError);
 				// Don't fail the whole request if email fails

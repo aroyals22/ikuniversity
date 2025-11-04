@@ -219,17 +219,19 @@ export const getCategoryById = async (categoryId) => {
 	}
 };
 
-export async function getRelatedCourses(currentCourseId, categoryId) {
+export async function getRelatedCourses(
+	currentCourseId,
+	currentCourseCategories
+) {
 	await dbConnect();
 	try {
 		const currentCourseObjectId = new mongoose.Types.ObjectId(currentCourseId);
-		const categoryObjectId = new mongoose.Types.ObjectId(categoryId);
 		const relatedCourses = await Course.find({
-			category: categoryObjectId,
+			category: { $in: currentCourseCategories }, // Find courses with any shared category
 			_id: { $ne: currentCourseObjectId },
 			active: true,
 		})
-			.select('title thumbnail price')
+			.select('title thumbnail price category')
 			.lean();
 		return relatedCourses;
 	} catch (error) {

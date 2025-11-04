@@ -33,7 +33,7 @@ export default async function SingleCoursePage({ params }) {
 	// Fetch related courses (pass first category ID, or all categories)
 	const relatedCourses =
 		categoryIds.length > 0
-			? await getRelatedCourses(currentCourseId, categoryIds[0])
+			? await getRelatedCourses(currentCourseId, categoryIds) // Pass all categories
 			: [];
 
 	// Get first lesson from first module for free preview

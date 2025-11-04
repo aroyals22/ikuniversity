@@ -17,9 +17,9 @@ const Support = () => {
 						With Applications Consulting we can build a package which suits your
 						training or test setup needs. Our Application team has combined for
 						over 30 years of experience helping customers solve their testing
-						application needs. They will come to your facility train your staff,
-						setup your new equipment and make sure you're testing your products
-						to every standard necessary.
+						application needs. They will come to your facility, train your
+						staff, setup your new equipment and make sure you're testing your
+						products to every standard necessary.
 					</p>
 
 					<div className='flex flex-wrap gap-4'>

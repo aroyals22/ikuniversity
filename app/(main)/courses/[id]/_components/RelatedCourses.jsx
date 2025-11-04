@@ -13,6 +13,20 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { SectionTitle } from '@/components/SectionTitle';
 
+// Helper function to handle both old (filename) and new (blob URL) thumbnails
+const getThumbnailUrl = (thumbnail) => {
+	if (!thumbnail) {
+		return '/assets/images/courses/placeholder.jpg';
+	}
+	
+	// If it's a full URL (Vercel Blob), use it directly
+	if (thumbnail.startsWith('http')) {
+		return thumbnail;
+	}
+	
+	// If it's just a filename (old courses), construct the path
+	return `/assets/images/courses/${thumbnail}`;
+};
 
 const RelatedCourses = ({ relatedCourses }) => {
 	return (
@@ -37,7 +51,7 @@ const RelatedCourses = ({ relatedCourses }) => {
 									<div className='group hover:shadow-sm transition overflow-hidden border rounded-lg p-3 h-full'>
 										<div className='relative w-full aspect-video rounded-md overflow-hidden'>
 											<Image
-												src={`/assets/images/courses/${course.thumbnail}`}
+												src={getThumbnailUrl(course.thumbnail)}
 												alt={course.title}
 												className='object-cover'
 												fill

@@ -27,7 +27,7 @@ const HomePage = async () => {
 					className='pointer-events-none absolute inset-0 -z-10 transform-gpu overflow-hidden blur-3xl'
 				></div>
 
-				<div className='container relative z-10 py-14 lg:py-20'>
+				<div className='container relative z-10 py-16 lg:py-22'>
 					<div className='grid lg:grid-cols-2 gap-8 items-center'>
 						{/* Left side - Your catchphrase hero */}
 						<div className='space-y-4'>

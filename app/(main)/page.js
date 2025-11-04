@@ -20,7 +20,7 @@ const HomePage = async () => {
 
 	return (
 		<>
-			<section className='relative overflow-hidden bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 min-h-screen flex items-center'>
+			<section className='relative overflow-hidden bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 flex items-center'>
 				{/* Subtle gradient accent */}
 				<div
 					aria-hidden='true'

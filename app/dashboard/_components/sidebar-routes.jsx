@@ -1,6 +1,13 @@
-"use client";
+'use client';
 
-import { BarChart, PlusCircle, BookOpen, BookA, Tags } from 'lucide-react';
+import {
+	BarChart,
+	PlusCircle,
+	BookOpen,
+	BookA,
+	Tags,
+	UserPlus,
+} from 'lucide-react';
 
 import { SidebarItem } from './sidebar-item';
 
@@ -30,25 +37,24 @@ const routes = [
 		label: 'Quizzes',
 		href: '/dashboard/quiz-sets',
 	},
+	{
+		icon: UserPlus,
+		label: 'Enroll User',
+		href: '/dashboard/enroll',
+	},
 ];
 
 export const SidebarRoutes = () => {
-  // const pathname = usePathname();
-
-  // const isTeacherPage = pathname?.includes("/teacher");
-
-  // const routes = isTeacherPage ? teacherRoutes : guestRoutes;
-
-  return (
-    <div className="flex flex-col w-full">
-      {routes.map((route) => (
-        <SidebarItem
-          key={route.href}
-          icon={route.icon}
-          label={route.label}
-          href={route.href}
-        />
-      ))}
-    </div>
-  );
+	return (
+		<div className='flex flex-col w-full'>
+			{routes.map((route) => (
+				<SidebarItem
+					key={route.href}
+					icon={route.icon}
+					label={route.label}
+					href={route.href}
+				/>
+			))}
+		</div>
+	);
 };

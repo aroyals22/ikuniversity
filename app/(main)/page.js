@@ -190,7 +190,7 @@ const HomePage = async () => {
 												Knowledge Assessments
 											</div>
 											<div className='text-xs text-gray-200'>
-												Retention quizzes
+												Verify knowledge retention with quizzes
 											</div>
 										</div>
 									</div>
